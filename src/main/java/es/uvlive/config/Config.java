@@ -1,4 +1,4 @@
-package com.outbottle.config;  
+package es.uvlive.config;  
   
 import org.springframework.context.annotation.Bean;  
 import org.springframework.context.annotation.ComponentScan;  
@@ -10,7 +10,7 @@ import org.springframework.web.servlet.view.JstlView;
 import org.springframework.web.servlet.view.UrlBasedViewResolver;  
   
 @Configuration
-@ComponentScan("com.outbottle")
+@ComponentScan("es.uvlive")
 @EnableWebMvc   
 public class Config extends WebMvcConfigurerAdapter {  
       
