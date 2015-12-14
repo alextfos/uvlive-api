@@ -3,12 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package es.uvlive.controllers.login;
+package es.uvlive.controller.login;
 
+import es.uvlive.controller.BaseController;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import org.json.JSONObject;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,7 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @author atraverf
  */
 @Controller
-public class LoginController {
+public class LoginController extends BaseController {
     
     /**
      *
@@ -31,14 +33,18 @@ public class LoginController {
      * @param response
      * @return
      */
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    @RequestMapping(value = "/login", method = RequestMethod.POST,
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            headers={"Content-Type=application/json"})
     public @ResponseBody
-    String createSession(/* @RequestBody LoginForm loginForm,*/ HttpServletRequest request, HttpServletResponse response)
+    BaseResponse createSession(@RequestBody LoginForm loginForm, BindingResult result,
+            HttpServletRequest request, HttpServletResponse response)
     {
-        JSONObject json = new JSONObject();
-        json.append("hola", "pepito");
-        json.accumulate("jaja", "asdf");
-        json.append("adios", "juanito");
-        return json.toString();
+        //JSONObject json = new JSONObject();
+        //json.put("hola", "pepito");
+        LoginResponse loginResponse = new LoginResponse();
+        loginResponse.setUser(loginForm.getUserName());
+        return loginResponse;
     }
 }

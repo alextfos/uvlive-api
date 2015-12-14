@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package es.uvlive.controllers.login;
+package es.uvlive.controller.login;
 
 /**
  *
@@ -11,13 +11,21 @@ package es.uvlive.controllers.login;
  */
 class LoginForm {
     private String userName;
-    private String password;
+    //private String password;
     
     public String getUserName(){
         return userName;
     }
     
-    public String getPassword(){
+   /* public String getPassword(){
         return password;
     }
+    */
+    public void setUserName(String userName){
+        this.userName=userName;
+    }
+    /*
+    public void setPassword(String password){
+        this.password=password;
+    }*/
 }

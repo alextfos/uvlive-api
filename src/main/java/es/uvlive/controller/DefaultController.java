@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package es.uvlive.controllers;
+package es.uvlive.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
