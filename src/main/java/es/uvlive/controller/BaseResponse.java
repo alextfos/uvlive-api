@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package es.uvlive.controller.login;
+package es.uvlive.controller;
 
 /**
  *
  * @author atraverf
  */
-class BaseResponse {
+public class BaseResponse {
     String respuesta;
     
 }

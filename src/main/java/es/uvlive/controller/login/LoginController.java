@@ -5,6 +5,7 @@
  */
 package es.uvlive.controller.login;
 
+import es.uvlive.controller.BaseResponse;
 import es.uvlive.controller.BaseController;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,6 +14,7 @@ import org.json.JSONObject;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -41,10 +43,14 @@ public class LoginController extends BaseController {
     BaseResponse createSession(@RequestBody LoginForm loginForm, BindingResult result,
             HttpServletRequest request, HttpServletResponse response)
     {
-        //JSONObject json = new JSONObject();
-        //json.put("hola", "pepito");
+        /*
+        Resetear la sesion antigua y crear una nueva.
+        */
         LoginResponse loginResponse = new LoginResponse();
         loginResponse.setUser(loginForm.getUserName());
+        //response.setHeader("Set-Cookie", "controlador");
+        String str = request.getSession().getId();
+        response.setHeader("Set-Cookie", "JSESSIONID="+str);
         return loginResponse;
     }
 }

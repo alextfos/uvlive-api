@@ -5,6 +5,7 @@
  */
 package es.uvlive.controller.login;
 
+import es.uvlive.controller.BaseResponse;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
