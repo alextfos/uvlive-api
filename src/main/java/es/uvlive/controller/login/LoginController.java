@@ -46,11 +46,19 @@ public class LoginController extends BaseController {
         /*
         Resetear la sesion antigua y crear una nueva.
         */
-        LoginResponse loginResponse = new LoginResponse();
-        loginResponse.setUser(loginForm.getUserName());
-        //response.setHeader("Set-Cookie", "controlador");
-        String str = request.getSession().getId();
-        response.setHeader("Set-Cookie", "JSESSIONID="+str);
-        return loginResponse;
+        
+        boolean login = uvLiveModel.login(loginForm.getUserName(),loginForm.getPassword(),loginForm.getLoginType());
+        
+        if(login){
+            LoginResponse loginResponse = new LoginResponse();
+            loginResponse.setUser(loginForm.getUserName());
+            //response.setHeader("Set-Cookie", "controlador");
+            String str = request.getSession().getId();
+            response.setHeader("Set-Cookie", "JSESSIONID="+str);
+            return loginResponse;
+        }else{
+            //TODO: Ver que hacer
+            return new LoginResponse();
+        }
     }
 }

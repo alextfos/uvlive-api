@@ -12,5 +12,15 @@ import es.uvlive.model.UVLiveModel;
  * @author atraverf
  */
 public class BaseController {
-    private UVLiveModel uvLiveModel = UVLiveModel.getUVLiveModel();
+    protected UVLiveModel uvLiveModel = UVLiveModel.getUVLiveModel();
+    protected int numUser;
+    protected String typeUser;
+    
+    public void setNumUser(int num){
+        numUser=num;
+    }
+    
+    public void setTypeUser(String type){
+        typeUser=type;
+    }
 }
