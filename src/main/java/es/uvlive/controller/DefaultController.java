@@ -19,7 +19,7 @@ public class DefaultController {
     
    @RequestMapping(value = "/", method = RequestMethod.GET)
    public String index(ModelMap map) {
-       map.put("msg", "Hello Spring 4 Web MVC!");
+       map.put("msg", "Enhorabuena, el Servidor se ha lanzado correctamente!");
        return "index";
    }
     
