@@ -19,7 +19,7 @@ import java.util.logging.Logger;
  */
 public class DBConnection {
     private Connection mConnectionDB;
-    private static final String URL = "jdbc:mysql://localhost/prueba";
+    private static final String URL = "jdbc:mysql://localhost/uvlive";
     private static final String USER = "root";
     private static final String PASSWORD = "asdf1234";
     private static final String DRIVER = "com.mysql.jdbc.Driver";
@@ -34,6 +34,7 @@ public class DBConnection {
         } catch (Exception e) {
             System.out.println("Error en la BD: "+e.toString());
         }
+        System.out.println("Base de Datos conectada.");
     }
     
     public ResultSet query(String sql) {

@@ -9,7 +9,7 @@ package es.uvlive.controller.login;
  *
  * @author atraverf
  */
-class LoginForm {
+public class LoginForm {
     private String userName;
     private String password;
     private String loginType;

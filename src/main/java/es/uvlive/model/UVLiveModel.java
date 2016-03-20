@@ -24,7 +24,10 @@ public class UVLiveModel {
         dbConnection = new DBConnection();
     }
     public static UVLiveModel getUVLiveModel(){
-        return (uvLiveModel==null)?new UVLiveModel():uvLiveModel;
+        if(uvLiveModel==null){
+            uvLiveModel=new UVLiveModel();
+        }
+        return uvLiveModel;
     }
 
     public boolean login(String userName, String password, String loginType) {

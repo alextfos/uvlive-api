@@ -22,6 +22,11 @@
     
     <dependencies>
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-autoconfigure</artifactId>
+            <version>1.2.1.RELEASE</version>
+        </dependency>
+        <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-web-api</artifactId>
             <version>7.0</version>
@@ -58,7 +63,11 @@
             <artifactId>jstl</artifactId>  
             <version>${jstl.version}</version>  
         </dependency>
-        
+        <dependency>
+    <groupId>cglib</groupId>
+    <artifactId>cglib</artifactId>
+    <version>2.2.2</version>
+</dependency>
         <dependency>
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>

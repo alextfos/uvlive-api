@@ -3,10 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package es.uvlive.controller.login;
+package es.uvlive.controller.conversations;
 
 import es.uvlive.controller.BaseResponse;
 import es.uvlive.controller.BaseController;
+import es.uvlive.controller.conversations.ConversationsForm;
+import es.uvlive.controller.conversations.ConversationsResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.http.MediaType;
@@ -17,12 +19,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import es.uvlive.controller.login.*;
+
 /**
  *
  * @author atraverf
  */
 @Controller
-public class LoginController extends BaseController {
+public class ConversationsController extends BaseController {
     
     /**
      *
@@ -32,18 +36,21 @@ public class LoginController extends BaseController {
      * @param response
      * @return
      */
-    @RequestMapping(value = "/login", method = RequestMethod.POST,
+    @RequestMapping(value = "/conversations", method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE,
             headers={"Content-Type=application/json"})
     public @ResponseBody
-    BaseResponse createSession(@RequestBody LoginForm loginForm, BindingResult result,
+    BaseResponse createSession(@RequestBody ConversationsForm loginForm, BindingResult result,
             HttpServletRequest request, HttpServletResponse response)
     {
+        ConversationsResponse conversationsResponse = new ConversationsResponse();
+        conversationsResponse.setId("Hola");
+        return conversationsResponse;
         /*
         Resetear la sesion antigua y crear una nueva.
         */
-        
+        /*
         boolean login = uvLiveModel.login(loginForm.getUserName(),loginForm.getPassword(),loginForm.getLoginType());
         
         if(login){
@@ -57,5 +64,6 @@ public class LoginController extends BaseController {
             //TODO: Ver que hacer
             return new LoginResponse();
         }
+*/
     }
 }
