@@ -10,6 +10,6 @@ package es.uvlive.controller;
  * @author atraverf
  */
 public class BaseResponse {
-    String respuesta;
+    //String respuesta;
     
 }

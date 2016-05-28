@@ -5,6 +5,7 @@
  */
 package es.uvlive.model.db;
 
+import es.uvlive.utils.DebuggingUtils;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -29,12 +30,12 @@ public class DBConnection {
             Class.forName(DRIVER);
             mConnectionDB = (Connection) DriverManager.getConnection(URL,USER, PASSWORD);
         } catch (SQLException ex) {
-            System.out.println("Error de Conexión en la BD");
+            DebuggingUtils.log(this,"SQLException in Database");
             Logger.getLogger(DBConnection.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception e) {
-            System.out.println("Error en la BD: "+e.toString());
+            DebuggingUtils.log(this,"Exception not handled in Database: "+e.toString());
         }
-        System.out.println("Base de Datos conectada.");
+        DebuggingUtils.log(this,"Database connected");
     }
     
     public ResultSet query(String sql) {
@@ -42,7 +43,7 @@ public class DBConnection {
             return mConnectionDB.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY).executeQuery(sql);
         } catch (SQLException ex) {
             Logger.getLogger(DBConnection.class.getName()).log(Level.SEVERE, null, ex);
-            System.out.println("Error de Conexión en la BD");
+            DebuggingUtils.log(this,"Exception while connect the database");
             return null;
         } catch (Exception e) {
             System.out.println("Error en la BD: "+e.toString());
@@ -54,13 +55,13 @@ public class DBConnection {
         try {
             if (mConnectionDB != null) {
                 mConnectionDB.close();
-                System.out.println("Desconectado de la BD");
+                DebuggingUtils.log(this,"Disconnecting Database");
             }
         } catch (SQLException ex) {
             Logger.getLogger(DBConnection.class.getName()).log(Level.SEVERE, null, ex);
-            System.out.println("Error de Conexión en la BD");
+            DebuggingUtils.log (this,"Error connecting to Database");
         } catch (Exception e){
-            System.out.println("Error en la BD:"+e.toString());
+            DebuggingUtils.log (this,"Exception not handled in Database:"+e.toString());
         }
     }
 }

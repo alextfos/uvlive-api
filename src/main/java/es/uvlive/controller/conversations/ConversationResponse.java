@@ -6,30 +6,42 @@
 package es.uvlive.controller.conversations;
 
 import es.uvlive.controller.BaseResponse;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
+/**
+ *
+ * @author atraverf
+ */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "user", "sessionId", "isInputTypeNumberSupported"
+@XmlType(name = "conversation", propOrder = {
+    "id", "name"
 })
 @XmlRootElement(name = "response")
-public class ConversationsResponse extends BaseResponse {
+public class ConversationResponse extends BaseResponse {
 
     @XmlElement(name = "id")
     private String id;
-
+    
+    @XmlElement(name = "name")
+    private String name;
     // Getters and Setters
     public String getId() {
         return id;
     }
+    
+    public String getName() {
+        return name;
+    }
 
-    public void setId(String user) {
+    public void setId (String user) {
         this.id = user;
     }
+    
+    public void setName (String name) {
+        this.name=name;
+    }
 }
-

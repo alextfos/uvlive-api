@@ -22,9 +22,9 @@ public class AuthenticationInterceptor extends HandlerInterceptorAdapter{
         System.out.println(request.getRequestURL());
         
         String url = request.getRequestURL().toString();
-        if(url.contains(endPointLogin)){
+        if(url.contains(endPointLogin) || !request.getSession().isNew()){
             return true;
-        }
+        } 
         throw new Exception();
     }
 }

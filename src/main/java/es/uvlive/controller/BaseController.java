@@ -13,14 +13,4 @@ import es.uvlive.model.UVLiveModel;
  */
 public class BaseController {
     protected UVLiveModel uvLiveModel = UVLiveModel.getUVLiveModel();
-    protected int numUser;
-    protected String typeUser;
-    
-    public void setNumUser(int num){
-        numUser=num;
-    }
-    
-    public void setTypeUser(String type){
-        typeUser=type;
-    }
 }

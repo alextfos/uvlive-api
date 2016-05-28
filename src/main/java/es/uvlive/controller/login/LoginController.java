@@ -7,6 +7,7 @@ package es.uvlive.controller.login;
 
 import es.uvlive.controller.BaseResponse;
 import es.uvlive.controller.BaseController;
+import es.uvlive.utils.DebuggingUtils;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.http.MediaType;
@@ -37,14 +38,19 @@ public class LoginController extends BaseController {
             produces = MediaType.APPLICATION_JSON_VALUE,
             headers={"Content-Type=application/json"})
     public @ResponseBody
-    BaseResponse createSession(@RequestBody LoginForm loginForm, BindingResult result,
-            HttpServletRequest request, HttpServletResponse response)
+    BaseResponse login(@RequestBody LoginForm loginForm, BindingResult result,
+            HttpServletRequest request, HttpServletResponse response) throws Exception
     {
+        Thread t = Thread.currentThread();
+        String name = t.getName();
+        System.out.println("Nombre del hilo:=" + name);
         /*
-        Resetear la sesion antigua y crear una nueva.
+        *    Reset old session and create new session
         */
-        
         boolean login = uvLiveModel.login(loginForm.getUserName(),loginForm.getPassword(),loginForm.getLoginType());
+        DebuggingUtils.log("Session ID:"+request.getSession().getId());
+        DebuggingUtils.log("Is new session: "+request.getSession().isNew());
+        request.getSession().invalidate();
         
         if(login){
             LoginResponse loginResponse = new LoginResponse();
@@ -53,9 +59,8 @@ public class LoginController extends BaseController {
             String str = request.getSession().getId();
             response.setHeader("Set-Cookie", "JSESSIONID="+str);
             return loginResponse;
-        }else{
-            //TODO: Ver que hacer
-            return new LoginResponse();
         }
+        request.getSession().invalidate();
+        throw new Exception();
     }
 }
