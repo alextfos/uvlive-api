@@ -1,8 +1,8 @@
 CREATE TABLE Message (idMessage int(10) NOT NULL AUTO_INCREMENT, text varchar(255), `date` int(10), StudentidStudent int(11) NOT NULL, TeacheridTeacher int(10) NOT NULL, ConversationidConversation int(10) NOT NULL, PRIMARY KEY (idMessage));
 CREATE TABLE Businessman (idBusinessman int(10) NOT NULL AUTO_INCREMENT, `user` varchar(8), password varchar(8), PRIMARY KEY (idBusinessman));
 CREATE TABLE Broadcast (idBroadcast int(10) NOT NULL AUTO_INCREMENT, text int(10), `date` int(10), ComercianteidComerciante int(10), PRIMARY KEY (idBroadcast));
-CREATE TABLE Teacher (idTeacher int(10) NOT NULL AUTO_INCREMENT, `user` varchar(8), password varchar(8), pushToken varchar(255), PRIMARY KEY (idTeacher));
-CREATE TABLE Student (idStudent int(11) NOT NULL AUTO_INCREMENT, `user` varchar(8), password varchar(8), pushToken varchar(255), PRIMARY KEY (idStudent));
+CREATE TABLE Teacher (idTeacher int(10) NOT NULL AUTO_INCREMENT, `user` varchar(8), password varchar(8), PRIMARY KEY (idTeacher));
+CREATE TABLE Student (idStudent int(11) NOT NULL AUTO_INCREMENT, `user` varchar(8), password varchar(8), PRIMARY KEY (idStudent));
 CREATE TABLE Conversation (idConversation int(10) NOT NULL AUTO_INCREMENT, name varchar(52), PRIMARY KEY (idConversation));
 CREATE TABLE Administrator (idAdministrator int(11) NOT NULL AUTO_INCREMENT, `user` varchar(8), password varchar(8), PRIMARY KEY (idAdministrator));
 CREATE TABLE Conversation_Teacher (ConversationidConversation int(10) NOT NULL, TeacheridTeacher int(10) NOT NULL, PRIMARY KEY (ConversationidConversation, TeacheridTeacher));
