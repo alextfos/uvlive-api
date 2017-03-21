@@ -20,10 +20,12 @@ import java.util.logging.Logger;
  */
 public class DBConnection {
     private Connection mConnectionDB;
+    // Debug environment
     private static final String URL = "jdbc:mysql://localhost/uvlive";
     private static final String USER = "root";
     private static final String PASSWORD = "asdf1234";
     private static final String DRIVER = "com.mysql.jdbc.Driver";
+    
     
     public DBConnection(){
         try {
@@ -43,7 +45,7 @@ public class DBConnection {
             return mConnectionDB.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY).executeQuery(sql);
         } catch (SQLException ex) {
             Logger.getLogger(DBConnection.class.getName()).log(Level.SEVERE, null, ex);
-            DebuggingUtils.log(this,"Exception while connect the database");
+            DebuggingUtils.log(this,"Exception while connect the database: "+ex.getMessage()+"--END--");
             return null;
         } catch (Exception e) {
             e.printStackTrace();
