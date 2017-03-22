@@ -11,6 +11,8 @@ package es.uvlive.utils;
  */
 public class DebuggingUtils {
     
+    public static String LOGGER = "";
+    
     public static void log (Object requesterObj, String logText) {
         log(requesterObj.getClass().getName()+" : "+logText);
     }
@@ -20,6 +22,7 @@ public class DebuggingUtils {
      * @param logText Text to print in logfile
      */
     public static void log(String logText) {
+        LOGGER+=logText+"\n";
         System.out.println(logText);
     }
 }
