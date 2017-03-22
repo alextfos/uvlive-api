@@ -7,7 +7,7 @@ package es.uvlive.config.interceptors;
 
 import es.uvlive.models.SessionManager;
 import es.uvlive.models.UVLiveModel;
-import es.uvlive.utils.DebuggingUtils;
+import es.uvlive.utils.Logger;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureException;
 import javax.servlet.http.HttpServletRequest;

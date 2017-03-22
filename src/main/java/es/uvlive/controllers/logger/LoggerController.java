@@ -8,8 +8,10 @@ package es.uvlive.controllers.logger;
 import es.uvlive.controllers.BaseController;
 import es.uvlive.controllers.BaseResponse;
 import es.uvlive.controllers.session.LoginForm;
-import es.uvlive.utils.DebuggingUtils;
+import es.uvlive.utils.LogRegister;
+import es.uvlive.utils.Logger;
 import java.security.SecureRandom;
+import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -46,34 +48,22 @@ public class LoggerController extends BaseController {
      * @param response
      * @return
      */
-    @RequestMapping(value = "/logger", method = RequestMethod.GET)
-    public @ResponseBody String login(HttpServletRequest request, HttpServletResponse response) throws Exception
+    @RequestMapping(value = "/logger", method = RequestMethod.POST)
+    public @ResponseBody LogListResponse login(HttpServletRequest request, HttpServletResponse response) throws Exception
     {
-        LogResponse logResponse = new LogResponse();
-        logResponse.setLog(DebuggingUtils.LOGGER);
-        //return logResponse;
-        return DebuggingUtils.LOGGER;
-    }
-    
-    @XmlAccessorType(XmlAccessType.FIELD)
-    @XmlType(name = "", propOrder = {
-        "log"
-    })
-    @XmlRootElement(name = "response")
-    public class LogResponse extends BaseResponse {
-
-        @XmlElement(name = "log")
-        private String log;
-
-        public String getLog() {
-            return log;
+        ArrayList<LogRegister> logs = Logger.getLogs();
+        LogListResponse logListResponse = new LogListResponse();
+        ArrayList<LogResponse> logArrayList = new ArrayList();
+        
+        for (LogRegister log: logs) {
+            LogResponse logResponse = new LogResponse();
+            logResponse.setTimeStamp(log.getTimeStamp());
+            logResponse.setLevel(log.getLevel());
+            logResponse.setClazz(log.getClazz());
+            logResponse.setMessage(log.getMessage());
+            logArrayList.add(logResponse);
         }
-
-        public void setLog(String log) {
-            this.log = log;
-        }
-
-
-    }
-    
+        logListResponse.setLogs(logArrayList);
+        return logListResponse;
+    }   
 }

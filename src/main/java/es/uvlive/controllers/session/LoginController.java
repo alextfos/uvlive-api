@@ -8,7 +8,7 @@ package es.uvlive.controllers.session;
 import es.uvlive.controllers.BaseResponse;
 import es.uvlive.controllers.BaseController;
 import es.uvlive.models.SessionManager;
-import es.uvlive.utils.DebuggingUtils;
+import es.uvlive.utils.Logger;
 import io.jsonwebtoken.Claims;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -51,7 +51,6 @@ public class LoginController extends BaseController {
     BaseResponse login(@RequestBody LoginForm loginForm, BindingResult result,
             HttpServletRequest request, HttpServletResponse response) throws Exception
     {
-        
         // Reset old session and create new session
         boolean login = uvLiveModel.login(loginForm.getUserName(),loginForm.getPassword(),loginForm.getLoginType());
         

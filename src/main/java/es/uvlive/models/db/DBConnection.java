@@ -5,13 +5,11 @@
  */
 package es.uvlive.models.db;
 
-import es.uvlive.utils.DebuggingUtils;
+import es.uvlive.utils.Logger;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 
 /**
@@ -32,24 +30,21 @@ public class DBConnection {
             Class.forName(DRIVER);
             mConnectionDB = (Connection) DriverManager.getConnection(URL,USER, PASSWORD);
         } catch (SQLException ex) {
-            DebuggingUtils.log(this,"SQLException in Database");
-            Logger.getLogger(DBConnection.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.putError(this,"SQLException in Database: "+ex.getMessage());
         } catch (Exception e) {
-            DebuggingUtils.log(this,"Exception not handled in Database: "+e.toString());
+            Logger.put(this,"Exception not handled in Database: "+e.toString());
         }
-        DebuggingUtils.log(this,"Database connected");
+        Logger.put(this,"Database connected");
     }
     
     public ResultSet query(String sql) {
         try {
             return mConnectionDB.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY).executeQuery(sql);
         } catch (SQLException ex) {
-            Logger.getLogger(DBConnection.class.getName()).log(Level.SEVERE, null, ex);
-            DebuggingUtils.log(this,"Exception while connect the database: "+ex.getMessage()+"--END--");
+            Logger.put(this,"SQLException: "+ex.getMessage());
             return null;
         } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("Error en la BD: "+e.toString());
+            System.out.println("Error en la BD: "+e.getMessage());
             return null;
         }
     }
@@ -58,13 +53,12 @@ public class DBConnection {
         try {
             if (mConnectionDB != null) {
                 mConnectionDB.close();
-                DebuggingUtils.log(this,"Disconnecting Database");
+                Logger.put(this,"Disconnecting Database");
             }
-        } catch (SQLException ex) {
-            Logger.getLogger(DBConnection.class.getName()).log(Level.SEVERE, null, ex);
-            DebuggingUtils.log (this,"Error connecting to Database");
+        } catch (SQLException ex) { 
+           Logger.put(this,"Error connecting to Database: "+ex.getMessage());
         } catch (Exception e){
-            DebuggingUtils.log (this,"Exception not handled in Database:"+e.toString());
+           Logger.put(this,"Exception not handled in Database:"+e.toString());
         }
     }
 }

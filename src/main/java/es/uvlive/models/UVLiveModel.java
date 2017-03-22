@@ -7,12 +7,10 @@ package es.uvlive.models;
 
 import es.uvlive.models.db.DBConnection;
 import es.uvlive.models.users.User;
-import es.uvlive.utils.DebuggingUtils;
+import es.uvlive.utils.Logger;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -46,20 +44,20 @@ public class UVLiveModel {
     public boolean login(String userName, String password, String loginType) {
         String table="";
         switch(loginType) {
-            case "alumno":
+            case "Alumno":
                 table = STUDENT_TABLE;
                 break;
-            case "profesor":
+            case "Profesor":
                 table = TEACHER_TABLE;
                 break;
-            case "admin":
+            case "Admin":
                 table = ADMINISTRATOR_TABLE;
                 break;
         }
         
         String sqlQuery = "SELECT * FROM "+table+" WHERE user = '"+userName+
                 "' AND password = '"+password+"'";
-        DebuggingUtils.log("Debug login: "+sqlQuery);
+        Logger.put("Debug login: "+sqlQuery);
         ResultSet result = dbConnection.query(sqlQuery);
         if(result!=null) {
             try {
@@ -69,8 +67,7 @@ public class UVLiveModel {
                         return true;
                 }
             } catch (SQLException ex) {
-                Logger.getLogger(UVLiveModel.class.getName()).log(Level.SEVERE, null, ex);
-                System.out.println("login - Error al recorrer el resultado de la consulta");
+                Logger.put(this,"login - Error al recorrer el resultado de la consulta: " + ex.getMessage());
                 return false;
             }
         }
@@ -80,7 +77,7 @@ public class UVLiveModel {
     public ArrayList<Conversation> getConversations() {
         ArrayList<Conversation> arrayResult=new ArrayList<>();
         String sqlQuery = "SELECT * FROM "+CONVERSATION_TABLE;
-        DebuggingUtils.log(sqlQuery);
+        Logger.put(sqlQuery);
         ResultSet result = dbConnection.query(sqlQuery);
         if(result!=null) {
             try {
@@ -92,8 +89,7 @@ public class UVLiveModel {
                     arrayResult.add(tmpConversation);
                 }
             } catch (SQLException ex) {
-                Logger.getLogger(UVLiveModel.class.getName()).log(Level.SEVERE, null, ex);
-                System.out.println("getConversations - Error al recorrer el resultado de la consulta");
+                Logger.put(this,"getConversations - Error al recorrer el resultado de la consulta" + ex.getMessage());
             }
         }
         return arrayResult;

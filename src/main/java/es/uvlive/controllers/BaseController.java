@@ -8,7 +8,7 @@ package es.uvlive.controllers;
 import es.uvlive.models.SessionManager;
 import es.uvlive.models.UVLiveModel;
 import es.uvlive.models.users.User;
-import es.uvlive.utils.DebuggingUtils;
+import es.uvlive.utils.Logger;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureException;
 import io.jsonwebtoken.impl.crypto.MacProvider;
@@ -28,7 +28,7 @@ public class BaseController {
     public void printThreadName() {
         Thread t = Thread.currentThread();
         String name = t.getName();
-        DebuggingUtils.log("Thread name: " + name);
+        Logger.put("Thread name: " + name);
     }
     
     protected User getUser(String authHeader) {
@@ -40,7 +40,7 @@ public class BaseController {
                 jwt = Jwts.parser().setSigningKey(SessionManager.SIGNATURE_KEY)
                         .parseClaimsJws (authHeader).getBody().getSubject();
                 if (!StringUtils.isEmpty(UVLiveModel.getInstance().getUser(jwt))) {
-                    DebuggingUtils.log(this," Authenticated user: "+jwt);
+                    Logger.put(this," Authenticated user: "+jwt);
                 }
             }
         } catch(SignatureException signExcept) {
