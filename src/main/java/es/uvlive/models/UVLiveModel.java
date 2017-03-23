@@ -35,14 +35,14 @@ public class UVLiveModel {
         sessionManager = new SessionManager();
     }
     public static synchronized UVLiveModel getInstance() {
-        if(uvLiveModel==null){
-            uvLiveModel=new UVLiveModel();
+        if(uvLiveModel == null) {
+            uvLiveModel = new UVLiveModel();
         }
         return uvLiveModel;
     }
 
     public boolean login(String userName, String password, String loginType) {
-        String table="";
+        String table = "";
         switch(loginType) {
             case "Alumno":
                 table = STUDENT_TABLE;

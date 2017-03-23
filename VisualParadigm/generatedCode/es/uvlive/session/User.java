@@ -1,4 +1,4 @@
-package es.android;
+package es.uvlive.session;
 
 public abstract class User {
 
