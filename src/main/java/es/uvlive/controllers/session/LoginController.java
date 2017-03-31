@@ -9,7 +9,6 @@ import es.uvlive.controllers.BaseResponse;
 import es.uvlive.controllers.BaseController;
 import es.uvlive.models.SessionManager;
 import es.uvlive.utils.Logger;
-import io.jsonwebtoken.Claims;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.http.MediaType;
@@ -21,9 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.impl.crypto.MacProvider;
 import java.math.BigInteger;
-import java.security.Key;
 import java.security.SecureRandom;
 
 /**
@@ -53,7 +50,7 @@ public class LoginController extends BaseController {
     {
         // Reset old session and create new session
         boolean login = uvLiveModel.login(loginForm.getUserName(),loginForm.getPassword(),loginForm.getLoginType());
-        
+        Logger.put(this, loginForm.getPushToken());
         LoginResponse loginResponse = new LoginResponse();
         
         if (login) {

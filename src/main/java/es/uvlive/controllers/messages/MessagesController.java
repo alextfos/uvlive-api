@@ -3,12 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package es.uvlive.controllers.session;
+package es.uvlive.controllers.messages;
 
-import es.uvlive.controllers.BaseController;
-import es.uvlive.controllers.BaseForm;
 import es.uvlive.controllers.BaseResponse;
-import es.uvlive.models.users.User;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.http.MediaType;
@@ -21,23 +18,33 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  *
- * @author alextfos
+ * @author atraver
  */
 @Controller
-public class SessionStatusController extends BaseController {
+public class MessagesController {
     
-    @RequestMapping(value = "/status", method = RequestMethod.POST,
+    @RequestMapping(value = "/messages", method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE,
             headers={"Content-Type=application/json"})
     public @ResponseBody
-    BaseResponse login(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        User user = getUser(request.getHeader("Authorization"));
-        BaseResponse status = new BaseResponse();
-        if (user == null) {
-            status.setErrorCode(BaseResponse.WRONG_CREDENTIALS); //TODO Error treatmen
-        }
-       
-        return status;
+    BaseResponse getMessages(@RequestBody GetMessagesForm getMesagesForm, BindingResult result,
+            HttpServletRequest request, HttpServletResponse response) throws Exception
+    {
+        return new MessageListResponse();
     }
+    
+    @RequestMapping(value = "/send", method = RequestMethod.POST,
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            headers={"Content-Type=application/json"})
+    public @ResponseBody BaseResponse sendMessage(
+            @RequestBody SendMessagesForm sendMessagesForm,
+            BindingResult result,
+            HttpServletRequest request,
+            HttpServletResponse response) throws Exception
+    {
+        return new BaseResponse();
+    }
+    
 }

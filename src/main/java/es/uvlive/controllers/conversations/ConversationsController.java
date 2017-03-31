@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import es.uvlive.models.Conversation;
 import es.uvlive.models.users.User;
+import es.uvlive.utils.Logger;
 import java.util.ArrayList;
 
 /**
@@ -41,10 +42,10 @@ public class ConversationsController extends BaseController {
             produces = MediaType.APPLICATION_JSON_VALUE,
             headers={"Content-Type=application/json"})
     public @ResponseBody
-    BaseResponse getConversations(@RequestBody ConversationsForm conversationsForm, BindingResult result,
-            HttpServletRequest request, HttpServletResponse response)
+    BaseResponse getConversations(HttpServletRequest request, HttpServletResponse response)
     {
         User user = getUser(request.getHeader("Authorization"));
+        Logger.put(user + ": " + request.getHeader("Authorization"));
         ArrayList<Conversation> array = uvLiveModel.getConversations();
         Conversation tmp = array.get(0);
         

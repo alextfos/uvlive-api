@@ -8,6 +8,7 @@ package es.uvlive.controllers.push;
 import es.uvlive.controllers.BaseController;
 import es.uvlive.controllers.BaseForm;
 import es.uvlive.controllers.BaseResponse;
+import es.uvlive.utils.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.http.MediaType;
@@ -29,9 +30,10 @@ public class UpdateTokenController extends BaseController {
             produces = MediaType.APPLICATION_JSON_VALUE,
             headers={"Content-Type=application/json"})
     public @ResponseBody
-    BaseResponse updateToken(@RequestBody BaseForm baseForm, BindingResult result,
+    BaseResponse updateToken(@RequestBody PushTokenForm pushTokenForm, BindingResult result,
             HttpServletRequest request, HttpServletResponse response) throws Exception
     {
+        Logger.put(this,pushTokenForm.getPushToken());
         //TODO make a update
         return new BaseResponse();
     }

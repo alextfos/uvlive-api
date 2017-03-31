@@ -15,6 +15,7 @@ public class LoginForm extends BaseForm {
     private String userName;
     private String password;
     private String loginType;
+    private String pushToken;
     
     public String getUserName(){
         return userName;
@@ -38,5 +39,13 @@ public class LoginForm extends BaseForm {
     
     public void setLoginType(String login){
         this.loginType=login;
+    }
+
+    public String getPushToken() {
+        return pushToken;
+    }
+
+    public void setPushToken(String pushToken) {
+        this.pushToken = pushToken;
     }
 }
