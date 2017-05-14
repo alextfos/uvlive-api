@@ -5,14 +5,8 @@
  */
 package es.uvlive.config.interceptors;
 
-import es.uvlive.models.SessionManager;
-import es.uvlive.models.UVLiveModel;
-import es.uvlive.utils.Logger;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 /**
@@ -24,6 +18,7 @@ public class AuthenticationInterceptor extends HandlerInterceptorAdapter {
     private String endPointLogin = "login";
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        // TODO remove
         return true;
         /*System.out.println("Authentication Interceptor - Url: " + request.getRequestURL());
         

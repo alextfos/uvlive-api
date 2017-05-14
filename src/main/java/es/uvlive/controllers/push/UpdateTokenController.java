@@ -6,7 +6,6 @@
 package es.uvlive.controllers.push;
 
 import es.uvlive.controllers.BaseController;
-import es.uvlive.controllers.BaseForm;
 import es.uvlive.controllers.BaseResponse;
 import es.uvlive.utils.Logger;
 import javax.servlet.http.HttpServletRequest;
@@ -33,7 +32,7 @@ public class UpdateTokenController extends BaseController {
     BaseResponse updateToken(@RequestBody PushTokenForm pushTokenForm, BindingResult result,
             HttpServletRequest request, HttpServletResponse response) throws Exception
     {
-        Logger.put(this,pushTokenForm.getPushToken());
+        Logger.put(this,"Push token updated: " + pushTokenForm.getPushToken());
         //TODO make a update
         return new BaseResponse();
     }

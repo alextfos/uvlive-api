@@ -8,7 +8,8 @@ public class UVLiveGayeway {
 	 * @param data
 	 */
 	public boolean send(String operation, Bundle data) {
-
+		// TODO - implement UVLiveGayeway.send
+		throw new UnsupportedOperationException();
 	}
 
 }

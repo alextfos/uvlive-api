@@ -6,8 +6,6 @@
 package es.uvlive.models;
 
 import es.uvlive.models.users.User;
-import io.jsonwebtoken.impl.crypto.MacProvider;
-import java.security.Key;
 import java.util.HashMap;
 
 /**
@@ -15,8 +13,6 @@ import java.util.HashMap;
  * @author alextfos
  */
 public class SessionManager {
-    
-    public static final Key SIGNATURE_KEY =  MacProvider.generateKey();
     
     private HashMap<String,User> usersMap;
     

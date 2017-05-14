@@ -5,9 +5,8 @@
  */
 package es.uvlive.controllers;
 
-import es.uvlive.models.SessionManager;
-import es.uvlive.models.UVLiveModel;
-import es.uvlive.models.users.User;
+import es.uvlive.model.UVLiveModel;
+import es.uvlive.model.User;
 import es.uvlive.utils.Logger;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureException;
@@ -15,11 +14,10 @@ import io.jsonwebtoken.impl.crypto.MacProvider;
 import java.security.Key;
 import org.springframework.util.StringUtils;
 
-/**
- *
- * @author atraverf
- */
 public class BaseController {
+    
+    public static final Key SIGNATURE_KEY =  MacProvider.generateKey();
+    
     protected UVLiveModel uvLiveModel = UVLiveModel.getInstance();
     
     /*
@@ -37,9 +35,9 @@ public class BaseController {
             if (!StringUtils.isEmpty(authHeader)) {
                 authHeader = authHeader.substring(7);
 
-                jwt = Jwts.parser().setSigningKey(SessionManager.SIGNATURE_KEY)
+                jwt = Jwts.parser().setSigningKey(SIGNATURE_KEY)
                         .parseClaimsJws (authHeader).getBody().getSubject();
-                if (!StringUtils.isEmpty(UVLiveModel.getInstance().getUser(jwt))) {
+                if (!StringUtils.isEmpty(uvLiveModel.getUser(jwt))) {
                     Logger.put(this," Authenticated user: "+jwt);
                 }
             }

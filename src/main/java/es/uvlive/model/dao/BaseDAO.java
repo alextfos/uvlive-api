@@ -1,9 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package es.uvlive.models.db;
+package es.uvlive.model.dao;
 
 import es.uvlive.utils.Logger;
 import java.sql.Connection;
@@ -11,54 +6,55 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-
-/**
- *
- * @author atraverf
- */
-public class DBConnection {
-    private Connection mConnectionDB;
+public class BaseDAO {
+    private static Connection sConnectionDB;
     // Debug environment
     private static final String URL = "jdbc:mysql://localhost/uvlive";
     private static final String USER = "root";
     private static final String PASSWORD = "asdf1234";
-    private static final String DRIVER = "com.mysql.jdbc.Driver";
+    private static final String DRIVER = "com.mysql.jdbc.Driver"; 
     
+    public BaseDAO() {
+        connect();
+    }
     
-    public DBConnection() {
+    protected void connect() {
         try {
             Class.forName(DRIVER);
-            mConnectionDB = (Connection) DriverManager.getConnection(URL,USER, PASSWORD);
+            sConnectionDB = (Connection) DriverManager.getConnection(URL,USER, PASSWORD);
+            Logger.put(this,"Database connected");
         } catch (SQLException ex) {
             Logger.putError(this,"SQLException in Database: "+ex.getMessage());
         } catch (Exception e) {
             Logger.put(this,"Exception not handled in Database: "+e.toString());
         }
-        Logger.put(this,"Database connected");
     }
     
-    public ResultSet query(String sql) {
+    protected ResultSet query(String sql) {
         try {
-            return mConnectionDB.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY).executeQuery(sql);
+            if (!(sConnectionDB != null && !sConnectionDB.isClosed())) {
+                connect();
+            }
+            return sConnectionDB.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY).executeQuery(sql);
         } catch (SQLException ex) {
             Logger.put(this,"SQLException: "+ex.getMessage());
             return null;
         } catch (Exception e) {
-            System.out.println("Error en la BD: "+e.getMessage());
+            Logger.put(this,"Error en la BD: "+e.getMessage());
             return null;
         }
     }
     
-    public void logout() {
+    protected void disconnect() {
         try {
-            if (mConnectionDB != null) {
-                mConnectionDB.close();
+            if (sConnectionDB != null) {
+                sConnectionDB.close();
                 Logger.put(this,"Disconnecting Database");
             }
         } catch (SQLException ex) { 
-           Logger.put(this,"Error connecting to Database: "+ex.getMessage());
+           Logger.put(this,"Error disconnecting to Database: "+ex.getMessage());
         } catch (Exception e){
-           Logger.put(this,"Exception not handled in Database:"+e.toString());
+           Logger.put(this,"Exception not handled in Database: "+e.toString());
         }
     }
 }

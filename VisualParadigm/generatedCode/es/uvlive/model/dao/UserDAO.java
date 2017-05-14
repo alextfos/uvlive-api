@@ -1,6 +1,8 @@
-package es.uvlive.model;
+package es.uvlive.model.dao;
 
-public class UserDAO {
+import es.uvlive.model.*;
+
+public class UserDAO extends BaseDAO {
 
 	/**
 	 * 

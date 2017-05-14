@@ -21,6 +21,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlRootElement(name = "response")
 public class BaseResponse {
     
+    public static final int UNKNOWN_ERROR = 1;
     public static final int OK = 0;
     public static final int WRONG_CREDENTIALS = -1;
     
