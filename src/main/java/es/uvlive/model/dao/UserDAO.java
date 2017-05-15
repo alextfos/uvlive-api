@@ -1,8 +1,15 @@
 package es.uvlive.model.dao;
 
-import es.uvlive.model.User;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
-public class UserDAO {
+import es.uvlive.model.Admin;
+import es.uvlive.model.Student;
+import es.uvlive.model.Teacher;
+import es.uvlive.model.User;
+import es.uvlive.utils.Logger;
+
+public class UserDAO extends BaseDAO {
     
 	/**
 	 * 
@@ -11,8 +18,48 @@ public class UserDAO {
 	 * @param loginType
 	 */
 	public User getUser(String userName, String password, String loginType) {
-		// TODO - implement UserDAO.UserDao
-		throw new UnsupportedOperationException();
+		User user = null;
+		String table = "";
+        switch(loginType) {
+            case "Alumno":
+                table = STUDENT_TABLE;
+                break;
+            case "Profesor":
+                table = TEACHER_TABLE;
+                break;
+            case "Admin":
+                table = ADMINISTRATOR_TABLE;
+                break;
+        }
+        
+        String sqlQuery = "SELECT * FROM "+table+" WHERE user = '"+userName+
+                "' AND password = '"+password+"'";
+        Logger.put("Debug login: "+sqlQuery);
+        ResultSet result = query(sqlQuery);
+        if(result!=null) {
+            try {
+                while(result.next()) {
+                    String name = result.getString("user");
+                    if(name.equals(userName)) {
+                    	switch (loginType) {
+                    	case "Alumno":
+                            user = new Student();
+                            break;
+                        case "Profesor":
+                            user = new Teacher();
+                            break;
+                        case "Admin":
+                            user = new Admin();
+                            break;
+                    	}
+                    }
+                }
+            } catch (SQLException ex) {
+                Logger.put(this,"login - Error al recorrer el resultado de la consulta: " + ex.getMessage());
+                return null;
+            }
+        }
+        return user;
 	}
 
 }

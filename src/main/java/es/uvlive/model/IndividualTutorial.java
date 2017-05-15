@@ -2,9 +2,9 @@ package es.uvlive.model;
 
 import java.util.*;
 
-public class TutoriaIndividual {
+public class IndividualTutorial {
 
-	private Collection<Mensaje> mensajes;
+	private Collection<Message> mensajes;
 	private int IDTutoria;
 	private int contador;
 

@@ -10,7 +10,7 @@ public class UserDAO extends BaseDAO {
 	 * @param password
 	 * @param loginType
 	 */
-	public User UserDao(String userName, String password, String loginType) {
+	public User getUser(String userName, String password, String loginType) {
 		// TODO - implement UserDAO.UserDao
 		throw new UnsupportedOperationException();
 	}

@@ -4,7 +4,7 @@ import java.util.*;
 
 public class SessionManager {
 
-	private Collection<User> coleccionUsuarios;
+	private Collection<User> users;
 
 	/**
 	 * 

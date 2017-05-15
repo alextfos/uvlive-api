@@ -14,6 +14,14 @@ public class BaseDAO {
     private static final String PASSWORD = "asdf1234";
     private static final String DRIVER = "com.mysql.jdbc.Driver"; 
     
+    protected static String STUDENT_TABLE = "Student";
+    protected static String TEACHER_TABLE = "Teacher";
+    protected static String MESSAGE_TABLE = "Message";
+    protected static String CONVERSATION_TABLE = "Conversation";
+    protected static String BUSINESSMAN_TABLE = "Businessman";
+    protected static String BROADCAST_TABLE = "Broadcast";
+    protected static String ADMINISTRATOR_TABLE = "Administrator";
+    
     public BaseDAO() {
         connect();
     }

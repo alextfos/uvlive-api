@@ -1,6 +1,6 @@
 package es.uvlive.model;
 
-public class Mensaje {
+public class Message {
 
 	private RolUV rolUV;
 	private int IDMensaje;

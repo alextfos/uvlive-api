@@ -4,7 +4,7 @@ public class UVLiveModel {
     
     private static UVLiveModel sUVLiveModel;
     
-    private CatalogoTutorias catalogoTutorias;
+    private TutorialCatalog catalogoTutorias;
     private SessionManager sessionManager;
 
     public static UVLiveModel getInstance() {
@@ -15,7 +15,7 @@ public class UVLiveModel {
     }
 
     public UVLiveModel() {
-        catalogoTutorias = new CatalogoTutorias();
+        catalogoTutorias = new TutorialCatalog();
         sessionManager = new SessionManager();
     }
 

@@ -2,8 +2,9 @@ package es.uvlive.model;
 
 import java.util.*;
 
-public abstract class RolUV extends User {
+public class Tutorial {
 
 	private Collection<Message> messages;
+	private int idTutorial;
 
 }

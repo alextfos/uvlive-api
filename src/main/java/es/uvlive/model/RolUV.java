@@ -4,6 +4,6 @@ import java.util.*;
 
 public abstract class RolUV extends User {
 
-    private Collection<Mensaje> mensajes;
+    private Collection<Message> mensajes;
 
 }
