@@ -1,0 +1,197 @@
+{
+	"variables": [],
+	"info": {
+		"name": "UVLive",
+		"_postman_id": "c844dfac-5bf0-c543-66d2-c369bde94301",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"request": {
+				"url": "{{environment}}/login",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"userName\":\"profesor\",\n\t\"password\":\"1006\",\n\t\"loginType\":\"profesor\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Conversations",
+			"request": {
+				"url": "{{environment}}/conversations",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhbHVtbm8tZzFsYWhvNWVkcjVxanVtZzlmaXA4aDJnMzgifQ.4vkCBcxQ0uMEK6zh8nNKrHSYSHwPWG-L6JRvsQrrKLi2RKI_UqG6_GmY4Ma-AVyPgxT5NCOYB0lfHN9Sw1XEYQ",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\":\"1\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "FGCM - Push",
+			"request": {
+				"url": "https://fcm.googleapis.com/fcm/send",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "key=AIzaSyBfIkN65G5X2j7B3omyRgv6xIHqK-i9Jt4",
+						"description": ""
+					},
+					{
+						"key": "Cache-Control",
+						"value": "no-cache",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"notification\": {\n\t\t\"title\": \"Nuevos contenidos\",\n\t\t\"text\": \"Tiene nuevos contenidos por visualizar\"\n\t\t\n\t}, \n\t\"to\" : \"eOParOKQAKM:APA91bF-D598Swt-L_UgOTNg1naQzT9lfq2MIiDpIGz-G4iuQfWxg0VgmFkCGBf6Yl25_vjmbk_b869dd3B3UxwNF62UaCAjT4JAa5TdJT27xSm838jA26jnFFjaBy3z0lR_4uDPXxjy\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Logout",
+			"request": {
+				"url": "{{environment}}/logout",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwcm9mZXNvci1jY2U1bWpycG9uNjhhbjFxcXMyOHR2a2ZraiJ9.Z4ZxANYSsJb9YQLP-mFQ7Yc1izWTAxPo1gabhHPF4YTVxH-BbPOAhxrdG4-NfUOszc7Y59QDaeZoWYVZO_-pSg",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Session status",
+			"request": {
+				"url": "{{environment}}/status",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwcm9mZXNvci1jY2U1bWpycG9uNjhhbjFxcXMyOHR2a2ZraiJ9.Z4ZxANYSsJb9YQLP-mFQ7Yc1izWTAxPo1gabhHPF4YTVxH-BbPOAhxrdG4-NfUOszc7Y59QDaeZoWYVZO_-pSg",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Update push token",
+			"request": {
+				"url": "{{environment}}/update/push_token",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer <token>",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Loggger",
+			"request": {
+				"url": "{{environment}}/logger",
+				"method": "POST",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
