@@ -34,7 +34,7 @@ public class SessionManager {
             token = Jwts.builder().setSubject(userName+"-"+generateId())
               .signWith(SignatureAlgorithm.HS512, SIGNATURE_KEY)
               .compact();
-            coleccionUsuarios.put(key, user);
+            coleccionUsuarios.put(token, user);
         }
         return token;
     }
