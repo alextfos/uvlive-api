@@ -33,6 +33,14 @@ public class UVLiveModel {
     public String login(String userName, String password, String loginType, String key) {
         return sessionManager.login(userName, password, loginType, key);
     }
+    
+    /**
+     * Logout
+     * @param token
+     */
+    public void logout(String token) {
+        sessionManager.Logout(token);
+    }
 
     /**
      * 

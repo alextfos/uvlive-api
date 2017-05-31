@@ -38,6 +38,14 @@ public class SessionManager {
         }
         return token;
     }
+    
+    /**
+     * Logout
+     * @param token
+     */
+    public void Logout(String token) {
+    	coleccionUsuarios.remove(token);
+    }
 
     /**
      * 

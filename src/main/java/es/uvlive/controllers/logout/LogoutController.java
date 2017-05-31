@@ -8,6 +8,8 @@ package es.uvlive.controllers.logout;
 import es.uvlive.controllers.BaseForm;
 import es.uvlive.controllers.BaseResponse;
 import es.uvlive.controllers.session.LoginForm;
+import es.uvlive.model.UVLiveModel;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.http.MediaType;
@@ -24,6 +26,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @Controller
 public class LogoutController {
+	
+	protected UVLiveModel uvLiveModel = UVLiveModel.getInstance();
     
     @RequestMapping(value = "/logout", method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE,
@@ -33,7 +37,8 @@ public class LogoutController {
     BaseResponse logout(@RequestBody BaseForm baseForm, BindingResult result,
             HttpServletRequest request, HttpServletResponse response) throws Exception
     {
-        //TODO make a logout and remove the pushToken
+    	String token = request.getHeader("Authorization").split(" ")[1];
+    	uvLiveModel.logout(token);
         return new BaseResponse();
     }
 }
