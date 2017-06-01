@@ -39,7 +39,7 @@ public class UVLiveModel {
      * @param token
      */
     public void logout(String token) {
-        sessionManager.Logout(token);
+        sessionManager.logout(token);
     }
 
     /**

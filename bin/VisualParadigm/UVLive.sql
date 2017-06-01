@@ -1,0 +1,17 @@
+CREATE TABLE Message (idMessage int(10) NOT NULL AUTO_INCREMENT, text varchar(255), `date` int(10), StudentidStudent int(11) NOT NULL, TeacheridTeacher int(10) NOT NULL, ConversationidConversation int(10) NOT NULL, PRIMARY KEY (idMessage));
+CREATE TABLE Businessman (idBusinessman int(10) NOT NULL AUTO_INCREMENT, `user` varchar(8), password varchar(8), PRIMARY KEY (idBusinessman));
+CREATE TABLE Broadcast (idBroadcast int(10) NOT NULL AUTO_INCREMENT, text int(10), `date` int(10), ComercianteidComerciante int(10), PRIMARY KEY (idBroadcast));
+CREATE TABLE Teacher (idTeacher int(10) NOT NULL AUTO_INCREMENT, `user` varchar(8), password varchar(8), PRIMARY KEY (idTeacher));
+CREATE TABLE Student (idStudent int(11) NOT NULL AUTO_INCREMENT, `user` varchar(8), password varchar(8), PRIMARY KEY (idStudent));
+CREATE TABLE Conversation (idConversation int(10) NOT NULL AUTO_INCREMENT, name varchar(52), PRIMARY KEY (idConversation));
+CREATE TABLE Administrator (idAdministrator int(11) NOT NULL AUTO_INCREMENT, `user` varchar(8), password varchar(8), PRIMARY KEY (idAdministrator));
+CREATE TABLE Conversation_Teacher (ConversationidConversation int(10) NOT NULL, TeacheridTeacher int(10) NOT NULL, PRIMARY KEY (ConversationidConversation, TeacheridTeacher));
+CREATE TABLE Conversation_Student (ConversationidConversation int(10) NOT NULL, StudentidStudent int(11) NOT NULL, PRIMARY KEY (ConversationidConversation, StudentidStudent));
+ALTER TABLE Broadcast ADD INDEX send (ComercianteidComerciante), ADD CONSTRAINT send FOREIGN KEY (ComercianteidComerciante) REFERENCES Businessman (idBusinessman);
+ALTER TABLE Message ADD INDEX studentWrites (StudentidStudent), ADD CONSTRAINT studentWrites FOREIGN KEY (StudentidStudent) REFERENCES Student (idStudent);
+ALTER TABLE Message ADD INDEX teacherWrites (TeacheridTeacher), ADD CONSTRAINT teacherWrites FOREIGN KEY (TeacheridTeacher) REFERENCES Teacher (idTeacher);
+ALTER TABLE Message ADD INDEX had (ConversationidConversation), ADD CONSTRAINT had FOREIGN KEY (ConversationidConversation) REFERENCES Conversation (idConversation);
+ALTER TABLE Conversation_Teacher ADD INDEX FKConversati530101 (ConversationidConversation), ADD CONSTRAINT FKConversati530101 FOREIGN KEY (ConversationidConversation) REFERENCES Conversation (idConversation);
+ALTER TABLE Conversation_Teacher ADD INDEX FKConversati478936 (TeacheridTeacher), ADD CONSTRAINT FKConversati478936 FOREIGN KEY (TeacheridTeacher) REFERENCES Teacher (idTeacher);
+ALTER TABLE Conversation_Student ADD INDEX FKConversati99348 (ConversationidConversation), ADD CONSTRAINT FKConversati99348 FOREIGN KEY (ConversationidConversation) REFERENCES Conversation (idConversation);
+ALTER TABLE Conversation_Student ADD INDEX FKConversati390158 (StudentidStudent), ADD CONSTRAINT FKConversati390158 FOREIGN KEY (StudentidStudent) REFERENCES Student (idStudent);

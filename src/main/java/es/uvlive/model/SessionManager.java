@@ -43,7 +43,7 @@ public class SessionManager {
      * Logout
      * @param token
      */
-    public void Logout(String token) {
+    public void logout(String token) {
     	coleccionUsuarios.remove(token);
     }
 
