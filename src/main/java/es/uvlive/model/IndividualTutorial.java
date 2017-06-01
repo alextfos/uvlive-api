@@ -1,7 +1,11 @@
 package es.uvlive.model;
 
-public class IndividualTutorial extends Tutorial {
+import java.util.*;
 
-	private int idTutorial;
+public class IndividualTutorial {
+
+	private Collection<Message> mensajes;
+	private int IDTutoria;
+	private int contador;
 
 }

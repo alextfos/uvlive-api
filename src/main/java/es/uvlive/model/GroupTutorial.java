@@ -1,7 +1,8 @@
 package es.uvlive.model;
 
-public class GroupTutorial extends Tutorial {
+import java.util.*;
 
+public class GroupTutorial extends Tutorial {
 	private int idTutorial;
 
 }
