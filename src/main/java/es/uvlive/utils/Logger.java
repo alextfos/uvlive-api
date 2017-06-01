@@ -5,9 +5,10 @@
  */
 package es.uvlive.utils;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+//import java.time.LocalDateTime;
+//import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 
 /**
  *
@@ -41,7 +42,10 @@ public class Logger {
      * @param logText Text to print in logfile
      */
     public static void put(String level, String clazz, String message) {
-        LogRegister logRegister = new LogRegister(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS")),level,clazz,message);
+        //LogRegister logRegister = new LogRegister(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS")),level,clazz,message);
+        
+    	// @Non-generated
+    	LogRegister logRegister = new LogRegister(new GregorianCalendar().toString(),level,clazz,message);
         logger.add(logRegister);
         System.out.println(logRegister);
     }
