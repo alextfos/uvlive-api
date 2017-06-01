@@ -10,7 +10,8 @@ import es.uvlive.model.User;
 import es.uvlive.utils.Logger;
 
 public class UserDAO extends BaseDAO {
-    
+	// TODO @Non-generated (Hint: nothing on this class is from VP)
+	
 	/**
 	 * 
 	 * @param userName

@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class BaseDAO {
+	// TODO @Non-generated (Hint: nothing on this class is from VP)
     private static Connection sConnectionDB;
     // Debug environment
     private static final String URL = "jdbc:mysql://localhost/uvlive";

@@ -1,11 +1,14 @@
 package es.uvlive.model;
 
+import java.util.Collection;
+
 public class UVLiveModel {
     
+	// TODO @Non-generated
     private static UVLiveModel sUVLiveModel;
     
-    private TutorialCatalog catalogoTutorias;
-    private SessionManager sessionManager;
+	private TutorialCatalog tutorialCatalog;
+	private SessionManager sessionManager;
 
     public static UVLiveModel getInstance() {
         if (sUVLiveModel == null) {
@@ -14,16 +17,19 @@ public class UVLiveModel {
         return sUVLiveModel;
     }
 
+    // TODO @Non-generated method
     public UVLiveModel() {
-        catalogoTutorias = new TutorialCatalog();
+        tutorialCatalog = new TutorialCatalog();
         sessionManager = new SessionManager();
     }
 
-    public void actualizarCurso() {
+    
+	public void updateCourse() {
             // TODO - implement UVLiveModel.actualizarCurso
             throw new UnsupportedOperationException();
     }
 
+    // TODO @Non-generated method
     /**
      * 
      * @param userName
@@ -34,6 +40,7 @@ public class UVLiveModel {
         return sessionManager.login(userName, password, loginType, key);
     }
     
+    // TODO @Non-generated method
     /**
      * Logout
      * @param token
@@ -51,21 +58,18 @@ public class UVLiveModel {
             throw new UnsupportedOperationException();
     }
 
-    public void banearAlumno() {
-            // TODO - implement UVLiveModel.banearAlumno
-            throw new UnsupportedOperationException();
-    }
-
+    // TODO Check in VP (Hint: idAlumno)
     /**
      * 
      * @param key
      * @param idAlumno
      */
-    public void banearAlumno(String key, int idAlumno) {
+	public void blockStudent(String key, int idAlumno) {
             // TODO - implement UVLiveModel.banearAlumno
             throw new UnsupportedOperationException();
     }
 
+	// TODO Check in VP (Hint: No method with different name and same parameters was found)
     /**
      * 
      * @param key
@@ -76,10 +80,90 @@ public class UVLiveModel {
             throw new UnsupportedOperationException();
     }
     
-    // Methods added manually
     
+    // TODO Check in VP (Hint: integer user id)
+	/**
+	 * 
+	 * @param idUser
+	 */
+	public User getUser(int idUser) {
+		// TODO - implement UVLiveModel.getUser
+		throw new UnsupportedOperationException();
+	}
+
+    
+	// TODO @Non-generated
+	/**
+	 * Gets User by session token
+	 * @param key
+	 * @return logged User
+	 */
     public User getUser(String key) {
         return sessionManager.getUser(key);
     }
+
+	/**
+	 * 
+	 * @param key
+	 * @param userName
+	 */
+	public boolean checkUserExists(String key, String userName) {
+		// TODO - implement UVLiveModel.checkUserExists
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * 
+	 * @param key
+	 * @param dni
+	 * @param firstname
+	 * @param lastname
+	 * @param userName
+	 * @param password
+	 */
+	public boolean registerBusinessman(String key, String dni, String firstname, String lastname, String userName, String password) {
+		// TODO - implement UVLiveModel.registerBusinessman
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * 
+	 * @param key
+	 * @param idTutorial
+	 * @param text
+	 */
+	public void sendMessage(String key, int idTutorial, String text) {
+		// TODO - implement UVLiveModel.sendMessage
+		throw new UnsupportedOperationException();
+	}
+
+	// TODO Check in VP (Hint: broadcastText String)
+	/**
+	 * 
+	 * @param key
+	 * @param String
+	 */
+	public void registerBroadcast(String key, String broadcastText) {
+		// TODO - implement UVLiveModel.registerBroadcast
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * 
+	 * @param text
+	 */
+	public void sendBroadcast(String text) {
+		// TODO - implement UVLiveModel.sendBroadcast
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * 
+	 * @param key
+	 */
+	public Collection<es.uvlive.model.Tutorial> getTutorials(String key) {
+		// TODO - implement UVLiveModel.getTutorials
+		throw new UnsupportedOperationException();
+	}
 
 }
