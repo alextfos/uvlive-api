@@ -4,8 +4,11 @@ import java.util.*;
 
 public class TutorialCatalog {
 
-    private Collection<IndividualTutorial> tutoriasIndividuales;
-    private Collection<GroupTutorial> tutoriasGrupales;
-    private UVLiveModel uvLive;
+	private Collection<Tutorial> tutorials;
+
+	public Collection<es.uvlive.model.Tutorial> getTutorials() {
+		// TODO - implement TutorialCatalog.getTutorials
+		throw new UnsupportedOperationException();
+	}
 
 }
