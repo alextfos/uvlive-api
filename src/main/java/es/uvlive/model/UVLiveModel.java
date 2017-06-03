@@ -1,5 +1,6 @@
 package es.uvlive.model;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 public class UVLiveModel {
@@ -162,8 +163,15 @@ public class UVLiveModel {
 	 * @param key
 	 */
 	public Collection<es.uvlive.model.Tutorial> getTutorials(String key) {
-		// TODO - implement UVLiveModel.getTutorials
-		throw new UnsupportedOperationException();
+		// TODO @Non-generated
+		Collection <es.uvlive.model.Tutorial> tutorials = new ArrayList<es.uvlive.model.Tutorial>();
+		User user = getUser(key);
+		if (user instanceof RolUV) {
+			((RolUV) user).setTutorialsCatalog(this.tutorialCatalog);
+			tutorials = ((RolUV) user).getTutorials();
+		}
+		
+		return tutorials;
 	}
 
 }
