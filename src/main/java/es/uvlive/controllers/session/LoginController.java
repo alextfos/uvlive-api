@@ -40,19 +40,21 @@ public class LoginController extends BaseController {
             HttpServletRequest request, HttpServletResponse response) throws Exception
     {
         String token = request.getHeader("Authorization");
-        token = uvLiveModel.login(loginForm.getUserName(),loginForm.getPassword(),loginForm.getLoginType(),token);
-        Logger.put(this, "Logging user "+ loginForm.getUserName() + ": " + (!StringUtils.isEmpty(token)?"logged":"not logged"));
         LoginResponse loginResponse = new LoginResponse();
-        
-        if (!StringUtils.isEmpty(token)) {
-            loginResponse.setUser(loginForm.getUserName());
-            String str = request.getSession().getId();
-            response.setHeader("Set-Cookie", "JSESSIONID=" + str);
-            loginResponse.setErrorCode(BaseResponse.OK);
-            loginResponse.setToken(token);
-        } else {
-            loginResponse.setErrorCode(BaseResponse.WRONG_CREDENTIALS);
+        try {
+	        token = uvLiveModel.login(loginForm.getUserName(),loginForm.getPassword(),loginForm.getLoginType(),token);
+	        Logger.put(this, "Logging user "+ loginForm.getUserName() + ": " + (!StringUtils.isEmpty(token)?"logged":"not logged"));
+	        
+	        if (!StringUtils.isEmpty(token)) {
+	            loginResponse.setUser(loginForm.getUserName());
+	            String str = request.getSession().getId();
+	            response.setHeader("Set-Cookie", "JSESSIONID=" + str);
+	            loginResponse.setToken(token);
+	        }
+        } catch (Exception e) {
+        	loginResponse.setErrorCode(getErrorCode(e));
         }
+        
         return loginResponse;
     }
 }

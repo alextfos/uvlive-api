@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package es.uvlive.controllers.trader;
+package es.uvlive.controllers.businessman;
 
 import es.uvlive.controllers.BaseForm;
 
@@ -11,15 +11,15 @@ import es.uvlive.controllers.BaseForm;
  *
  * @author alextfos
  */
-public class ValidateTraderForm extends BaseForm {
-    private static String userName;
+public class ValidateBusinessmanForm extends BaseForm {
+    private String userName;
 
-    public static String getUserName() {
+    public String getUserName() {
         return userName;
     }
 
-    public static void setUserName(String userName) {
-        ValidateTraderForm.userName = userName;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
     
     

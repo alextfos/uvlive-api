@@ -40,8 +40,8 @@ public class ConversationsController extends BaseController {
     public @ResponseBody
     BaseResponse getConversations(HttpServletRequest request, HttpServletResponse response)
     {
-        User user = getUser(request.getHeader("Authorization"));
-        Logger.put(user + ": " + request.getHeader("Authorization"));
+//        User user = getUser(request.getHeader("Authorization"));
+//        Logger.put(user + ": " + request.getHeader("Authorization"));
         // ArrayList<Conversation> array = uvLiveModel.getConversations();
         // Conversation tmp = array.get(0);
         

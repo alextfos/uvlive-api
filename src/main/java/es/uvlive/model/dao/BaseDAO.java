@@ -3,6 +3,7 @@ package es.uvlive.model.dao;
 import es.uvlive.utils.Logger;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -51,6 +52,35 @@ public class BaseDAO {
         } catch (Exception e) {
             Logger.put(this,"Error en la BD: "+e.getMessage());
             return null;
+        }
+    }
+    
+    
+    protected PreparedStatement getPreparedStatement(String query) {
+    	try {
+            if (!(sConnectionDB != null && !sConnectionDB.isClosed())) {
+                connect();
+            }
+            return sConnectionDB.prepareStatement(query);
+        } catch (SQLException ex) {
+            Logger.put(this,"SQLException: "+ex.getMessage());
+            return null;
+        } catch (Exception e) {
+            Logger.put(this,"Error en la BD: "+e.getMessage());
+            return null;
+        }
+    }
+    
+    protected void insert(PreparedStatement preparedStatement) {
+    	try {
+            if (!(sConnectionDB != null && !sConnectionDB.isClosed())) {
+                connect();
+            }
+            preparedStatement.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.put(this,"SQLException: "+ex.getMessage());
+        } catch (Exception e) {
+            Logger.put(this,"Error en la BD: "+e.getMessage());
         }
     }
     

@@ -4,14 +4,17 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import es.uvlive.model.Admin;
+import es.uvlive.model.Businessman;
 import es.uvlive.model.Student;
 import es.uvlive.model.Teacher;
 import es.uvlive.model.User;
 import es.uvlive.utils.Logger;
 
 public class UserDAO extends BaseDAO {
-	// TODO @Non-generated (Hint: nothing on this class is from VP)
 	
+	private static final String QUERY_LOGIN = "SELECT * FROM %s WHERE user = '%s' AND password = '%s'";
+	
+	// TODO @Non-generated (Hint: nothing on this class is from VP)
 	/**
 	 * 
 	 * @param userName
@@ -31,17 +34,23 @@ public class UserDAO extends BaseDAO {
             case "Admin":
                 table = ADMINISTRATOR_TABLE;
                 break;
+            case "Businessman":
+            	table = BUSINESSMAN_TABLE;
+            	break;
+            default:
+            	return null;
         }
         
-        String sqlQuery = "SELECT * FROM "+table+" WHERE user = '"+userName+
-                "' AND password = '"+password+"'";
-        Logger.put("Debug login: "+sqlQuery);
+        String sqlQuery = String.format(QUERY_LOGIN, table,userName,password);
+//        String sqlQuery = "SELECT * FROM "+table+" WHERE user = '"+userName+
+//                "' AND password = '"+password+"'";
+//        Logger.put("Debug login: "+sqlQuery);
         ResultSet result = query(sqlQuery);
-        if(result!=null) {
+        if (result!=null) {
             try {
-                while(result.next()) {
+                while (result.next()) {
                     String name = result.getString("user");
-                    if(name.equals(userName)) {
+                    if (name.equals(userName)) {
                     	switch (loginType) {
                     	case "Alumno":
                             user = new Student();
@@ -52,6 +61,8 @@ public class UserDAO extends BaseDAO {
                         case "Admin":
                             user = new Admin();
                             break;
+                        case "Businessman":
+                        	user = new Businessman();
                     	}
                     }
                 }

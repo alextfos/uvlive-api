@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package es.uvlive.controllers.trader;
+package es.uvlive.controllers.businessman;
 
 import es.uvlive.controllers.BaseResponse;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -19,7 +19,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {"status"})
 @XmlRootElement(name = "response")
-public class ValidateTraderResponse extends BaseResponse {
+public class ValidateBusinessmanResponse extends BaseResponse {
 
     @XmlElement(name = "status")
     private boolean status;
@@ -30,7 +30,5 @@ public class ValidateTraderResponse extends BaseResponse {
 
     public void setStatus(boolean status) {
         this.status = status;
-    }
-    
-      
+    } 
 }

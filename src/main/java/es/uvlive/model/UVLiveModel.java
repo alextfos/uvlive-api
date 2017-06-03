@@ -3,85 +3,85 @@ package es.uvlive.model;
 import java.util.Collection;
 
 public class UVLiveModel {
-    
+
 	// TODO @Non-generated
-    private static UVLiveModel sUVLiveModel;
-    
+	private static UVLiveModel sUVLiveModel;
+
 	private TutorialCatalog tutorialCatalog;
 	private SessionManager sessionManager;
 
-    public static UVLiveModel getInstance() {
-        if (sUVLiveModel == null) {
-            sUVLiveModel = new UVLiveModel();
-        }
-        return sUVLiveModel;
-    }
+	public static UVLiveModel getInstance() {
+		if (sUVLiveModel == null) {
+			sUVLiveModel = new UVLiveModel();
+		}
+		return sUVLiveModel;
+	}
 
-    // TODO @Non-generated method
-    public UVLiveModel() {
-        tutorialCatalog = new TutorialCatalog();
-        sessionManager = new SessionManager();
-    }
+	// TODO @Non-generated method
+	public UVLiveModel() {
+		tutorialCatalog = new TutorialCatalog();
+		sessionManager = new SessionManager();
+	}
 
-    
 	public void updateCourse() {
-            // TODO - implement UVLiveModel.actualizarCurso
-            throw new UnsupportedOperationException();
-    }
+		// TODO - implement UVLiveModel.actualizarCurso
+		throw new UnsupportedOperationException();
+	}
 
-    // TODO @Non-generated method
-    /**
-     * 
-     * @param userName
-     * @param password
-     * @param loginType
-     */
-    public String login(String userName, String password, String loginType, String key) {
-        return sessionManager.login(userName, password, loginType, key);
-    }
-    
-    // TODO @Non-generated method
-    /**
-     * Logout
-     * @param token
-     */
-    public void logout(String token) {
-        sessionManager.logout(token);
-    }
+	// TODO @Non-generated method
+	/**
+	 * 
+	 * @param userName
+	 * @param password
+	 * @param loginType
+	 */
+	public String login(String userName, String password, String loginType, String key) throws Exception {
+		return sessionManager.login(userName, password, loginType, key);
+	}
 
-    /**
-     * 
-     * @param key
-     */
-    public boolean containsUser(String key) {
-            // TODO - implement UVLiveModel.containsUser
-            throw new UnsupportedOperationException();
-    }
+	// TODO @Non-generated method
+	/**
+	 * Logout
+	 * 
+	 * @param token
+	 */
+	public void logout(String token) {
+		sessionManager.logout(token);
+	}
 
-    // TODO Check in VP (Hint: idAlumno)
-    /**
-     * 
-     * @param key
-     * @param idAlumno
-     */
+	/**
+	 * 
+	 * @param key
+	 */
+	public boolean containsUser(String key) {
+		// TODO - implement UVLiveModel.containsUser
+		throw new UnsupportedOperationException();
+	}
+
+	// TODO Check in VP (Hint: idAlumno)
+	/**
+	 * 
+	 * @param key
+	 * @param idAlumno
+	 */
 	public void blockStudent(String key, int idAlumno) {
-            // TODO - implement UVLiveModel.banearAlumno
-            throw new UnsupportedOperationException();
-    }
+		// TODO - implement UVLiveModel.banearAlumno
+		throw new UnsupportedOperationException();
+	}
 
-	// TODO Check in VP (Hint: No method with different name and same parameters was found)
-    /**
-     * 
-     * @param key
-     * @param traderName
-     */
-    public void validarNombreComerciante(String key, String traderName) {
-            // TODO - implement UVLiveModel.validarNombreComerciante
-            throw new UnsupportedOperationException();
-    }
-    
-    
-    // TODO Check in VP (Hint: integer user id)
+	// TODO Check in VP (Hint: No method with different name and same parameters
+	// was found)
+	/**
+	 * 
+	 * @param key
+	 * @param traderName
+	 */
+	public void validarNombreComerciante(String key, String traderName) {
+		// TODO - implement UVLiveModel.validarNombreComerciante
+		throw new UnsupportedOperationException();
+	}
+
+	// TODO Check in VP (Hint: integer user id)
 	/**
 	 * 
 	 * @param idUser
@@ -91,16 +91,16 @@ public class UVLiveModel {
 		throw new UnsupportedOperationException();
 	}
 
-    
 	// TODO @Non-generated
 	/**
 	 * Gets User by session token
+	 * 
 	 * @param key
 	 * @return logged User
 	 */
-    public User getUser(String key) {
-        return sessionManager.getUser(key);
-    }
+	public User getUser(String key) {
+		return sessionManager.getUser(key);
+	}
 
 	/**
 	 * 
@@ -108,8 +108,12 @@ public class UVLiveModel {
 	 * @param userName
 	 */
 	public boolean checkUserExists(String key, String userName) {
-		// TODO - implement UVLiveModel.checkUserExists
-		throw new UnsupportedOperationException();
+		User user = getUser(key);
+		if (user != null && user instanceof Admin) {
+			return ((Admin) user).checkUserExists(userName);
+		} else {
+			return false; // TODO throw Not Authorized Exception
+		}
 	}
 
 	/**
@@ -121,9 +125,35 @@ public class UVLiveModel {
 	 * @param userName
 	 * @param password
 	 */
-	public boolean registerBusinessman(String key, String dni, String firstname, String lastname, String userName, String password) {
-		// TODO - implement UVLiveModel.registerBusinessman
-		throw new UnsupportedOperationException();
+	public boolean registerBusinessman(String key, String dni, String firstname, String lastname, String userName,
+			String password) {
+		User user = getUser(key);
+		
+		if (user instanceof Admin && !((Admin)user).checkUserExists(userName)) {
+			((Admin)user).registerBusinessman(dni, firstname, lastname, userName, password);
+			return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * 
+	 * @param key
+	 * @param dni
+	 * @param firstname
+	 * @param lastname
+	 * @param userName
+	 * @param password
+	 */
+	public boolean updateBusinessman(String key, String dni, String firstname, String lastname, String userName,
+			String password) {
+		User user = getUser(key);
+		
+		if (user instanceof Admin && !((Admin)user).checkUserExists(userName)) {
+			((Admin)user).updateBusinessman(dni, firstname, lastname, userName, password);
+			return true;
+		}
+		return false;
 	}
 
 	/**

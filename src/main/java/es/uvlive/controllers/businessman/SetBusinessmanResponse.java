@@ -3,12 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package es.uvlive.controllers.trader.modify;
+package es.uvlive.controllers.businessman;
+
+import es.uvlive.controllers.BaseResponse;
 
 /**
  *
  * @author alextfos
  */
-public class TraderForm {
+public class SetBusinessmanResponse extends BaseResponse {
     
 }

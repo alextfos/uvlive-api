@@ -1,7 +1,11 @@
 package es.uvlive.model;
 
 import static es.uvlive.controllers.BaseController.SIGNATURE_KEY;
+
+import es.uvlive.controllers.exceptions.WrongCredentialsException;
+import es.uvlive.model.dao.BusinessmanDAO;
 import es.uvlive.model.dao.UserDAO;
+import es.uvlive.utils.StringUtils;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import java.math.BigInteger;
@@ -26,7 +30,7 @@ public class SessionManager {
      * @param password
      * @param loginType
      */
-    public String login(String userName, String password, String loginType, String key) {
+    public String login(String userName, String password, String loginType, String key) throws Exception {
     	if (usersCollection.containsKey(key)) {
             return key;
         }
@@ -37,7 +41,12 @@ public class SessionManager {
             token = Jwts.builder().setSubject(userName+"-"+generateId())
               .signWith(SignatureAlgorithm.HS512, SIGNATURE_KEY)
               .compact();
+            if (user instanceof Admin) {
+            	((Admin)user).setSessionManager(this);
+            }
             usersCollection.put(token, user);
+        } else {
+        	throw new WrongCredentialsException();
         }
         return token;
     }
@@ -68,4 +77,33 @@ public class SessionManager {
     private String generateId() {
         return new BigInteger(130, random).toString(32);
     }
+
+	public boolean isUserExists(String userName) {
+		BusinessmanDAO businessmanDAO = new BusinessmanDAO();
+		return businessmanDAO.getBusinessman(userName) != null;
+	}
+	
+	/**
+	 * 
+	 * @param dni
+	 * @param firstname
+	 * @param lastname
+	 * @param username
+	 * @param password
+	 */
+	public void registerBusinessman(String dni, String firstname, String lastname, String username, String password) {
+		new BusinessmanDAO().saveBusinessman(dni, firstname, lastname, username, password);
+	}
+	
+	/**
+	 * 
+	 * @param dni
+	 * @param firstname
+	 * @param lastname
+	 * @param username
+	 * @param password
+	 */
+	public void updateBusinessman(String dni, String firstname, String lastname, String username, String password) {
+		new BusinessmanDAO().updateBusinessman(dni, firstname, lastname, username, password);
+	}
 }

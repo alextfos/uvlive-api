@@ -29,12 +29,13 @@ public class SessionStatusController extends BaseController {
             headers={"Content-Type=application/json"})
     public @ResponseBody
     BaseResponse login(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        User user = getUser(request.getHeader("Authorization"));
-        BaseResponse status = new BaseResponse();
-        if (user == null) {
-            status.setErrorCode(BaseResponse.WRONG_CREDENTIALS); //TODO Error treatmen
-        }
-       
-        return status;
+//        User user = getUser(request.getHeader("Authorization"));
+//        BaseResponse status = new BaseResponse();
+//        if (user == null) {
+//            status.setErrorCode(BaseResponse.WRONG_CREDENTIALS); //TODO Error treatment
+//        }
+//       
+//        return status;
+    	return null;
     }
 }
