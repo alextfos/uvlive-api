@@ -1,5 +1,7 @@
 package es.uvlive.model;
 
+import java.sql.SQLException;
+
 public class Admin extends User {
 	
 	private SessionManager sessionManager;
@@ -19,8 +21,10 @@ public class Admin extends User {
 	 * @param lastname
 	 * @param username
 	 * @param password
+	 * @throws SQLException 
+	 * @throws ClassNotFoundException 
 	 */
-	public void registerBusinessman(String dni, String firstname, String lastname, String username, String password) {
+	public void registerBusinessman(String dni, String firstname, String lastname, String username, String password) throws ClassNotFoundException, SQLException {
 		// TODO - implement Admin.registerBusinessman
 		sessionManager.registerBusinessman(dni,firstname,lastname,username,password);
 	}
@@ -32,13 +36,15 @@ public class Admin extends User {
 	 * @param lastname
 	 * @param username
 	 * @param password
+	 * @throws SQLException 
+	 * @throws ClassNotFoundException 
 	 */
-	public void updateBusinessman(String dni, String firstname, String lastname, String username, String password) {
+	public void updateBusinessman(String dni, String firstname, String lastname, String username, String password) throws ClassNotFoundException, SQLException {
 		// TODO - implement Admin.registerBusinessman
 		sessionManager.updateBusinessman(dni,firstname,lastname,username,password);
 	}
 
-	public boolean checkUserExists(String userName) {
+	public boolean checkUserExists(String userName) throws ClassNotFoundException, SQLException {
 		return sessionManager.isUserExists(userName);
 	}
 

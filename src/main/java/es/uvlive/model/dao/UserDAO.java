@@ -11,7 +11,7 @@ import es.uvlive.model.User;
 import es.uvlive.utils.Logger;
 
 public class UserDAO extends BaseDAO {
-	
+
 	private static final String QUERY_LOGIN = "SELECT * FROM %s WHERE user = '%s' AND password = '%s'";
 	
 	// TODO @Non-generated (Hint: nothing on this class is from VP)
@@ -20,8 +20,10 @@ public class UserDAO extends BaseDAO {
 	 * @param userName
 	 * @param password
 	 * @param loginType
+	 * @throws SQLException 
+	 * @throws ClassNotFoundException 
 	 */
-	public User getUser(String userName, String password, String loginType) {
+	public User getUser(String userName, String password, String loginType) throws SQLException, ClassNotFoundException {
 		User user = null;
 		String table = "";
         switch(loginType) {
@@ -42,33 +44,27 @@ public class UserDAO extends BaseDAO {
         }
         
         String sqlQuery = String.format(QUERY_LOGIN, table,userName,password);
-//        String sqlQuery = "SELECT * FROM "+table+" WHERE user = '"+userName+
-//                "' AND password = '"+password+"'";
-//        Logger.put("Debug login: "+sqlQuery);
         ResultSet result = query(sqlQuery);
         if (result!=null) {
-            try {
-                while (result.next()) {
-                    String name = result.getString("user");
-                    if (name.equals(userName)) {
-                    	switch (loginType) {
-                    	case "Alumno":
-                            user = new Student();
-                            break;
-                        case "Profesor":
-                            user = new Teacher();
-                            break;
-                        case "Admin":
-                            user = new Admin();
-                            break;
-                        case "Businessman":
-                        	user = new Businessman();
-                    	}
-                    }
+            while (result.next()) {
+                String name = result.getString("user");
+                if (name.equals(userName)) {
+                	switch (loginType) {
+                	case "Alumno":
+                        user = new Student();
+                        break;
+                    case "Profesor":
+                        user = new Teacher();
+                        break;
+                    case "Admin":
+                        user = new Admin();
+                        break;
+                    case "Businessman":
+                    	user = new Businessman();
+                	}
+                	user.setUserId(String.valueOf(result.getInt("id" + table)));
+                	// Missing firstname and lastname
                 }
-            } catch (SQLException ex) {
-                Logger.put(this,"login - Error al recorrer el resultado de la consulta: " + ex.getMessage());
-                return null;
             }
         }
         return user;

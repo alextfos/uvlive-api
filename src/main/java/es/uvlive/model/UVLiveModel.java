@@ -1,6 +1,11 @@
 package es.uvlive.model;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collection;
+
+import es.uvlive.controllers.exceptions.UnauthorizedException;
+import es.uvlive.controllers.exceptions.UserDefinedException;
 
 public class UVLiveModel {
 
@@ -107,12 +112,12 @@ public class UVLiveModel {
 	 * @param key
 	 * @param userName
 	 */
-	public boolean checkUserExists(String key, String userName) {
+	public boolean checkUserExists(String key, String userName) throws Exception {
 		User user = getUser(key);
 		if (user != null && user instanceof Admin) {
 			return ((Admin) user).checkUserExists(userName);
 		} else {
-			return false; // TODO throw Not Authorized Exception
+			throw new UnauthorizedException();
 		}
 	}
 
@@ -125,15 +130,19 @@ public class UVLiveModel {
 	 * @param userName
 	 * @param password
 	 */
-	public boolean registerBusinessman(String key, String dni, String firstname, String lastname, String userName,
-			String password) {
+	public void registerBusinessman(String key, String dni, String firstname, String lastname, String userName,
+			String password) throws Exception {
 		User user = getUser(key);
 		
-		if (user instanceof Admin && !((Admin)user).checkUserExists(userName)) {
-			((Admin)user).registerBusinessman(dni, firstname, lastname, userName, password);
-			return true;
+		if (user != null && user instanceof Admin) {
+			if (!((Admin)user).checkUserExists(userName)) {
+				((Admin)user).registerBusinessman(dni, firstname, lastname, userName, password);
+			} else {
+				throw new UserDefinedException();
+			}
+		} else {
+			throw new UnauthorizedException();
 		}
-		return false;
 	}
 	
 	/**
@@ -145,15 +154,20 @@ public class UVLiveModel {
 	 * @param userName
 	 * @param password
 	 */
-	public boolean updateBusinessman(String key, String dni, String firstname, String lastname, String userName,
-			String password) {
+	public void updateBusinessman(String key, String dni, String firstname, String lastname, String userName,
+			String password) throws Exception {
 		User user = getUser(key);
 		
-		if (user instanceof Admin && !((Admin)user).checkUserExists(userName)) {
-			((Admin)user).updateBusinessman(dni, firstname, lastname, userName, password);
-			return true;
+		if (user != null && user instanceof Admin) {
+			if (!((Admin)user).checkUserExists(userName)) {
+				((Admin)user).updateBusinessman(dni, firstname, lastname, userName, password);
+			} else {
+				throw new UserDefinedException();
+			}
+		} else {
+			throw new UnauthorizedException();
 		}
-		return false;
+		
 	}
 
 	/**
@@ -191,9 +205,16 @@ public class UVLiveModel {
 	 * 
 	 * @param key
 	 */
-	public Collection<es.uvlive.model.Tutorial> getTutorials(String key) {
-		// TODO - implement UVLiveModel.getTutorials
-		throw new UnsupportedOperationException();
+	public Collection<es.uvlive.model.Tutorial> getTutorials(String key) throws Exception {
+		// TODO @Non-generated
+		Collection <es.uvlive.model.Tutorial> tutorials = new ArrayList<es.uvlive.model.Tutorial>();
+		User user = getUser(key);
+		if (user instanceof RolUV) {
+			((RolUV) user).setTutorialsCatalog(this.tutorialCatalog);
+			tutorials = ((RolUV) user).getTutorials();
+		}
+		
+		return tutorials;
 	}
 
 }

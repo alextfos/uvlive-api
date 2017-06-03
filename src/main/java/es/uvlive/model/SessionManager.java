@@ -1,18 +1,22 @@
 package es.uvlive.model;
 
-import static es.uvlive.controllers.BaseController.SIGNATURE_KEY;
-
 import es.uvlive.controllers.exceptions.WrongCredentialsException;
 import es.uvlive.model.dao.BusinessmanDAO;
 import es.uvlive.model.dao.UserDAO;
 import es.uvlive.utils.StringUtils;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.impl.crypto.MacProvider;
+
 import java.math.BigInteger;
+import java.security.Key;
 import java.security.SecureRandom;
+import java.sql.SQLException;
 import java.util.*;
 
 public class SessionManager {
+	
+	public static final Key SIGNATURE_KEY =  MacProvider.generateKey();
 
 	// TODO @Non-generated, VP overwrites with collection
     private HashMap<String,User> usersCollection;
@@ -78,7 +82,7 @@ public class SessionManager {
         return new BigInteger(130, random).toString(32);
     }
 
-	public boolean isUserExists(String userName) {
+	public boolean isUserExists(String userName) throws ClassNotFoundException, SQLException {
 		BusinessmanDAO businessmanDAO = new BusinessmanDAO();
 		return businessmanDAO.getBusinessman(userName) != null;
 	}
@@ -90,8 +94,10 @@ public class SessionManager {
 	 * @param lastname
 	 * @param username
 	 * @param password
+	 * @throws SQLException 
+	 * @throws ClassNotFoundException 
 	 */
-	public void registerBusinessman(String dni, String firstname, String lastname, String username, String password) {
+	public void registerBusinessman(String dni, String firstname, String lastname, String username, String password) throws ClassNotFoundException, SQLException {
 		new BusinessmanDAO().saveBusinessman(dni, firstname, lastname, username, password);
 	}
 	
@@ -102,8 +108,10 @@ public class SessionManager {
 	 * @param lastname
 	 * @param username
 	 * @param password
+	 * @throws SQLException 
+	 * @throws ClassNotFoundException 
 	 */
-	public void updateBusinessman(String dni, String firstname, String lastname, String username, String password) {
+	public void updateBusinessman(String dni, String firstname, String lastname, String username, String password) throws ClassNotFoundException, SQLException {
 		new BusinessmanDAO().updateBusinessman(dni, firstname, lastname, username, password);
 	}
 }

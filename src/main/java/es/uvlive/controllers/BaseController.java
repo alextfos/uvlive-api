@@ -26,8 +26,6 @@ public class BaseController {
     public static final int OK_CODE = 0;
     public static final int WRONG_CREDENTIALS_CODE = -1;
     public static final int UNAUTHORIZED_CODE = -2;
-	
-    public static final Key SIGNATURE_KEY =  MacProvider.generateKey();
     
     protected UVLiveModel uvLiveModel = UVLiveModel.getInstance();
     
@@ -49,6 +47,7 @@ public class BaseController {
     }
     
     protected int getErrorCode(Exception e) {
+    	System.err.println("Generic error treatment: "+e.getMessage());
     	int code;
     	switch (e.getMessage()) {
     		case UnauthorizedException.MESSAGE:

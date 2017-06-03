@@ -7,6 +7,7 @@ package es.uvlive.controllers.conversations;
 
 import es.uvlive.controllers.BaseResponse;
 import es.uvlive.models.Conversation;
+
 import java.util.ArrayList;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
