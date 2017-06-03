@@ -6,6 +6,7 @@ import java.util.Collection;
 
 import es.uvlive.controllers.exceptions.UnauthorizedException;
 import es.uvlive.controllers.exceptions.UserDefinedException;
+import es.uvlive.utils.StringUtils;
 
 public class UVLiveModel {
 
@@ -29,46 +30,53 @@ public class UVLiveModel {
 	}
 
 	public void updateCourse() {
-		// TODO - implement UVLiveModel.actualizarCurso
-		throw new UnsupportedOperationException();
-	}
+        // TODO - implement UVLiveModel.actualizarCurso
+        throw new UnsupportedOperationException();
+    }
 
-	// TODO @Non-generated method
-	/**
-	 * 
-	 * @param userName
-	 * @param password
-	 * @param loginType
-	 */
-	public String login(String userName, String password, String loginType, String key) throws Exception {
-		return sessionManager.login(userName, password, loginType, key);
-	}
+    // TODO @Non-generated method
+    /**
+     * 
+     * @param userName
+     * @param password
+     * @param loginType
+     */
+    public String login(String userName, String password, String loginType, String key) throws Exception {
+        String token = sessionManager.login(userName, password, loginType, key);
+        if (!StringUtils.isEmpty(token)) {
+        	User user = sessionManager.getUser(token);
+        	if (user instanceof RolUV) {
+        		((RolUV)user).setTutorialsCatalog(this.tutorialCatalog);
+        		((RolUV)user).init();
+        	}
+        }
+        return token;
+    }
+    
+    // TODO @Non-generated method
+    /**
+     * Logout
+     * @param token
+     */
+    public void logout(String token) {
+        sessionManager.logout(token);
+    }
 
-	// TODO @Non-generated method
-	/**
-	 * Logout
-	 * 
-	 * @param token
-	 */
-	public void logout(String token) {
-		sessionManager.logout(token);
-	}
+    /**
+     * 
+     * @param key
+     */
+    public boolean containsUser(String key) {
+            // TODO - implement UVLiveModel.containsUser
+            throw new UnsupportedOperationException();
+    }
 
-	/**
-	 * 
-	 * @param key
-	 */
-	public boolean containsUser(String key) {
-		// TODO - implement UVLiveModel.containsUser
-		throw new UnsupportedOperationException();
-	}
-
-	// TODO Check in VP (Hint: idAlumno)
-	/**
-	 * 
-	 * @param key
-	 * @param idAlumno
-	 */
+    // TODO Check in VP (Hint: idAlumno)
+    /**
+     * 
+     * @param key
+     * @param idAlumno
+     */
 	public void blockStudent(String key, int idAlumno) {
 		// TODO - implement UVLiveModel.banearAlumno
 		throw new UnsupportedOperationException();

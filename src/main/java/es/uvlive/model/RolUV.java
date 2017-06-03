@@ -15,16 +15,30 @@ public abstract class RolUV extends User {
 		
 	}
 	
-	public Collection<es.uvlive.model.Tutorial> getTutorials() throws SQLException, ClassNotFoundException {
-		
-		if (userTutorials == null || userTutorials.isEmpty()) {
-			userTutorials = tutorialsCatalog.getTutorials(this);
+	/**
+	 * Initializes User's conversations collection using tutorialCatalog
+	 * @throws SQLException 
+	 * @throws ClassNotFoundException 
+	 */
+	public void init() throws ClassNotFoundException, SQLException {
+		if (tutorialsCatalog != null) {
+			if (userTutorials == null || userTutorials.isEmpty()) {
+				userTutorials = tutorialsCatalog.getTutorials(this);
+			}
 		}
 		
+	}
+	
+	/**
+	 * Gets tutorials
+	 * @return Collection<Tutorial> tutorial conversations of this user
+	 */
+	public Collection<es.uvlive.model.Tutorial> getTutorials() {
 		return userTutorials;
 	}
 	/**
 	 * 
+	 * Sends message
 	 * @param tutorial
 	 * @param text
 	 */
@@ -34,11 +48,19 @@ public abstract class RolUV extends User {
 	}
 
 	// TODO @Non-generated
+	/**
+	 * Gets tutorial catalog
+	 * @return tutorialsCatalog
+	 */
 	public TutorialCatalog getTutorialsCatalog() {
 		return tutorialsCatalog;
 	}
 
 	// TODO @Non-generated
+	/**
+	 * Sets tutorials catalog
+	 * @param tutorialCatalog
+	 */
 	public void setTutorialsCatalog(TutorialCatalog tutorialCatalog) {
 		this.tutorialsCatalog = tutorialCatalog;
 	}
