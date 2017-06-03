@@ -53,6 +53,8 @@ public class UserDAO extends BaseDAO {
                             user = new Admin();
                             break;
                     	}
+                    	user.setUserId(String.valueOf(result.getInt("id" + table)));
+                    	// Missing firstname and lastname
                     }
                 }
             } catch (SQLException ex) {
