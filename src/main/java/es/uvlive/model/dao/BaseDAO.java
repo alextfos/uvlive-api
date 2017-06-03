@@ -22,6 +22,8 @@ public class BaseDAO {
     protected static String BUSINESSMAN_TABLE = "Businessman";
     protected static String BROADCAST_TABLE = "Broadcast";
     protected static String ADMINISTRATOR_TABLE = "Administrator";
+    protected static String CONVERSATION_STUDENT_TABLE = "Conversation_Student";
+    protected static String CONVERSATION_TEACHER_TABLE = "Conversation_Teacher";
     
     public BaseDAO() {
         connect();
