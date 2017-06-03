@@ -3,6 +3,8 @@ package es.uvlive.model;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import org.springframework.util.StringUtils;
+
 public class UVLiveModel {
     
 	// TODO @Non-generated
@@ -38,7 +40,15 @@ public class UVLiveModel {
      * @param loginType
      */
     public String login(String userName, String password, String loginType, String key) {
-        return sessionManager.login(userName, password, loginType, key);
+        String token = sessionManager.login(userName, password, loginType, key);
+        if (!StringUtils.isEmpty(token)) {
+        	User user = sessionManager.getUser(token);
+        	if (user instanceof RolUV) {
+        		((RolUV)user).setTutorialsCatalog(this.tutorialCatalog);
+        		((RolUV)user).init();
+        	}
+        }
+        return token;
     }
     
     // TODO @Non-generated method

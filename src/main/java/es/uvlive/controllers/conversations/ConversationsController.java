@@ -43,11 +43,13 @@ public class ConversationsController extends BaseController {
         // TODO non-generated
     	Collection<Tutorial> tutorials = uvLiveModel.getTutorials(request.getHeader("Authorization"));
     	ConversationsListResponse conversationListResponse = new ConversationsListResponse();
-    	for (Tutorial tutorial : tutorials) {
-    		ConversationResponse conversationResponse = new ConversationResponse();
-    		conversationResponse.setId(String.valueOf(tutorial.getIdTutorial()));
-    		conversationResponse.setName(tutorial.getName());
-    		conversationListResponse.add(conversationResponse);
+    	if (tutorials != null) {
+	    	for (Tutorial tutorial : tutorials) {
+	    		ConversationResponse conversationResponse = new ConversationResponse();
+	    		conversationResponse.setId(String.valueOf(tutorial.getIdTutorial()));
+	    		conversationResponse.setName(tutorial.getName());
+	    		conversationListResponse.add(conversationResponse);
+	    	}
     	}
 
     	return conversationListResponse;
