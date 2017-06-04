@@ -7,7 +7,7 @@ public abstract class RolUV extends User {
 
 	private Collection<Message> messages;
 	private String pushToken;
-
+	
 	private TutorialCatalog tutorialsCatalog;
 	private Collection<es.uvlive.model.Tutorial> userTutorials;
 	
@@ -28,6 +28,15 @@ public abstract class RolUV extends User {
 		}
 		
 	}
+	
+	public String getPushToken() {
+		return pushToken;
+	}
+
+	public void setPushToken(String pushToken) {
+		this.pushToken = pushToken;
+	}
+
 	
 	/**
 	 * Gets tutorials

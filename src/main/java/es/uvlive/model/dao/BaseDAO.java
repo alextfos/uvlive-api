@@ -16,15 +16,40 @@ public class BaseDAO {
     private static final String PASSWORD = "asdf1234";
     private static final String DRIVER = "com.mysql.jdbc.Driver"; 
     
-    protected static String STUDENT_TABLE = "Student";
-    protected static String TEACHER_TABLE = "Teacher";
-    protected static String MESSAGE_TABLE = "Message";
-    protected static String CONVERSATION_TABLE = "Conversation";
-    protected static String BUSINESSMAN_TABLE = "Businessman";
-    protected static String BROADCAST_TABLE = "Broadcast";
-    protected static String ADMINISTRATOR_TABLE = "Administrator";
-    protected static String CONVERSATION_STUDENT_TABLE = "Conversation_Student";
-    protected static String CONVERSATION_TEACHER_TABLE = "Conversation_Teacher";
+    /* Table names */
+    protected static final String USER_TABLE = "User";
+    protected static final String ROL_UV_TABLE = "ROLUV";
+    protected static final String STUDENT_TABLE = "Student";
+    protected static final String TEACHER_TABLE = "Teacher";
+    protected static final String ADMIN_TABLE = "Administrator";
+    
+    protected static final String MESSAGE_TABLE = "Message";
+    protected static final String CONVERSATION_TABLE = "Conversation";
+    protected static final String BUSINESSMAN_TABLE = "Businessman";
+    protected static final String BROADCAST_TABLE = "Broadcast";
+    
+    protected static final String CONVERSATION_ROL_UV_TABLE = "Conversation_RolUV";
+    
+    /* Field names */
+    protected static final String USER_ID_FIELD = "idUser";
+    protected static final String USER_NAME_FIELD = "userName";
+    protected static final String PASSWORD_FIELD = "password";
+    protected static final String FIRST_NAME_FIELD = "firstName";
+    protected static final String LAST_NAME_FIELD = "lastName";
+    protected static final String DNI_FIELD = "dni";
+    protected static final String PUSH_TOKEN_FIELD = "pushToken";
+    protected static final String BLOCKED_FIELD = "blocked";
+    
+    protected static final String BRODCAST_ID_FIELD = "idBroadCast";
+    protected static final String TEXT_FIELD = "text";
+    protected static final String TIME_STAMP_FIELD = "timeStamp";
+    protected static final String TUTORIAL_ID_FIELD = "idTutorial";
+    protected static final String NAME_FIELD = "name";
+    
+    protected static final String CONVERSATION_ID_TUTORIAL_FIELD = "ConversationidTutorial";
+    protected static final String ROL_UV_ID_USER_FIELD = "RolUVidUser";
+    
+    
     
     public BaseDAO() {
     	try {

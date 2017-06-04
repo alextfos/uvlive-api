@@ -5,20 +5,14 @@
  */
 package es.uvlive.controllers;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.util.StringUtils;
+
 import es.uvlive.controllers.exceptions.UnauthorizedException;
 import es.uvlive.controllers.exceptions.WrongCredentialsException;
 import es.uvlive.model.UVLiveModel;
-import es.uvlive.model.User;
 import es.uvlive.utils.Logger;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureException;
-import io.jsonwebtoken.impl.crypto.MacProvider;
-import java.security.Key;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.constraints.NotNull;
-
-import org.springframework.util.StringUtils;
 
 public class BaseController {
     
@@ -48,17 +42,16 @@ public class BaseController {
     
     protected int getErrorCode(Exception e) {
     	System.err.println("Generic error treatment: "+e.getMessage());
-    	int code;
-    	switch (e.getMessage()) {
-    		case UnauthorizedException.MESSAGE:
-    			code = UNAUTHORIZED_CODE;
-    			break;
-    		case WrongCredentialsException.MESSAGE:
-    			code = WRONG_CREDENTIALS_CODE;
-    			break;
-    		default:
-    			code = UNKNOWN_ERROR_CODE;
-    			break;
+    	int code = UNKNOWN_ERROR_CODE;
+    	if (!StringUtils.isEmpty(e.getMessage())) {
+	    	switch (e.getMessage()) {
+	    		case UnauthorizedException.MESSAGE:
+	    			code = UNAUTHORIZED_CODE;
+	    			break;
+	    		case WrongCredentialsException.MESSAGE:
+	    			code = WRONG_CREDENTIALS_CODE;
+	    			break;
+	    	}
     	}
     	return code;
     }

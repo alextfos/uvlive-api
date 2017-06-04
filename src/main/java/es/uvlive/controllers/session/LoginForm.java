@@ -17,27 +17,27 @@ public class LoginForm extends BaseForm {
     private String loginType;
     private String pushToken;
     
-    public String getUserName(){
+    public String getUserName() {
         return userName;
     }
     
-    public String getPassword(){
+    public String getPassword() {
         return password;
     }
     
-    public String getLoginType(){
+    public String getLoginType() {
         return loginType;
     }
     
-    public void setUserName(String userName){
+    public void setUserName(String userName) {
         this.userName=userName;
     }
     
-    public void setPassword(String password){
+    public void setPassword(String password) {
         this.password=password;
     }
     
-    public void setLoginType(String login){
+    public void setLoginType(String login) {
         this.loginType=login;
     }
 

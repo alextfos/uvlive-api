@@ -53,6 +53,7 @@ public class LoginController extends BaseController {
 	        }
         } catch (Exception e) {
         	loginResponse.setErrorCode(getErrorCode(e));
+        	e.printStackTrace();
         }
         
         return loginResponse;

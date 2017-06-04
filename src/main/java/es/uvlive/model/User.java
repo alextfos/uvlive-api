@@ -3,30 +3,19 @@ package es.uvlive.model;
 public class User {
 	
 	// @Non-generated
-	private String userId;
+	private int userId;
 	
-	private String user;
 	private String firstname;
 	private String lastname;
 	
 	// @Non-generated
-	public String getUserId() {
+	public int getUserId() {
 		return userId;
 	}
 	
 	// @Non-generated
-	public void setUserId(String userId) {
+	public void setUserId(int userId) {
 		this.userId = userId;
-	}
-
-	// @Non-generated
-	public String getUser() {
-		return user;
-	}
-
-	// @Non-generated
-	public void setUser(String user) {
-		this.user = user;
 	}
 
 	// @Non-generated

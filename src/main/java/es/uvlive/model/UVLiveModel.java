@@ -9,7 +9,7 @@ import es.uvlive.controllers.exceptions.UserDefinedException;
 import es.uvlive.utils.StringUtils;
 
 public class UVLiveModel {
-
+	
 	// TODO @Non-generated
 	private static UVLiveModel sUVLiveModel;
 
