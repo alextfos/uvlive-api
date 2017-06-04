@@ -14,28 +14,21 @@ import es.uvlive.utils.Logger;
 public class TutorialDAO extends BaseDAO {
 	
 	private static final String QUERY_GET_USER_IDS = "SELECT * FROM " + CONVERSATION_ROL_UV_TABLE + " WHERE " + CONVERSATION_ID_TUTORIAL_FIELD + " = '%s'";
+	private static final String QUERY_GET_TUTORIALS = "SELECT * FROM " + CONVERSATION_TABLE;
 	
 	// @Non-generated
 	public Collection<es.uvlive.model.Tutorial> getTutorials() throws ClassNotFoundException, SQLException {
-		String table = "Conversation";
 		Collection<es.uvlive.model.Tutorial> tutorialsCollection = new ArrayList<es.uvlive.model.Tutorial>();
 		
-		String sqlQuery = "SELECT * FROM %s";
-        Logger.put("Debug login: "+sqlQuery);
-        ResultSet result = query(String.format(sqlQuery, table));
+        ResultSet result = query(QUERY_GET_TUTORIALS);
         if (result!=null) {
-            try {
-                while(result.next()) {
-                	Tutorial tutorial = new Tutorial();
-                    int idConversation = result.getInt("idConversation");
-                    String  name = result.getString("name");
-                    tutorial.setIdTutorial(idConversation);
-                    tutorial.setName(name);
-                    tutorialsCollection.add(tutorial);
-                }
-            } catch (SQLException ex) {
-                Logger.put(this,"login - Error al recorrer el resultado de la consulta: " + ex.getMessage());
-                return null;
+            while(result.next()) {
+            	Tutorial tutorial = new Tutorial();
+                int idConversation = result.getInt(TUTORIAL_ID_FIELD);
+                String  name = result.getString(NAME_FIELD);
+                tutorial.setIdTutorial(idConversation);
+                tutorial.setName(name);
+                tutorialsCollection.add(tutorial);
             }
         }
         return tutorialsCollection;
