@@ -184,9 +184,11 @@ public class UVLiveModel {
 	 * @param idTutorial
 	 * @param text
 	 */
-	public void sendMessage(String key, int idTutorial, String text) {
-		// TODO - implement UVLiveModel.sendMessage
-		throw new UnsupportedOperationException();
+	public void sendMessage(String key, int idTutorial, String text) throws Exception {
+		User user = getUser(key);
+		if (user instanceof RolUV) {
+			((RolUV)user).sendMessage(idTutorial, text);
+		}
 	}
 
 	// TODO Check in VP (Hint: broadcastText String)

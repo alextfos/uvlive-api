@@ -12,5 +12,21 @@ import es.uvlive.controllers.BaseForm;
  * @author atraver
  */
 public class SendMessagesForm extends BaseForm {
-    
+	// TODO @Non-generated Class
+	
+	private String idConversation;
+	private String message;
+	
+	public String getIdConversation() {
+		return idConversation;
+	}
+	public void setIdConversation(String idConversation) {
+		this.idConversation = idConversation;
+	}
+	public String getMessage() {
+		return message;
+	}
+	public void setMessage(String message) {
+		this.message = message;
+	}
 }

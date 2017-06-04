@@ -3,6 +3,8 @@ package es.uvlive.model;
 import java.sql.SQLException;
 import java.util.Collection;
 
+import es.uvlive.model.dao.MessageDAO;
+
 public abstract class RolUV extends User {
 
 	private Collection<Message> messages;
@@ -41,10 +43,35 @@ public abstract class RolUV extends User {
 	 * Sends message
 	 * @param tutorial
 	 * @param text
+	 * @throws SQLException 
 	 */
-	public void sendMessage(Tutorial tutorial, String text) {
-		// TODO - implement RolUV.sendMessage
-		throw new UnsupportedOperationException();
+	// @Non-generated
+	public void sendMessage(int idTutorial, String text) throws SQLException {/*
+		if (tutorialsCatalog != null) {
+			tutorialsCatalog.sendMessage(this, idTutorial, text);
+		}*/
+		// Recorrer userTutorials y buscar por ID
+		// si no está throw UnauthorizedException
+		
+		Tutorial currentTutorial = null;
+		Message message = new Message();
+		
+		// Gets the current tutorial from tutorials collection
+		for (Tutorial tutorial : userTutorials) {
+			if (tutorial.getIdTutorial() == idTutorial) {
+				currentTutorial = tutorial;
+			}
+		}
+		
+		// Gets messages of current tutorial
+//		if (currentTutorial.getMessages() != null && !currentTutorial.getMessages().isEmpty()) {
+//			tutorialMessages = currentTutorial.getMessages();
+//		}
+		
+		// Stores message in database and returns a new message model
+		message = new MessageDAO().sendMessage(this, idTutorial, text); // TODO change it
+		
+		currentTutorial.sendMessage(message);
 	}
 
 	// TODO @Non-generated

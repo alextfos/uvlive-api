@@ -13,8 +13,7 @@ public class Tutorial {
 
 	// @Non-generated
 	public Tutorial() {
-		// @Non-generated
-		// Required empty constructor
+		this.messages = new ArrayList<Message>();
 	}
 	
 	// @Non-generated
@@ -55,5 +54,13 @@ public class Tutorial {
 	// @Non-generated
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	// @Non-generated
+	public void sendMessage(Message message) {
+		if(messages != null && message != null) {
+			messages.add(message);
+		}
+		// TODO notify all users
 	}
 }
