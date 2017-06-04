@@ -9,18 +9,19 @@ import es.uvlive.utils.Logger;
 
 public class BusinessmanDAO extends BaseDAO {
 
-	private static String GET_BUSINESSMAN_QUERY = "SELECT * FROM " + BUSINESSMAN_TABLE + "WHERE user='%s'";
-	private static String SAVE_BUSINESSMAN_QUERY = "INSERT INTO " + BUSINESSMAN_TABLE + "(user,password) VALUES (?,?)";
-	private static String UPDATE_BUSINESSMAN_QUERY = "INSERT INTO " + BUSINESSMAN_TABLE + "(user,password) VALUES ('%s','%s')";
-	
+	private static String QUERY_GET_BUSINESSMAN = "SELECT * FROM " + BUSINESSMAN_TABLE + "WHERE " + USER_NAME_FIELD + " ='%s'";
+	private static String QUERY_SAVE_USER_BUSINESSMAN = "INSERT INTO " + USER_TABLE + "(" + USER_NAME_FIELD + "," + PASSWORD_FIELD + ") VALUES (?,?)";
+	private static String QUERY_SAVE_BUSINESSMAN_BUSINESSMAN = "INSERT INTO " + BUSINESSMAN_TABLE + "(" + DNI_FIELD + ") VALUES (?)";
+	private static String QUERY_UPDATE_BUSINESSMAN = "INSERT INTO " + BUSINESSMAN_TABLE + "(" + USER_NAME_FIELD + "," + PASSWORD_FIELD + ") VALUES ('%s','%s')";
+	// UPDATE MyGuests SET lastname='Doe' WHERE id=2" TODO
 	public Businessman getBusinessman(String userName) throws ClassNotFoundException, SQLException {
 		Businessman businessman = null;
-		ResultSet result = query(String.format(GET_BUSINESSMAN_QUERY,userName));
+		ResultSet result = query(String.format(QUERY_GET_BUSINESSMAN,userName));
 		
 		if (result != null) {
             if (result.next()) {
             	businessman = new Businessman();
-            	businessman.setUser(result.getString("user"));
+            	businessman.setUserId(result.getInt(USER_NAME_FIELD));
             }
         }
 		
@@ -28,19 +29,20 @@ public class BusinessmanDAO extends BaseDAO {
 	}
 	
 	public void saveBusinessman(String dni, String firstname, String lastname, String username, String password) throws ClassNotFoundException, SQLException {
-		// TODO add fields to DATABASE structure
-			// TODO implement
-		PreparedStatement preparedStatement = getPreparedStatement(SAVE_BUSINESSMAN_QUERY);
+		PreparedStatement preparedStatement = getPreparedStatement(QUERY_SAVE_USER_BUSINESSMAN);
 		preparedStatement.setString(1, username);
 		preparedStatement.setString(2, password);
+		insert(preparedStatement);
+		
+		preparedStatement = getPreparedStatement(QUERY_SAVE_BUSINESSMAN_BUSINESSMAN);
+		preparedStatement.setString(1, dni);
 		insert(preparedStatement);
 	}
 	
 	public void updateBusinessman(String dni, String firstname, String lastname, String username, String password) throws ClassNotFoundException, SQLException {
 		// TODO implement
-		PreparedStatement preparedStatement = getPreparedStatement(SAVE_BUSINESSMAN_QUERY);
+		PreparedStatement preparedStatement = getPreparedStatement(QUERY_SAVE_USER_BUSINESSMAN);
 		preparedStatement.setString(0, username);
-		preparedStatement.setString(1, password);
 		insert(preparedStatement);
 	}
 }

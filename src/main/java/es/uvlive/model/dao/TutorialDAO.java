@@ -13,27 +13,22 @@ import es.uvlive.utils.Logger;
 
 public class TutorialDAO extends BaseDAO {
 	
+	private static final String QUERY_GET_USER_IDS = "SELECT * FROM " + CONVERSATION_ROL_UV_TABLE + " WHERE " + CONVERSATION_ID_TUTORIAL_FIELD + " = '%s'";
+	private static final String QUERY_GET_TUTORIALS = "SELECT * FROM " + CONVERSATION_TABLE;
+	
 	// @Non-generated
 	public Collection<es.uvlive.model.Tutorial> getTutorials() throws ClassNotFoundException, SQLException {
-		String table = "Conversation";
 		Collection<es.uvlive.model.Tutorial> tutorialsCollection = new ArrayList<es.uvlive.model.Tutorial>();
 		
-		String sqlQuery = "SELECT * FROM %s";
-        Logger.put("Debug login: "+sqlQuery);
-        ResultSet result = query(String.format(sqlQuery, table));
+        ResultSet result = query(QUERY_GET_TUTORIALS);
         if (result!=null) {
-            try {
-                while(result.next()) {
-                	Tutorial tutorial = new Tutorial();
-                    int idConversation = result.getInt("idConversation");
-                    String  name = result.getString("name");
-                    tutorial.setIdTutorial(idConversation);
-                    tutorial.setName(name);
-                    tutorialsCollection.add(tutorial);
-                }
-            } catch (SQLException ex) {
-                Logger.put(this,"login - Error al recorrer el resultado de la consulta: " + ex.getMessage());
-                return null;
+            while(result.next()) {
+            	Tutorial tutorial = new Tutorial();
+                int idConversation = result.getInt(TUTORIAL_ID_FIELD);
+                String  name = result.getString(NAME_FIELD);
+                tutorial.setIdTutorial(idConversation);
+                tutorial.setName(name);
+                tutorialsCollection.add(tutorial);
             }
         }
         return tutorialsCollection;
@@ -41,36 +36,16 @@ public class TutorialDAO extends BaseDAO {
 	
 	// @Non-generated
 	public ArrayList<Integer> getIdsOfUserTutorials (User user) throws SQLException, ClassNotFoundException {
-		String table = "";
-		String userType = "";
-		ArrayList<Integer> idsOfTutorialsCollection = new ArrayList<Integer>();
 		
-		if (user instanceof Student) {
-			table = CONVERSATION_STUDENT_TABLE;
-			userType = STUDENT_TABLE;
-		} else if (user instanceof Teacher){
-			table = CONVERSATION_TEACHER_TABLE;
-			userType = TEACHER_TABLE;
-		}
-		if (table != "" && userType != "") {
-			String idUserTableColumnName = userType + "id" + userType;
-			String sqlQuery = "SELECT * FROM %s where %s = '%s'";
-	        Logger.put("Debug login: "+sqlQuery);
-	        
-	        ArrayList<String> params = new ArrayList<String>();
-	        params.add(table);
-	        params.add(idUserTableColumnName); /*column name of row depending on if user is a teacher or a student*/
-	        params.add(user.getUserId());
-	        
-	        ResultSet result = query(String.format(sqlQuery, table, idUserTableColumnName, String.valueOf(user.getUserId())));
-	        if (result != null) {
-                while(result.next()) {
-                	// TODO check DB (Hint: column names)
-                    int idConversation = result.getInt("ConversationidConversation");
-                    idsOfTutorialsCollection.add(idConversation);
-                }
-	        }
-		}
+		ArrayList<Integer> idsOfTutorialsCollection = new ArrayList<Integer>();
+			
+        ResultSet result = query(String.format(QUERY_GET_USER_IDS, String.valueOf(user.getUserId())));
+        if (result != null) {
+            while(result.next()) {
+                int idConversation = result.getInt(CONVERSATION_ID_TUTORIAL_FIELD);
+                idsOfTutorialsCollection.add(idConversation);
+            }
+        }
         return idsOfTutorialsCollection;
 	}
 

@@ -4,6 +4,8 @@ import java.sql.SQLException;
 
 public class Admin extends User {
 	
+	public static final String LOGIN_TYPE = "Admin";
+	
 	private SessionManager sessionManager;
 	
 	public SessionManager getSessionManager() {
