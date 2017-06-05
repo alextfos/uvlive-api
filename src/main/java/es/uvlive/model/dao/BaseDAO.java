@@ -52,6 +52,8 @@ public class BaseDAO {
     
     protected static final String MESSAGE_ID_CONVERSATION_FIELD = "ConversationIdConversation";
     
+    protected static final String BROADCAST_ID_BUSINESSMAN_FIELD = "BusinessmanidBusinessman";
+    
     public BaseDAO() {
     	try {
     		connect();

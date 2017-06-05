@@ -13,6 +13,9 @@ public class BusinessmanDAO extends BaseDAO {
 	private static String QUERY_SAVE_USER_BUSINESSMAN = "INSERT INTO " + USER_TABLE + "(" + USER_NAME_FIELD + "," + PASSWORD_FIELD + ") VALUES (?,?)";
 	private static String QUERY_SAVE_BUSINESSMAN_BUSINESSMAN = "INSERT INTO " + BUSINESSMAN_TABLE + "(" + DNI_FIELD + ") VALUES (?)";
 	private static String QUERY_UPDATE_BUSINESSMAN = "INSERT INTO " + BUSINESSMAN_TABLE + "(" + USER_NAME_FIELD + "," + PASSWORD_FIELD + ") VALUES ('%s','%s')";
+	
+	private static String QUERY_SAVE_BROADCAST = "INSERT INTO " + BROADCAST_TABLE + "(" + TEXT_FIELD + "," + BROADCAST_ID_BUSINESSMAN_FIELD + ") VALUES (?,?)";
+	
 	// UPDATE MyGuests SET lastname='Doe' WHERE id=2" TODO
 	public Businessman getBusinessman(String userName) throws ClassNotFoundException, SQLException {
 		Businessman businessman = null;
@@ -43,6 +46,14 @@ public class BusinessmanDAO extends BaseDAO {
 		// TODO implement
 		PreparedStatement preparedStatement = getPreparedStatement(QUERY_SAVE_USER_BUSINESSMAN);
 		preparedStatement.setString(0, username);
+		insert(preparedStatement);
+	}
+
+	// TODO @check in VP (Hint: nothing of broadcast usecase is implemented)
+	public void registerBroadcast(Businessman businessman, String broadcastText) throws ClassNotFoundException, SQLException {
+		PreparedStatement preparedStatement = getPreparedStatement(QUERY_SAVE_BROADCAST);
+		preparedStatement.setString(1, broadcastText);
+		preparedStatement.setInt(2, businessman.getUserId());
 		insert(preparedStatement);
 	}
 }
