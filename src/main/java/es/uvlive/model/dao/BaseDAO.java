@@ -1,5 +1,6 @@
 package es.uvlive.model.dao;
 
+import es.uvlive.model.UVLiveModel;
 import es.uvlive.utils.Logger;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -49,7 +50,7 @@ public class BaseDAO {
     protected static final String CONVERSATION_ID_TUTORIAL_FIELD = "ConversationidTutorial";
     protected static final String ROL_UV_ID_USER_FIELD = "RolUVidUser";
     
-    
+    protected static final String MESSAGE_ID_CONVERSATION_FIELD = "ConversationIdConversation";
     
     public BaseDAO() {
     	try {
