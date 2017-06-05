@@ -5,12 +5,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import es.uvlive.model.Message;
-import es.uvlive.model.Student;
-import es.uvlive.model.Teacher;
 import es.uvlive.model.Tutorial;
 import es.uvlive.model.User;
-import es.uvlive.utils.Logger;
 
 public class TutorialDAO extends BaseDAO {
 	
@@ -29,7 +25,6 @@ public class TutorialDAO extends BaseDAO {
                 String  name = result.getString(NAME_FIELD);
                 tutorial.setIdTutorial(idConversation);
                 tutorial.setName(name);
-                tutorial.setMessages(new ArrayList<Message>());
                 tutorialsCollection.add(tutorial);
             }
         }
