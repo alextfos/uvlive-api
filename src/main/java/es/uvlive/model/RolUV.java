@@ -1,13 +1,14 @@
 package es.uvlive.model;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collection;
 
+import es.uvlive.controllers.messages.MessageListResponse;
 import es.uvlive.model.dao.MessageDAO;
 
 public abstract class RolUV extends User {
 
-	private Collection<Message> messages;
 	private String pushToken;
 	
 	private TutorialCatalog tutorialsCatalog;
@@ -100,5 +101,26 @@ public abstract class RolUV extends User {
 	 */
 	public void setTutorialsCatalog(TutorialCatalog tutorialCatalog) {
 		this.tutorialsCatalog = tutorialCatalog;
+	}
+
+	public Collection<Message> getMessages(int idConversation) throws ClassNotFoundException, SQLException {
+		Collection<Message> messages = new ArrayList<Message>();
+		Tutorial requestedTutorial = new Tutorial();
+		
+		for (Tutorial tutorial : userTutorials) {
+			if (tutorial.getIdTutorial() == idConversation) {
+				// User can read this conversation
+				requestedTutorial = tutorial;
+				if (requestedTutorial.getMessages() != null && !requestedTutorial.getMessages().isEmpty()){
+					messages = requestedTutorial.getMessages();
+				} else {
+					// Should get conversations messages
+					messages = new MessageDAO().getMessages(idConversation);
+					// TODO update user conversations list with messages
+				}
+			}
+		}
+		
+		return messages;
 	}
 }

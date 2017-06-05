@@ -7,8 +7,10 @@ package es.uvlive.controllers.messages;
 
 import es.uvlive.controllers.BaseController;
 import es.uvlive.controllers.BaseResponse;
+import es.uvlive.model.Message;
 import es.uvlive.model.Tutorial;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.servlet.http.HttpServletRequest;
@@ -33,10 +35,33 @@ public class MessagesController extends BaseController{
             produces = MediaType.APPLICATION_JSON_VALUE,
             headers={"Content-Type=application/json"})
     public @ResponseBody
-    BaseResponse getMessages(@RequestBody GetMessagesForm getMesagesForm, BindingResult result,
+    MessageListResponse getMessages(@RequestBody GetMessagesForm getMesagesForm, BindingResult result,
             HttpServletRequest request, HttpServletResponse response) throws Exception
     {
-        return new MessageListResponse();
+    	MessageListResponse messageListResponse = new MessageListResponse();
+    	Collection<MessageResponse> messageResponseList = new ArrayList<MessageResponse>();
+    	
+    	Collection<Message> messages = new ArrayList<Message>();
+    	String token = request.getHeader("Authorization");
+    	
+    	try {
+    	messages = uvLiveModel.getMessages(token, getMesagesForm.getIdConversation());
+    	for (Message message : messages) {
+    		MessageResponse messageResponse = new MessageResponse();
+    		messageResponse.setIdMessage(message.getIdMessage());
+    		messageResponse.setText(message.getText());
+    		messageResponse.setTimestamp(message.getTimestamp());
+    		
+    		messageResponseList.add(messageResponse);
+    	}
+    	
+    	messageListResponse.setMessages(messageResponseList);
+    	
+    	}catch (Exception e) {
+    		messageListResponse.setErrorCode(getErrorCode(e));
+    	}
+    	
+    	return messageListResponse;
     }
     
     @RequestMapping(value = "/send", method = RequestMethod.POST,

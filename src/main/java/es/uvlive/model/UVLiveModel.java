@@ -6,6 +6,7 @@ import java.util.Collection;
 
 import es.uvlive.controllers.exceptions.UnauthorizedException;
 import es.uvlive.controllers.exceptions.UserDefinedException;
+import es.uvlive.controllers.messages.MessageListResponse;
 import es.uvlive.utils.StringUtils;
 
 public class UVLiveModel {
@@ -178,19 +179,6 @@ public class UVLiveModel {
 		
 	}
 
-	/**
-	 * 
-	 * @param key
-	 * @param idTutorial
-	 * @param text
-	 */
-	public void sendMessage(String key, int idTutorial, String text) throws Exception {
-		User user = getUser(key);
-		if (user instanceof RolUV) {
-			((RolUV)user).sendMessage(idTutorial, text);
-		}
-	}
-
 	// TODO Check in VP (Hint: broadcastText String)
 	/**
 	 * 
@@ -225,6 +213,29 @@ public class UVLiveModel {
 		}
 		
 		return tutorials;
+	}
+	
+	/**
+	 * 
+	 * @param key
+	 * @param idTutorial
+	 * @param text
+	 */
+	public void sendMessage(String key, int idTutorial, String text) throws Exception {
+		User user = getUser(key);
+		if (user instanceof RolUV) {
+			((RolUV)user).sendMessage(idTutorial, text);
+		}
+	}
+
+	public Collection<Message> getMessages(String key, int idConversation) throws ClassNotFoundException, SQLException {
+		Collection<Message> messages = new ArrayList<Message>();
+		User user = getUser(key);
+		if (user instanceof RolUV) {
+			// Only RolUV users can send messages
+			messages = ((RolUV)user).getMessages(idConversation);
+		}
+		return messages;
 	}
 
 }
