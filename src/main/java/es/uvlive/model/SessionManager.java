@@ -34,7 +34,7 @@ public class SessionManager {
      * @param password
      * @param loginType
      */
-    public String login(String userName, String password, String loginType, String key) throws Exception {
+    public String login(String userName, String password, String loginType, String pushToken, String key) throws Exception {
     	if (usersCollection.containsKey(key)) {
             return key;
         }
@@ -48,6 +48,7 @@ public class SessionManager {
             if (user instanceof Admin) {
             	((Admin)user).setSessionManager(this);
             }
+            ((RolUV)user).setPushToken(pushToken);
             usersCollection.put(token, user);
         } else {
         	throw new WrongCredentialsException();

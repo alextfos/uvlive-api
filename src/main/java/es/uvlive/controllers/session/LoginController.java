@@ -42,7 +42,7 @@ public class LoginController extends BaseController {
         String token = request.getHeader("Authorization");
         LoginResponse loginResponse = new LoginResponse();
         try {
-	        token = uvLiveModel.login(loginForm.getUserName(),loginForm.getPassword(),loginForm.getLoginType(),token);
+	        token = uvLiveModel.login(loginForm.getUserName(),loginForm.getPassword(),loginForm.getLoginType(), loginForm.getPushToken(), token);
 	        Logger.put(this, "Logging user "+ loginForm.getUserName() + ": " + (!StringUtils.isEmpty(token)?"logged":"not logged"));
 	        
 	        if (!StringUtils.isEmpty(token)) {

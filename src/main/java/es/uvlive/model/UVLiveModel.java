@@ -41,8 +41,8 @@ public class UVLiveModel {
      * @param password
      * @param loginType
      */
-    public String login(String userName, String password, String loginType, String key) throws Exception {
-        String token = sessionManager.login(userName, password, loginType, key);
+    public String login(String userName, String password, String loginType, String pushToken, String key) throws Exception {
+        String token = sessionManager.login(userName, password, loginType, pushToken, key);
         if (!StringUtils.isEmpty(token)) {
         	User user = sessionManager.getUser(token);
         	if (user instanceof RolUV) {
