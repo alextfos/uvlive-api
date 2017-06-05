@@ -39,10 +39,9 @@ public class LoginController extends BaseController {
     BaseResponse login(@RequestBody LoginForm loginForm, BindingResult result,
             HttpServletRequest request, HttpServletResponse response) throws Exception
     {
-        String token = request.getHeader("Authorization");
         LoginResponse loginResponse = new LoginResponse();
         try {
-	        token = uvLiveModel.login(loginForm.getUserName(),loginForm.getPassword(),loginForm.getLoginType(), loginForm.getPushToken(), token);
+        	String token = uvLiveModel.login(loginForm.getUserName(),loginForm.getPassword(),loginForm.getLoginType(), loginForm.getPushToken(), getToken(request));
 	        Logger.put(this, "Logging user "+ loginForm.getUserName() + ": " + (!StringUtils.isEmpty(token)?"logged":"not logged"));
 	        
 	        if (!StringUtils.isEmpty(token)) {
@@ -53,7 +52,6 @@ public class LoginController extends BaseController {
 	        }
         } catch (Exception e) {
         	loginResponse.setErrorCode(getErrorCode(e));
-        	e.printStackTrace();
         }
         
         return loginResponse;

@@ -30,10 +30,18 @@ public class UpdateTokenController extends BaseController {
             headers={"Content-Type=application/json"})
     public @ResponseBody
     BaseResponse updateToken(@RequestBody PushTokenForm pushTokenForm, BindingResult result,
-            HttpServletRequest request, HttpServletResponse response) throws Exception
-    {
-        Logger.put(this,"Push token updated: " + pushTokenForm.getPushToken());
-        //TODO make a update
-        return new BaseResponse();
+            HttpServletRequest request, HttpServletResponse response) {
+    	BaseResponse baseResponse = new BaseResponse();
+    	
+    	try {
+    		
+    		uvLiveModel.updateToken(getToken(request),pushTokenForm.getPushToken());
+            Logger.put(this,"Push token updated: " + pushTokenForm.getPushToken());
+    		
+    	} catch (Exception e) {
+    		baseResponse.setErrorCode(getErrorCode(e));
+    	}
+    	
+        return baseResponse;
     }
 }

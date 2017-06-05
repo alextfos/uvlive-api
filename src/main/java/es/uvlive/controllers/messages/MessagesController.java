@@ -40,24 +40,22 @@ public class MessagesController extends BaseController{
     {
     	MessageListResponse messageListResponse = new MessageListResponse();
     	Collection<MessageResponse> messageResponseList = new ArrayList<MessageResponse>();
-    	
     	Collection<Message> messages = new ArrayList<Message>();
-    	String token = request.getHeader("Authorization");
     	
     	try {
-    	messages = uvLiveModel.getMessages(token, getMesagesForm.getIdConversation());
-    	for (Message message : messages) {
-    		MessageResponse messageResponse = new MessageResponse();
-    		messageResponse.setIdMessage(message.getIdMessage());
-    		messageResponse.setText(message.getText());
-    		messageResponse.setTimestamp(message.getTimestamp());
-    		
-    		messageResponseList.add(messageResponse);
-    	}
+	    	messages = uvLiveModel.getMessages(getToken(request), getMesagesForm.getIdConversation());
+	    	for (Message message : messages) {
+	    		MessageResponse messageResponse = new MessageResponse();
+	    		messageResponse.setIdMessage(message.getIdMessage());
+	    		messageResponse.setText(message.getText());
+	    		messageResponse.setTimestamp(message.getTimestamp());
+	    		
+	    		messageResponseList.add(messageResponse);
+	    	}
+	    	
+	    	messageListResponse.setMessages(messageResponseList);
     	
-    	messageListResponse.setMessages(messageResponseList);
-    	
-    	}catch (Exception e) {
+    	} catch (Exception e) {
     		messageListResponse.setErrorCode(getErrorCode(e));
     	}
     	

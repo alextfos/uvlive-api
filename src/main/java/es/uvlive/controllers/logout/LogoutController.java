@@ -5,6 +5,7 @@
  */
 package es.uvlive.controllers.logout;
 
+import es.uvlive.controllers.BaseController;
 import es.uvlive.controllers.BaseForm;
 import es.uvlive.controllers.BaseResponse;
 import es.uvlive.controllers.session.LoginForm;
@@ -25,7 +26,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @author alextfos
  */
 @Controller
-public class LogoutController {
+public class LogoutController extends BaseController {
 	
 	protected UVLiveModel uvLiveModel = UVLiveModel.getInstance();
     
@@ -37,8 +38,12 @@ public class LogoutController {
     BaseResponse logout(@RequestBody BaseForm baseForm, BindingResult result,
             HttpServletRequest request, HttpServletResponse response) throws Exception
     {
-    	String token = request.getHeader("Authorization").split(" ")[1];
-    	uvLiveModel.logout(token);
-        return new BaseResponse();
+    	BaseResponse baseResponse = new BaseResponse();
+    	try {
+    		uvLiveModel.logout(getToken(request));
+    	} catch (Exception e) {
+    		baseResponse.setErrorCode(getErrorCode(e));
+    	}
+        return baseResponse;
     }
 }

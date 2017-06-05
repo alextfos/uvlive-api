@@ -242,5 +242,14 @@ public class UVLiveModel {
 		}
 		return messages;
 	}
+	
+	// @Non-generated
+	public void updateToken(String key, String pushToken) {
+		User user = getUser(key);
+		
+		if (user != null && user instanceof RolUV) {
+			((RolUV)user).setPushToken(pushToken);
+		}
+	}
 
 }

@@ -4,6 +4,7 @@ import es.uvlive.controllers.exceptions.WrongCredentialsException;
 import es.uvlive.model.dao.BusinessmanDAO;
 import es.uvlive.model.dao.UserDAO;
 import es.uvlive.utils.StringUtils;
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.impl.crypto.MacProvider;
@@ -42,7 +43,8 @@ public class SessionManager {
         UserDAO userDao = new UserDAO();
         User user = userDao.getUser(userName, password, loginType);
         if (user != null) {
-            token = Jwts.builder().setSubject(userName+"-"+generateId())
+        	String stringKey = userName+"-"+generateId();
+            token = Jwts.builder().setSubject(stringKey)
               .signWith(SignatureAlgorithm.HS512, SIGNATURE_KEY)
               .compact();
             if (user instanceof Admin) {
@@ -51,7 +53,7 @@ public class SessionManager {
             if (user instanceof RolUV) {
             	((RolUV)user).setPushToken(pushToken);
             }
-            usersCollection.put(token, user);
+            usersCollection.put(stringKey, user);
         } else {
         	throw new WrongCredentialsException();
         }
@@ -73,7 +75,10 @@ public class SessionManager {
      * @param key
      */
     public User getUser(String key) {
-        return usersCollection.get(key);
+    	Claims claims = Jwts.parser()         
+    		       .setSigningKey(SIGNATURE_KEY)
+    		       .parseClaimsJws(key).getBody();
+        return usersCollection.get(claims.getSubject());
     }
     
     // TODO @Non-generated method
