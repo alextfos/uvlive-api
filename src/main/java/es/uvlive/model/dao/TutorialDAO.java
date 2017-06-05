@@ -13,7 +13,7 @@ import es.uvlive.utils.Logger;
 
 public class TutorialDAO extends BaseDAO {
 	
-	private static final String QUERY_GET_USER_IDS = "SELECT * FROM " + CONVERSATION_ROL_UV_TABLE + " WHERE " + CONVERSATION_ID_TUTORIAL_FIELD + " = '%s'";
+	private static final String QUERY_GET_USER_IDS = "SELECT * FROM " + CONVERSATION_ROL_UV_TABLE + " WHERE " + ROL_UV_ID_USER_FIELD + " = '%s'";
 	private static final String QUERY_GET_TUTORIALS = "SELECT * FROM " + CONVERSATION_TABLE;
 	
 	// @Non-generated
