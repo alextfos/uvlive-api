@@ -64,6 +64,7 @@ public class UserDAO extends BaseDAO {
                     	user = new Businessman();
                     	user.setUserId(userId);
                     	getBusinessmanData((Businessman)user);
+                    	break;
                 	default:
                 		return null;
                 	}

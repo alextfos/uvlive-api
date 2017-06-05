@@ -48,7 +48,9 @@ public class SessionManager {
             if (user instanceof Admin) {
             	((Admin)user).setSessionManager(this);
             }
-            ((RolUV)user).setPushToken(pushToken);
+            if (user instanceof RolUV) {
+            	((RolUV)user).setPushToken(pushToken);
+            }
             usersCollection.put(token, user);
         } else {
         	throw new WrongCredentialsException();
