@@ -33,7 +33,7 @@ public class BaseController {
     }
     
     protected String getToken( HttpServletRequest request) {
-    	if (request != null) {
+    	if (request != null && request.getHeader("Authorization") != null) {
     		return request.getHeader("Authorization").replaceFirst("Bearer ", "");
     	} else {
     		return "";
@@ -42,6 +42,7 @@ public class BaseController {
     
     protected int getErrorCode(Exception e) {
     	System.err.println("Generic error treatment: "+e.getMessage());
+    	e.printStackTrace();
     	int code = UNKNOWN_ERROR_CODE;
     	if (!StringUtils.isEmpty(e.getMessage())) {
 	    	switch (e.getMessage()) {
