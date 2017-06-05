@@ -53,9 +53,10 @@ public abstract class RolUV extends User {
 	 * @param tutorial
 	 * @param text
 	 * @throws SQLException 
+	 * @throws ClassNotFoundException 
 	 */
 	// @Non-generated
-	public void sendMessage(int idTutorial, String text) throws SQLException {/*
+	public void sendMessage(int idTutorial, String text) throws SQLException, ClassNotFoundException {/*
 		if (tutorialsCatalog != null) {
 			tutorialsCatalog.sendMessage(this, idTutorial, text);
 		}*/
