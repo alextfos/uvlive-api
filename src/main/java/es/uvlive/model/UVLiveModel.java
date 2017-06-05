@@ -181,12 +181,17 @@ public class UVLiveModel {
 
 	// TODO Check in VP (Hint: broadcastText String)
 	/**
-	 * 
+	 * Registers Broadcast requested by Businessman
 	 * @param key
 	 * @param String
+	 * @throws SQLException 
+	 * @throws ClassNotFoundException 
 	 */
-	public void registerBroadcast(String key, String broadcastText) {
-		// TODO - implement UVLiveModel.registerBroadcast
+	public void registerBroadcast(String key, String broadcastText) throws ClassNotFoundException, SQLException {
+		User user = getUser(key);
+		if (user instanceof Businessman) {
+			((Businessman)user).registerBroadcast(broadcastText);
+		}
 		throw new UnsupportedOperationException();
 	}
 

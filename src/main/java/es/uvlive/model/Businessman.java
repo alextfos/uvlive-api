@@ -1,5 +1,9 @@
 package es.uvlive.model;
 
+import java.sql.SQLException;
+
+import es.uvlive.model.dao.BusinessmanDAO;
+
 public class Businessman extends User {
 	
 	public static final String LOGIN_TYPE = "Businessman";
@@ -13,6 +17,10 @@ public class Businessman extends User {
 
 	public void setDni(String dni) {
 		this.dni = dni;
+	}
+
+	public void registerBroadcast(String broadcastText) throws ClassNotFoundException, SQLException {
+		new BusinessmanDAO().registerBroadcast(this, broadcastText);
 	}
 	
 }

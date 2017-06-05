@@ -67,4 +67,19 @@ public class BusinessmanManagementController extends BaseController {
 		}
 		return setBusinessmanResponse;
 	}
+	
+	// TODO @Non-generated
+	@RequestMapping(value = "/broadcast/register", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE, headers = {
+	"Content-Type=application/json" })
+	public @ResponseBody BaseResponse registerBroadcast(@RequestBody BroadcastForm broadcastForm,
+		BindingResult result, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		try {
+			String token = request.getHeader("Authorization");
+			uvLiveModel.registerBroadcast(token, broadcastForm.getBroadcastMessage());
+		} catch (Exception e) {
+			new BaseResponse().setErrorCode(getErrorCode(e));
+		}
+		return new BaseResponse();
+	}
 }
