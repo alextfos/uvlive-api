@@ -53,6 +53,7 @@ public class BaseDAO {
     protected static final String MESSAGE_ID_CONVERSATION_FIELD = "ConversationIdConversation";
     
     protected static final String BROADCAST_ID_BUSINESSMAN_FIELD = "BusinessmanidBusinessman";
+    protected static final String BROADCAST_EXPIRATION_DATE = "expiration_date";
     
     public BaseDAO() {
     	try {
