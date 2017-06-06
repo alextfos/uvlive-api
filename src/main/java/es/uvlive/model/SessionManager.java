@@ -1,5 +1,6 @@
 package es.uvlive.model;
 
+import es.uvlive.controllers.exceptions.UnauthorizedException;
 import es.uvlive.controllers.exceptions.WrongCredentialsException;
 import es.uvlive.model.dao.BusinessmanDAO;
 import es.uvlive.model.dao.UserDAO;
@@ -50,7 +51,7 @@ public class SessionManager {
             if (user instanceof Admin) {
             	((Admin)user).setSessionManager(this);
             }
-            if (user instanceof RolUV) {
+            if (user instanceof RolUV && !StringUtils.isEmpty(pushToken)) {
             	((RolUV)user).setPushToken(pushToken);
             }
             usersCollection.put(stringKey, user);
@@ -71,14 +72,18 @@ public class SessionManager {
 
    // TODO @Non-generated method
     /**
-     * Gets user
+     * Gets user - Si hay algun tipo de ptoblema con el token, se lanzará una excepción de no autorizado
      * @param key
      */
-    public User getUser(String key) {
+    public User getUser(String key) throws UnauthorizedException {
+    	try {
     	Claims claims = Jwts.parser()         
     		       .setSigningKey(SIGNATURE_KEY)
     		       .parseClaimsJws(key).getBody();
         return usersCollection.get(claims.getSubject());
+    	} catch (Exception e) {
+    		throw new UnauthorizedException();
+    	}
     }
     
     // TODO @Non-generated method

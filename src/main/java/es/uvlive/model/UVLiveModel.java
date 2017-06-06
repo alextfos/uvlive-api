@@ -6,7 +6,6 @@ import java.util.Collection;
 
 import es.uvlive.controllers.exceptions.UnauthorizedException;
 import es.uvlive.controllers.exceptions.UserDefinedException;
-import es.uvlive.controllers.messages.MessageListResponse;
 import es.uvlive.utils.StringUtils;
 
 public class UVLiveModel {
@@ -95,16 +94,6 @@ public class UVLiveModel {
 		throw new UnsupportedOperationException();
 	}
 
-	// TODO Check in VP (Hint: integer user id)
-	/**
-	 * 
-	 * @param idUser
-	 */
-	public User getUser(int idUser) {
-		// TODO - implement UVLiveModel.getUser
-		throw new UnsupportedOperationException();
-	}
-
 	// TODO @Non-generated
 	/**
 	 * Gets User by session token
@@ -112,7 +101,7 @@ public class UVLiveModel {
 	 * @param key
 	 * @return logged User
 	 */
-	public User getUser(String key) {
+	public User getUser(String key) throws Exception {
 		return sessionManager.getUser(key);
 	}
 
@@ -187,7 +176,7 @@ public class UVLiveModel {
 	 * @throws SQLException 
 	 * @throws ClassNotFoundException 
 	 */
-	public void registerBroadcast(String key, String broadcastText) throws ClassNotFoundException, SQLException {
+	public void registerBroadcast(String key, String broadcastText) throws Exception {
 		User user = getUser(key);
 		if (user instanceof Businessman) {
 			((Businessman)user).registerBroadcast(broadcastText);
@@ -233,7 +222,7 @@ public class UVLiveModel {
 		}
 	}
 
-	public Collection<Message> getMessages(String key, int idConversation) throws ClassNotFoundException, SQLException {
+	public Collection<Message> getMessages(String key, int idConversation) throws Exception {
 		Collection<Message> messages = new ArrayList<Message>();
 		User user = getUser(key);
 		if (user instanceof RolUV) {
@@ -244,7 +233,7 @@ public class UVLiveModel {
 	}
 	
 	// @Non-generated
-	public void updateToken(String key, String pushToken) {
+	public void updateToken(String key, String pushToken) throws Exception {
 		User user = getUser(key);
 		
 		if (user != null && user instanceof RolUV) {

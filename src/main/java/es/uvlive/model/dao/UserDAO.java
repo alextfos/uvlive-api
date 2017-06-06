@@ -21,6 +21,8 @@ public class UserDAO extends BaseDAO {
 	private static final String QUERY_LOGIN_ADMIN = "SELECT * FROM " + ADMIN_TABLE + " WHERE " + USER_ID_FIELD + " = '%d'";
 	private static final String QUERY_LOGIN_BUSINESSMAN = "SELECT * FROM " + BUSINESSMAN_TABLE + " WHERE " + USER_ID_FIELD + " = '%d'";
 	
+	private static final String QUERY_SAVE_PUSH_TOKEN = "UPDATE " + ROL_UV_TABLE + " SET " + PUSH_TOKEN_FIELD + " = '%s' WHERE " + USER_ID_FIELD + "= %d";
+	
 	// TODO @Non-generated (Hint: nothing on this class is from VP)
 	/**
 	 * 
@@ -74,6 +76,10 @@ public class UserDAO extends BaseDAO {
             }
         }
         return user;
+	}
+	
+	public void savePushToken(int userId, String pushToken) throws SQLException {
+		update(String.format(QUERY_SAVE_PUSH_TOKEN, pushToken,userId));
 	}
 	
 	protected void getRolUvData(RolUV user) throws ClassNotFoundException, SQLException, WrongCredentialsException {

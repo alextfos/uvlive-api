@@ -6,6 +6,7 @@ import java.util.Collection;
 
 import es.uvlive.controllers.messages.MessageListResponse;
 import es.uvlive.model.dao.MessageDAO;
+import es.uvlive.model.dao.UserDAO;
 
 public abstract class RolUV extends User {
 
@@ -36,8 +37,9 @@ public abstract class RolUV extends User {
 		return pushToken;
 	}
 
-	public void setPushToken(String pushToken) {
+	public void setPushToken(String pushToken) throws SQLException {
 		this.pushToken = pushToken;
+		new UserDAO().savePushToken(getUserId(),pushToken);
 	}
 
 	

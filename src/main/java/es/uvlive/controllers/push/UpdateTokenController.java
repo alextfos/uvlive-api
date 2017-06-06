@@ -34,7 +34,6 @@ public class UpdateTokenController extends BaseController {
     	BaseResponse baseResponse = new BaseResponse();
     	
     	try {
-    		
     		uvLiveModel.updateToken(getToken(request),pushTokenForm.getPushToken());
             Logger.put(this,"Push token updated: " + pushTokenForm.getPushToken());
     		

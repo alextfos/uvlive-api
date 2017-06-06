@@ -8,6 +8,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import com.mysql.jdbc.Statement;
+
 public class BaseDAO {
 	// TODO @Non-generated (Hint: nothing on this class is from VP)
     private static Connection sConnectionDB;
@@ -89,6 +91,11 @@ public class BaseDAO {
             connect();
         }
         preparedStatement.executeUpdate();
+    }
+    
+    protected void update(String query) throws SQLException {
+    	java.sql.Statement statement = sConnectionDB.createStatement();
+    	statement.executeUpdate(query);
     }
     
     protected void disconnect() {
