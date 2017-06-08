@@ -71,15 +71,32 @@ public class UVLiveModel {
             throw new UnsupportedOperationException();
     }
 
-    // TODO Check in VP (Hint: idAlumno)
     /**
      * 
      * @param key
-     * @param idAlumno
+     * @param Student
+     * @throws Exception 
      */
-	public void blockStudent(String key, int idAlumno) {
-		// TODO - implement UVLiveModel.banearAlumno
-		throw new UnsupportedOperationException();
+    // TODO check names in VP (Hint: idAlumno)
+	public void blockStudent(String key, int idStudent) throws Exception {
+		User user = getUser(key);
+		if (user != null && user instanceof Teacher) {
+			((Teacher)user).blockStudent(idStudent);
+		}
+	}
+	
+    /**
+     * 
+     * @param key
+     * @param Student
+     * @throws Exception 
+     */
+    // TODO @Non-generated
+	public void unblockStudent(String key, int idStudent) throws Exception {
+		User user = getUser(key);
+		if (user != null && user instanceof Teacher) {
+			((Teacher)user).unblockStudent(idStudent);
+		}
 	}
 
 	// TODO Check in VP (Hint: No method with different name and same parameters
