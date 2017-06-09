@@ -260,4 +260,16 @@ public class UVLiveModel {
 		}
 	}
 
+	public <T extends RolUV> Collection<RolUV> getUsers(String token) throws Exception {
+		User user = getUser(token);
+		if (user instanceof RolUV) {
+			if (user instanceof Teacher) {
+				return ((Teacher)user).getUsers();
+			} else if (user instanceof Student) {
+				return ((Student)user).getUsers();
+			}
+		}
+		return null;
+	}
+
 }
