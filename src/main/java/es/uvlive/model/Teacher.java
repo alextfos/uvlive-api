@@ -1,8 +1,10 @@
 package es.uvlive.model;
 
 import java.sql.SQLException;
+import java.util.Collection;
 
 import es.uvlive.model.dao.PermissionsDAO;
+import es.uvlive.model.dao.UserDAO;
 
 public class Teacher extends RolUV {
 	
@@ -34,6 +36,11 @@ public class Teacher extends RolUV {
 	 */
 	public void unblockStudent(int idStudent) throws ClassNotFoundException, SQLException {
 		new PermissionsDAO().unblockStudent(idStudent);
+	}
+
+	@Override
+	public Collection<RolUV> getUsers() throws ClassNotFoundException, SQLException {
+		return new UserDAO().getStudents();
 	}
 
 }

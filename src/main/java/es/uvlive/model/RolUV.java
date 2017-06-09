@@ -125,4 +125,7 @@ public abstract class RolUV extends User {
 		
 		return messages;
 	}
+
+	public abstract Collection<RolUV> getUsers() throws ClassNotFoundException, SQLException;
+	
 }
