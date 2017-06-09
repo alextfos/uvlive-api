@@ -8,6 +8,9 @@ public class User {
 	private String firstname;
 	private String lastname;
 	
+	// TODO check in VP
+	private String username;
+	
 	// @Non-generated
 	public int getUserId() {
 		return userId;
@@ -37,4 +40,15 @@ public class User {
 	public void setLastname(String lastname) {
 		this.lastname = lastname;
 	}
+
+	// @Non-generated
+	public String getUsername() {
+		return username;
+	}
+
+	// @Non-generated
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	
 }
