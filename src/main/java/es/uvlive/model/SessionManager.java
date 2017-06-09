@@ -142,8 +142,6 @@ public class SessionManager {
 				((Student)usersCollection.get(key)).setBlocked(true);
 			}
 		}
-		
-		usersCollection.toString();
 	}
 	
 	// TODO @Non-generated
@@ -160,8 +158,6 @@ public class SessionManager {
 				((Student)usersCollection.get(key)).setBlocked(false);
 			}
 		}
-
-		usersCollection.toString();
 	}
 	
 }
