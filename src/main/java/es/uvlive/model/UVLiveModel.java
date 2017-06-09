@@ -82,6 +82,7 @@ public class UVLiveModel {
 		User user = getUser(key);
 		if (user != null && user instanceof Teacher) {
 			((Teacher)user).blockStudent(idStudent);
+			sessionManager.blockUser(idStudent);
 		}
 	}
 	
@@ -96,6 +97,7 @@ public class UVLiveModel {
 		User user = getUser(key);
 		if (user != null && user instanceof Teacher) {
 			((Teacher)user).unblockStudent(idStudent);
+			sessionManager.unblockUser(idStudent);
 		}
 	}
 

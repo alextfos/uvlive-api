@@ -127,4 +127,41 @@ public class SessionManager {
 	public void updateBusinessman(String dni, String firstname, String lastname, String username, String password) throws ClassNotFoundException, SQLException {
 		new BusinessmanDAO().updateBusinessman(dni, firstname, lastname, username, password);
 	}
+
+	// TODO @Non-generated
+	/**
+	 * Blocks Student user by id
+	 * @param idStudent
+	 */
+	public void blockUser(int idStudent) {
+		Set<String> users = usersCollection.keySet();
+		
+		for (String key : users) {
+			User currentUser = usersCollection.get(key);
+			if (currentUser.getUserId() == idStudent && currentUser instanceof Student) {
+				((Student)usersCollection.get(key)).setBlocked(true);
+			}
+		}
+		
+		usersCollection.toString();
+	}
+	
+	// TODO @Non-generated
+	/**
+	 * Unblocks Student user by id
+	 * @param idStudent
+	 */
+	public void unblockUser(int idStudent) {
+		Set<String> users = usersCollection.keySet();
+		
+		for (String key : users) {
+			User currentUser = usersCollection.get(key);
+			if (currentUser.getUserId() == idStudent && currentUser instanceof Student) {
+				((Student)usersCollection.get(key)).setBlocked(false);
+			}
+		}
+
+		usersCollection.toString();
+	}
+	
 }
