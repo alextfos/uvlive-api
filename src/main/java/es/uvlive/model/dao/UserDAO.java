@@ -2,6 +2,8 @@ package es.uvlive.model.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collection;
 
 import es.uvlive.controllers.exceptions.WrongCredentialsException;
 import es.uvlive.model.Admin;
@@ -22,6 +24,10 @@ public class UserDAO extends BaseDAO {
 	private static final String QUERY_LOGIN_BUSINESSMAN = "SELECT * FROM " + BUSINESSMAN_TABLE + " WHERE " + USER_ID_FIELD + " = '%d'";
 	
 	private static final String QUERY_SAVE_PUSH_TOKEN = "UPDATE " + ROL_UV_TABLE + " SET " + PUSH_TOKEN_FIELD + " = '%s' WHERE " + USER_ID_FIELD + "= %d";
+	
+	private static final String QUERY_STUDENTS_USERS = "SELECT * FROM " + STUDENT_TABLE + " left join " + USER_TABLE + " on " + STUDENT_TABLE + "." + USER_ID_FIELD + " = " + USER_TABLE + "." + USER_ID_FIELD + ";";
+	
+	private static final String QUERY_TEACHERS_USERS = "SELECT * FROM " + TEACHER_TABLE + " left join " + USER_TABLE + " on " + TEACHER_TABLE + "." + USER_ID_FIELD + " = " + USER_TABLE + "." + USER_ID_FIELD + ";";
 	
 	// TODO @Non-generated (Hint: nothing on this class is from VP)
 	/**
@@ -127,5 +133,39 @@ public class UserDAO extends BaseDAO {
         	throw new WrongCredentialsException();
         }
 	}
+
+	public Collection<RolUV> getStudents() throws ClassNotFoundException, SQLException {
+		Collection<RolUV> students = new ArrayList<RolUV>();
+        ResultSet result = query(QUERY_STUDENTS_USERS);
+        if (result!=null) {
+            if (result.next()) {
+				Student student = new Student();
+				student.setUserId(result.getInt(USER_ID_FIELD));
+				student.setFirstname(result.getString(FIRST_NAME_FIELD));
+				student.setLastname(result.getString(LAST_NAME_FIELD));
+				((User)student).setUsername(result.getString(USER_NAME_FIELD));
+				students.add(student);
+            }
+        }
+        return students;
+	}
+
+	public Collection<RolUV> getTeachers() throws ClassNotFoundException, SQLException {
+		Collection<RolUV> teachers = new ArrayList<RolUV>();
+        ResultSet result = query(QUERY_TEACHERS_USERS);
+        if (result!=null) {
+            if (result.next()) {
+				Teacher teacher = new Teacher();
+				teacher.setUserId(result.getInt(USER_ID_FIELD));
+				teacher.setFirstname(result.getString(FIRST_NAME_FIELD));
+				teacher.setLastname(result.getString(LAST_NAME_FIELD));
+				((User)teacher).setUsername(result.getString(USER_NAME_FIELD));
+				teachers.add(teacher);
+            }
+        }
+		return teachers;
+	}
+	
+	
 
 }

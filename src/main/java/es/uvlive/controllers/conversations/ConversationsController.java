@@ -7,7 +7,11 @@ package es.uvlive.controllers.conversations;
 
 import es.uvlive.controllers.BaseResponse;
 import es.uvlive.controllers.BaseController;
+import es.uvlive.model.RolUV;
 import es.uvlive.model.Tutorial;
+import es.uvlive.model.User;
+
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.servlet.http.HttpServletRequest;
@@ -56,4 +60,34 @@ public class ConversationsController extends BaseController {
     	
     	return conversationListResponse;
     }
+    
+    @RequestMapping(value = "/getusers", method = RequestMethod.POST,
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            headers={"Content-Type=application/json"})
+    public @ResponseBody
+    UsersListResponse getUsers (HttpServletRequest request, HttpServletResponse response)
+    {
+    	UsersListResponse usersListResponse = new UsersListResponse();
+    	
+    	try {
+	    	String token = getToken(request);
+	    	Collection<RolUV> users = uvLiveModel.getUsers(token);
+	    	Collection<UserResponse> responseUsers = new ArrayList<UserResponse>();
+	    	for (User user: users) {
+	    		UserResponse userResponse = new UserResponse();
+	    		userResponse.setUserId(user.getUserId());
+	    		userResponse.setUsername(user.getUsername());
+	    		userResponse.setFirstname(user.getFirstname());
+	    		userResponse.setLastname(user.getLastname());
+	    		responseUsers.add(userResponse);
+	    	}
+	    	usersListResponse.setUsers(responseUsers);
+    	} catch (Exception e) {
+    		usersListResponse.setErrorCode(getErrorCode(e));
+    	}
+    	
+    	return usersListResponse;
+    }
+    
 }

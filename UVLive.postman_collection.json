@@ -1,0 +1,411 @@
+{
+	"id": "d25a7b98-097a-b36d-f2cc-2bff2ed62168",
+	"name": "UVLive",
+	"description": "",
+	"order": [
+		"1ba5f825-128f-9bd8-2480-640980f40bf9",
+		"d411dc10-d705-75aa-2b7b-bb8b2578bde0",
+		"b69291e9-7ad0-ac72-137c-15fb1cfc6694",
+		"f55ec40f-fc7d-dfea-2a55-cd22546f19ec",
+		"d4498e25-3b0d-bb71-adb0-f58444885ebf",
+		"e2af6361-0e8a-dbfd-451b-d63069b2f634",
+		"3c2c8652-fade-7f22-615b-c5d765eaf12e",
+		"c1ef8fa8-888b-e530-5885-0b39e1376f20",
+		"951979c0-57c2-8827-d7f1-98dc48691272",
+		"dbea351a-ce45-56a5-2f7b-c8f4d4e08782",
+		"51d6470a-86f5-0175-3a2f-eb973190539d",
+		"0bfd2bf4-a4b5-5291-e1e3-8a0668c8f81e"
+	],
+	"folders": [],
+	"timestamp": 0,
+	"owner": "1698322",
+	"public": false,
+	"requests": [
+		{
+			"id": "0bfd2bf4-a4b5-5291-e1e3-8a0668c8f81e",
+			"headers": "Accept: application/json\nContent-Type: application/json\nAuthorization: {{token}}\n",
+			"headerData": [
+				{
+					"key": "Accept",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "Authorization",
+					"value": "{{token}}",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "{{environment}}/permission/unblock",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1496954742516,
+			"name": "Permissions - unblock student",
+			"description": "",
+			"collectionId": "d25a7b98-097a-b36d-f2cc-2bff2ed62168",
+			"isFromCollection": true,
+			"collectionRequestId": "51d6470a-86f5-0175-3a2f-eb973190539d",
+			"rawModeData": "{\n  \"idStudent\":\"1\"\n}"
+		},
+		{
+			"id": "1ba5f825-128f-9bd8-2480-640980f40bf9",
+			"headers": "Accept: application/json\nContent-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Accept",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "{{environment}}/login",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"tests": "var jsonData = JSON.parse(responseBody);\npostman.setEnvironmentVariable(\"token\", jsonData.token);",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1496954320743,
+			"name": "Login",
+			"description": "",
+			"collectionId": "d25a7b98-097a-b36d-f2cc-2bff2ed62168",
+			"rawModeData": "{\n  \"userName\":\"profesor\",\n  \"password\":\"1006\",\n  \"loginType\":\"Teacher\",\n  \"pushToken\":\"eOParOKQAKM:APA91bF-D598Swt-L_UgOTNg1naQzT9lfq2MIiDpIGz-G4iuQfWxg0VgmFkCGBf6Yl25_vjmbk_b869dd3B3UxwNF62UaCAjT4JAa5TdJT27xSm838jA26jnFFjaBy3z0lR_4uDPXxjy\"\n}"
+		},
+		{
+			"folder": null,
+			"id": "3c2c8652-fade-7f22-615b-c5d765eaf12e",
+			"name": "Loggger",
+			"dataMode": null,
+			"data": [],
+			"rawModeData": "",
+			"descriptionFormat": null,
+			"description": "",
+			"headers": "",
+			"method": "POST",
+			"pathVariables": null,
+			"url": "{{environment}}/logger",
+			"preRequestScript": null,
+			"tests": null,
+			"currentHelper": null,
+			"helperAttributes": null,
+			"queryParams": null,
+			"headerData": null,
+			"pathVariableData": null,
+			"collectionId": "d25a7b98-097a-b36d-f2cc-2bff2ed62168"
+		},
+		{
+			"id": "51d6470a-86f5-0175-3a2f-eb973190539d",
+			"headers": "Accept: application/json\nContent-Type: application/json\nAuthorization: {{token}}\n",
+			"headerData": [
+				{
+					"key": "Accept",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "Authorization",
+					"value": "{{token}}",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "{{environment}}/permission/block",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1496955039310,
+			"name": "Permissions - block student",
+			"description": "",
+			"collectionId": "d25a7b98-097a-b36d-f2cc-2bff2ed62168",
+			"rawModeData": "{\n  \"idStudent\":\"1\"\n}"
+		},
+		{
+			"id": "951979c0-57c2-8827-d7f1-98dc48691272",
+			"headers": "Accept: application/json\nContent-Type: application/json\nAuthorization: {{token}}\n",
+			"headerData": [
+				{
+					"key": "Accept",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "Authorization",
+					"value": "{{token}}",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "{{environment}}/messages",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1496653607423,
+			"name": "Message - get messages by conversation",
+			"description": "",
+			"collectionId": "d25a7b98-097a-b36d-f2cc-2bff2ed62168",
+			"rawModeData": "{\n  \"idConversation\":\"1\"\n}"
+		},
+		{
+			"folder": null,
+			"id": "b69291e9-7ad0-ac72-137c-15fb1cfc6694",
+			"name": "FGCM - Push",
+			"dataMode": "raw",
+			"data": [],
+			"descriptionFormat": null,
+			"description": "",
+			"headers": "Content-Type: application/json\nAuthorization: key=AIzaSyBfIkN65G5X2j7B3omyRgv6xIHqK-i9Jt4\nCache-Control: no-cache",
+			"method": "POST",
+			"pathVariables": null,
+			"url": "https://fcm.googleapis.com/fcm/send",
+			"preRequestScript": null,
+			"tests": null,
+			"currentHelper": null,
+			"helperAttributes": null,
+			"queryParams": null,
+			"headerData": null,
+			"pathVariableData": null,
+			"collectionId": "d25a7b98-097a-b36d-f2cc-2bff2ed62168",
+			"rawModeData": "{\n  \"notification\": {\n    \"title\": \"Nuevos contenidos\",\n    \"text\": \"Tiene nuevos contenidos por visualizar\"\n    \n  }, \n  \"to\" : \"eOParOKQAKM:APA91bF-D598Swt-L_UgOTNg1naQzT9lfq2MIiDpIGz-G4iuQfWxg0VgmFkCGBf6Yl25_vjmbk_b869dd3B3UxwNF62UaCAjT4JAa5TdJT27xSm838jA26jnFFjaBy3z0lR_4uDPXxjy\"\n}"
+		},
+		{
+			"id": "c1ef8fa8-888b-e530-5885-0b39e1376f20",
+			"headers": "Accept: application/json\nContent-Type: application/json\nAuthorization: {{token}}\n",
+			"headerData": [
+				{
+					"key": "Accept",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "Authorization",
+					"value": "{{token}}",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "{{environment}}/send",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1496653593006,
+			"name": "Message - send",
+			"description": "",
+			"collectionId": "d25a7b98-097a-b36d-f2cc-2bff2ed62168",
+			"rawModeData": "{\n  \"idConversation\":\"1\",\n  \"message\":\"prueba de mensaje largo\"\n}"
+		},
+		{
+			"id": "d411dc10-d705-75aa-2b7b-bb8b2578bde0",
+			"headers": "Accept: application/json\nContent-Type: application/json\nAuthorization: {{token}}\n",
+			"headerData": [
+				{
+					"key": "Accept",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "Authorization",
+					"value": "{{token}}",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "{{environment}}/conversations",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1496514661444,
+			"name": "Conversations",
+			"description": "",
+			"collectionId": "d25a7b98-097a-b36d-f2cc-2bff2ed62168",
+			"rawModeData": ""
+		},
+		{
+			"folder": null,
+			"id": "d4498e25-3b0d-bb71-adb0-f58444885ebf",
+			"name": "Session status",
+			"dataMode": "raw",
+			"data": [],
+			"descriptionFormat": null,
+			"description": "",
+			"headers": "Accept: application/json\nContent-Type: application/json\nAuthorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwcm9mZXNvci1jY2U1bWpycG9uNjhhbjFxcXMyOHR2a2ZraiJ9.Z4ZxANYSsJb9YQLP-mFQ7Yc1izWTAxPo1gabhHPF4YTVxH-BbPOAhxrdG4-NfUOszc7Y59QDaeZoWYVZO_-pSg",
+			"method": "POST",
+			"pathVariables": null,
+			"url": "{{environment}}/status",
+			"preRequestScript": null,
+			"tests": null,
+			"currentHelper": null,
+			"helperAttributes": null,
+			"queryParams": null,
+			"headerData": null,
+			"pathVariableData": null,
+			"collectionId": "d25a7b98-097a-b36d-f2cc-2bff2ed62168",
+			"rawModeData": "{}"
+		},
+		{
+			"id": "dbea351a-ce45-56a5-2f7b-c8f4d4e08782",
+			"headers": "Accept: application/json\nContent-Type: application/json\nAuthorization: {{token}}\n",
+			"headerData": [
+				{
+					"key": "Accept",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "Authorization",
+					"value": "{{token}}",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "{{environment}}/broadcast/register",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1496667621156,
+			"name": "Broadcast - register",
+			"description": "",
+			"collectionId": "d25a7b98-097a-b36d-f2cc-2bff2ed62168",
+			"rawModeData": "{\n  \"broadcastMessage\" : \"Copistería Martínez: El encuadernado de tu TFG por solo 5€ (jaja, es broma)\"\n}"
+		},
+		{
+			"folder": null,
+			"id": "e2af6361-0e8a-dbfd-451b-d63069b2f634",
+			"name": "Update push token",
+			"dataMode": "raw",
+			"data": [],
+			"descriptionFormat": null,
+			"description": "",
+			"headers": "Content-Type: application/json\nAccept: application/json\nAuthorization: Bearer <token>",
+			"method": "POST",
+			"pathVariables": null,
+			"url": "{{environment}}/update/push_token",
+			"preRequestScript": null,
+			"tests": null,
+			"currentHelper": null,
+			"helperAttributes": null,
+			"queryParams": null,
+			"headerData": null,
+			"pathVariableData": null,
+			"collectionId": "d25a7b98-097a-b36d-f2cc-2bff2ed62168",
+			"rawModeData": "{}"
+		},
+		{
+			"folder": null,
+			"id": "f55ec40f-fc7d-dfea-2a55-cd22546f19ec",
+			"name": "Logout",
+			"dataMode": "raw",
+			"data": [],
+			"descriptionFormat": null,
+			"description": "",
+			"headers": "Accept: application/json\nContent-Type: application/json\nAuthorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwcm9mZXNvci1jY2U1bWpycG9uNjhhbjFxcXMyOHR2a2ZraiJ9.Z4ZxANYSsJb9YQLP-mFQ7Yc1izWTAxPo1gabhHPF4YTVxH-BbPOAhxrdG4-NfUOszc7Y59QDaeZoWYVZO_-pSg",
+			"method": "POST",
+			"pathVariables": null,
+			"url": "{{environment}}/logout",
+			"preRequestScript": null,
+			"tests": null,
+			"currentHelper": null,
+			"helperAttributes": null,
+			"queryParams": null,
+			"headerData": null,
+			"pathVariableData": null,
+			"collectionId": "d25a7b98-097a-b36d-f2cc-2bff2ed62168",
+			"rawModeData": "{}"
+		}
+	]
+}

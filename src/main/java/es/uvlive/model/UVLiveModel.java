@@ -71,15 +71,34 @@ public class UVLiveModel {
             throw new UnsupportedOperationException();
     }
 
-    // TODO Check in VP (Hint: idAlumno)
     /**
      * 
      * @param key
-     * @param idAlumno
+     * @param Student
+     * @throws Exception 
      */
-	public void blockStudent(String key, int idAlumno) {
-		// TODO - implement UVLiveModel.banearAlumno
-		throw new UnsupportedOperationException();
+    // TODO check names in VP (Hint: idAlumno)
+	public void blockStudent(String key, int idStudent) throws Exception {
+		User user = getUser(key);
+		if (user != null && user instanceof Teacher) {
+			((Teacher)user).blockStudent(idStudent);
+			sessionManager.blockUser(idStudent);
+		}
+	}
+	
+    /**
+     * 
+     * @param key
+     * @param Student
+     * @throws Exception 
+     */
+    // TODO @Non-generated
+	public void unblockStudent(String key, int idStudent) throws Exception {
+		User user = getUser(key);
+		if (user != null && user instanceof Teacher) {
+			((Teacher)user).unblockStudent(idStudent);
+			sessionManager.unblockUser(idStudent);
+		}
 	}
 
 	// TODO Check in VP (Hint: No method with different name and same parameters
@@ -239,6 +258,18 @@ public class UVLiveModel {
 		if (user != null && user instanceof RolUV) {
 			((RolUV)user).setPushToken(pushToken);
 		}
+	}
+
+	public <T extends RolUV> Collection<RolUV> getUsers(String token) throws Exception {
+		User user = getUser(token);
+		if (user instanceof RolUV) {
+			if (user instanceof Teacher) {
+				return ((Teacher)user).getUsers();
+			} else if (user instanceof Student) {
+				return ((Student)user).getUsers();
+			}
+		}
+		return null;
 	}
 
 }
