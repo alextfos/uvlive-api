@@ -40,13 +40,12 @@ public class User {
 	public void setLastname(String lastname) {
 		this.lastname = lastname;
 	}
-<<<<<<< HEAD
 	
 	@Override
 	public boolean equals(Object o) {
 		return o instanceof User && ((User)o).userId == this.userId;
 	}
-=======
+
 
 	// @Non-generated
 	public String getUsername() {
@@ -57,6 +56,4 @@ public class User {
 	public void setUsername(String username) {
 		this.username = username;
 	}
-	
->>>>>>> develop
 }
