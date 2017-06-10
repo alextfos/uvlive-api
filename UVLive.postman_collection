@@ -26,7 +26,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"userName\":\"profesor\",\n\t\"password\":\"1006\",\n\t\"loginType\":\"profesor\"\n}"
+					"raw": "{\n\t\"userName\":\"alumno\",\n\t\"password\":\"1006\",\n\t\"loginType\":\"Student\"\n}"
 				},
 				"description": ""
 			},
@@ -50,7 +50,7 @@
 					},
 					{
 						"key": "Authorization",
-						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhbHVtbm8tZzFsYWhvNWVkcjVxanVtZzlmaXA4aDJnMzgifQ.4vkCBcxQ0uMEK6zh8nNKrHSYSHwPWG-L6JRvsQrrKLi2RKI_UqG6_GmY4Ma-AVyPgxT5NCOYB0lfHN9Sw1XEYQ",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbi1mbTluYnZldDllN3V2MjI2MGVsaHJqbTk3NCJ9.B3HRKPHgHPPDiPccPVZXN4Dx-BZpybbiVhDvxRuh8-WdxLxsc6YbPiDyKRQDn0xIpLeMj-lRpXPIteYzFEzPrw",
 						"description": ""
 					}
 				],
@@ -170,13 +170,13 @@
 					},
 					{
 						"key": "Authorization",
-						"value": "Bearer <token>",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhbHVtbm8tbzl2bWFiaWk4ZmtvOHFjY3FnaWE0bHBtN3EifQ.1oDXltwE8lEf6Oy_Jh33RhtjRddBle_XSjEHoPAbQcIAEOzAO_gRE7ixae_RKwLPhkyh6aaON0HBXCO6AZbyTw",
 						"description": ""
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{}"
+					"raw": "{\n\t\"pushToken\":\"nuevoToken\"\n}"
 				},
 				"description": ""
 			},
@@ -189,6 +189,156 @@
 				"method": "POST",
 				"header": [],
 				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Register Businessman",
+			"request": {
+				"url": "{{environment}}/businessman/register",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbi10bjA4aWZ0M3J1MXUwMnZoNWdya2Z1amk3ayJ9.Awtsg3MINGFDkDWZWfpvCywHOxGnChFVTqrgXsI5I8UqYCxSYrlGwwJ_EcNF1SRhABRvGA5NQAatwxGfpGLAqg",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"dni\": \"asdf\",\n\t\"firstName\": \"asdf\",\n\t\"lastName\": \"asdf\",\n\t\"userName\": \"manolo\",\n\t\"password\": \"1006\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Validate Businessman name",
+			"request": {
+				"url": "{{environment}}/businessman/register",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbi1mbTluYnZldDllN3V2MjI2MGVsaHJqbTk3NCJ9.B3HRKPHgHPPDiPccPVZXN4Dx-BZpybbiVhDvxRuh8-WdxLxsc6YbPiDyKRQDn0xIpLeMj-lRpXPIteYzFEzPrw",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"userName\":\"manolo\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "BusinessmanUpdate",
+			"request": {
+				"url": "{{environment}}/businessman/update",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbi1mbTluYnZldDllN3V2MjI2MGVsaHJqbTk3NCJ9.B3HRKPHgHPPDiPccPVZXN4Dx-BZpybbiVhDvxRuh8-WdxLxsc6YbPiDyKRQDn0xIpLeMj-lRpXPIteYzFEzPrw",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"userName\":\"manolo\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Send message",
+			"request": {
+				"url": "{{environment}}/send",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwcm9mZXNvci1jNWdlc3NibzVmYXI4MDVvM3VnN2R2OThpcSJ9.iiFD0pNCzxzLqzWjTEc9zwFy5mPh4onHyyYr-2j5peQUHDs-F36_LwzozkrKmI-BCxei_ozwS3lnOeuVnJB--w",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"idConversation\":\"1\",\n\t\"message\":\"primer mensaje\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Get messages",
+			"request": {
+				"url": "{{environment}}/send",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwcm9mZXNvci1jNWdlc3NibzVmYXI4MDVvM3VnN2R2OThpcSJ9.iiFD0pNCzxzLqzWjTEc9zwFy5mPh4onHyyYr-2j5peQUHDs-F36_LwzozkrKmI-BCxei_ozwS3lnOeuVnJB--w",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"idConversation\":\"1\",\n\t\"message\":\"primer mensaje\"\n}"
+				},
 				"description": ""
 			},
 			"response": []
