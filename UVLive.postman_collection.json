@@ -14,7 +14,8 @@
 		"951979c0-57c2-8827-d7f1-98dc48691272",
 		"dbea351a-ce45-56a5-2f7b-c8f4d4e08782",
 		"51d6470a-86f5-0175-3a2f-eb973190539d",
-		"0bfd2bf4-a4b5-5291-e1e3-8a0668c8f81e"
+		"0bfd2bf4-a4b5-5291-e1e3-8a0668c8f81e",
+		"74dcdd51-6e7d-03bc-66f2-e11a4042ce7c"
 	],
 	"folders": [],
 	"timestamp": 0,
@@ -158,6 +159,46 @@
 			"description": "",
 			"collectionId": "d25a7b98-097a-b36d-f2cc-2bff2ed62168",
 			"rawModeData": "{\n  \"idStudent\":\"1\"\n}"
+		},
+		{
+			"id": "74dcdd51-6e7d-03bc-66f2-e11a4042ce7c",
+			"headers": "Accept: application/json\nContent-Type: application/json\nAuthorization: {{token}}\n",
+			"headerData": [
+				{
+					"key": "Accept",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "Authorization",
+					"value": "{{token}}",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "{{environment}}/getusers",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1497046186790,
+			"name": "Conversations - getUsers",
+			"description": "",
+			"collectionId": "d25a7b98-097a-b36d-f2cc-2bff2ed62168",
+			"rawModeData": ""
 		},
 		{
 			"id": "951979c0-57c2-8827-d7f1-98dc48691272",
