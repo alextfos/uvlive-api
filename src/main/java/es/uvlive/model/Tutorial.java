@@ -2,6 +2,15 @@ package es.uvlive.model;
 
 import java.util.*;
 
+import es.uvlive.requests.GoogleInterface;
+import es.uvlive.requests.NotificationRequest;
+import es.uvlive.requests.NotificationResponse;
+import es.uvlive.requests.RetrofitFactory;
+import es.uvlive.requests.NotificationRequest.Notification;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class Tutorial {
 
 	// TODO Check in VP
@@ -14,6 +23,7 @@ public class Tutorial {
 	// @Non-generated
 	public Tutorial() {
 		this.messages = new ArrayList<Message>();
+		rolUVs = new ArrayList<>();
 	}
 	
 	// @Non-generated
@@ -24,6 +34,10 @@ public class Tutorial {
 	// @Non-generated
 	public void setRolUVs(Collection<RolUV> rolUVs) {
 		this.rolUVs = rolUVs;
+	}
+	
+	public void addRolUV(RolUV rolUV) {
+		rolUVs.add(rolUV);
 	}
 
 	// @Non-generated
@@ -57,10 +71,33 @@ public class Tutorial {
 	}
 	
 	// @Non-generated
-	public void sendMessage(Message message) {
+	public void sendMessage(RolUV currentUser, Message message) {
+		// TODO no
 		if(messages != null && message != null) {
 			messages.add(message);
 		}
-		// TODO notify all users
+		for (RolUV rolUV: rolUVs) {
+			if (!currentUser.equals(rolUV)) {
+				String pushToken = rolUV.getPushToken();
+				GoogleInterface googleInterface = RetrofitFactory.getGoogleInterface();
+		        NotificationRequest notificationRequest = new NotificationRequest();
+		        
+		        notificationRequest.setNotification(new Notification("GET","MESSAGES"));
+		        notificationRequest.setTo(pushToken);
+		        Call<NotificationResponse> callback = googleInterface.sendNotification(notificationRequest);
+		        callback.enqueue(new Callback<NotificationResponse>() {
+		            @Override
+		            public void onResponse(Call<NotificationResponse> call, Response<NotificationResponse> rspns) {
+		                System.out.println("Response");
+		            }
+	
+		            @Override
+		            public void onFailure(Call<NotificationResponse> call, Throwable thrwbl) {
+		                System.out.println("Error: ");
+		                thrwbl.printStackTrace();
+		            }
+		        });
+			}
+		}
 	}
 }

@@ -18,7 +18,7 @@ public class MessageDAO extends BaseDAO {
 	
 	private static final String QUERY_GET_MESSAGES = "SELECT * FROM " + MESSAGE_TABLE + " WHERE " + MESSAGE_ID_CONVERSATION_FIELD + " = %s";
 
-	public Message sendMessage(RolUV user, int idTutorial, String text) throws SQLException, ClassNotFoundException {
+	public Message saveMessage(RolUV user, int idTutorial, String text) throws SQLException, ClassNotFoundException {
 		Message message = new Message();
 
 		String timestamp = String.valueOf(((long) new Date().getTime()) / 1000);

@@ -37,4 +37,9 @@ public class User {
 	public void setLastname(String lastname) {
 		this.lastname = lastname;
 	}
+	
+	@Override
+	public boolean equals(Object o) {
+		return o instanceof User && ((User)o).userId == this.userId;
+	}
 }

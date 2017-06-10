@@ -28,6 +28,9 @@ public abstract class RolUV extends User {
 		if (tutorialsCatalog != null) {
 			if (userTutorials == null || userTutorials.isEmpty()) {
 				userTutorials = tutorialsCatalog.getTutorials(this);
+				for (Tutorial tutorial: userTutorials) {
+					tutorial.addRolUV(this);
+				}
 			}
 		}
 		
@@ -59,15 +62,12 @@ public abstract class RolUV extends User {
 	 * @throws ClassNotFoundException 
 	 */
 	// @Non-generated
-	public void sendMessage(int idTutorial, String text) throws SQLException, ClassNotFoundException {/*
-		if (tutorialsCatalog != null) {
-			tutorialsCatalog.sendMessage(this, idTutorial, text);
-		}*/
-		// Recorrer userTutorials y buscar por ID
-		// si no está throw UnauthorizedException
+	public void sendMessage(int idTutorial, String text) throws SQLException, ClassNotFoundException, Exception {
+		if (tutorialsCatalog == null) {
+			throw new Exception();
+		}
 		
 		Tutorial currentTutorial = null;
-		Message message = new Message();
 		
 		// Gets the current tutorial from tutorials collection
 		for (Tutorial tutorial : userTutorials) {
@@ -76,15 +76,10 @@ public abstract class RolUV extends User {
 			}
 		}
 		
-		// Gets messages of current tutorial
-//		if (currentTutorial.getMessages() != null && !currentTutorial.getMessages().isEmpty()) {
-//			tutorialMessages = currentTutorial.getMessages();
-//		}
-		
-		// Stores message in database and returns a new message model
-		message = new MessageDAO().sendMessage(this, idTutorial, text); // TODO change it
-		
-		currentTutorial.sendMessage(message);
+		if (currentTutorial != null) {
+			Message message = new MessageDAO().saveMessage(this, idTutorial, text);
+			currentTutorial.sendMessage(this,message);
+		}
 	}
 
 	// TODO @Non-generated

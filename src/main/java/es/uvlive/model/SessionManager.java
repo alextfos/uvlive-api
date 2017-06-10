@@ -36,16 +36,16 @@ public class SessionManager {
      * @param password
      * @param loginType
      */
-    public String login(String userName, String password, String loginType, String pushToken, String key) throws Exception {
-    	if (usersCollection.containsKey(key)) {
-            return key;
+    public String login(String userName, String password, String loginType, String pushToken, String token) throws Exception {
+    	if (!StringUtils.isEmpty(token) && usersCollection.containsKey(getKey(token))) {
+            return token;
         }
-        String token = null;
+        String newToken = null;
         UserDAO userDao = new UserDAO();
         User user = userDao.getUser(userName, password, loginType);
         if (user != null) {
         	String stringKey = userName+"-"+generateId();
-            token = Jwts.builder().setSubject(stringKey)
+        	newToken = Jwts.builder().setSubject(stringKey)
               .signWith(SignatureAlgorithm.HS512, SIGNATURE_KEY)
               .compact();
             if (user instanceof Admin) {
@@ -58,7 +58,7 @@ public class SessionManager {
         } else {
         	throw new WrongCredentialsException();
         }
-        return token;
+        return newToken;
     }
     
     // TODO @Non-generated method
@@ -75,15 +75,19 @@ public class SessionManager {
      * Gets user - Si hay algun tipo de ptoblema con el token, se lanzará una excepción de no autorizado
      * @param key
      */
-    public User getUser(String key) throws UnauthorizedException {
+    public User getUser(String token) throws UnauthorizedException {
     	try {
-    	Claims claims = Jwts.parser()         
-    		       .setSigningKey(SIGNATURE_KEY)
-    		       .parseClaimsJws(key).getBody();
-        return usersCollection.get(claims.getSubject());
+			return usersCollection.get(getKey(token));
     	} catch (Exception e) {
     		throw new UnauthorizedException();
     	}
+    }
+    
+    private String getKey(String token) {
+    	Claims claims = Jwts.parser()         
+ 		       .setSigningKey(SIGNATURE_KEY)
+ 		       .parseClaimsJws(token).getBody();
+    	return claims.getSubject();
     }
     
     // TODO @Non-generated method

@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @author atraver
  */
 @Controller
-public class MessagesController extends BaseController{
+public class MessagesController extends BaseController {
     
     @RequestMapping(value = "/messages", method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE,
@@ -70,13 +70,10 @@ public class MessagesController extends BaseController{
             @RequestBody SendMessagesForm sendMessagesForm,
             BindingResult result,
             HttpServletRequest request,
-            HttpServletResponse response) throws Exception
-    {
+            HttpServletResponse response) {
     	BaseResponse baseResponse = new BaseResponse();
     	try {
-	    	// @Non-generated
-	    	String token = request.getHeader("Authorization");
-	    	uvLiveModel.sendMessage(token, Integer.parseInt(sendMessagesForm.getIdConversation()), sendMessagesForm.getMessage());
+	    	uvLiveModel.sendMessage(getToken(request), Integer.parseInt(sendMessagesForm.getIdConversation()), sendMessagesForm.getMessage());
     	} catch (Exception e) {
     		baseResponse.setErrorCode(getErrorCode(e));
     	}
