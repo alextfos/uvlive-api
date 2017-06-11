@@ -58,12 +58,10 @@
 			"tests": null,
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1496954742516,
+			"time": 1497210037343,
 			"name": "Permissions - unblock student",
 			"description": "",
 			"collectionId": "d25a7b98-097a-b36d-f2cc-2bff2ed62168",
-			"isFromCollection": true,
-			"collectionRequestId": "51d6470a-86f5-0175-3a2f-eb973190539d",
 			"rawModeData": "{\n  \"idStudent\":\"1\"\n}"
 		},
 		{
@@ -94,11 +92,11 @@
 			"tests": "var jsonData = JSON.parse(responseBody);\npostman.setEnvironmentVariable(\"token\", jsonData.token);",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1496954320743,
+			"time": 1497205981520,
 			"name": "Login",
 			"description": "",
 			"collectionId": "d25a7b98-097a-b36d-f2cc-2bff2ed62168",
-			"rawModeData": "{\n  \"userName\":\"profesor\",\n  \"password\":\"1006\",\n  \"loginType\":\"Teacher\",\n  \"pushToken\":\"eOParOKQAKM:APA91bF-D598Swt-L_UgOTNg1naQzT9lfq2MIiDpIGz-G4iuQfWxg0VgmFkCGBf6Yl25_vjmbk_b869dd3B3UxwNF62UaCAjT4JAa5TdJT27xSm838jA26jnFFjaBy3z0lR_4uDPXxjy\"\n}"
+			"rawModeData": "{\n  \"userName\":\"alumno\",\n  \"password\":\"1006\",\n  \"loginType\":\"Studen\",\n  \"pushToken\":\"eOParOKQAKM:APA91bF-D598Swt-L_UgOTNg1naQzT9lfq2MIiDpIGz-G4iuQfWxg0VgmFkCGBf6Yl25_vjmbk_b869dd3B3UxwNF62UaCAjT4JAa5TdJT27xSm838jA26jnFFjaBy3z0lR_4uDPXxjy\"\n}"
 		},
 		{
 			"id": "25333191-8ff7-c8a8-0759-3da68f11aa8d",
@@ -123,7 +121,7 @@
 					"enabled": true
 				}
 			],
-			"url": "{{environment}}/messages",
+			"url": "{{environment}}/getFollowingMessages",
 			"queryParams": [],
 			"preRequestScript": null,
 			"pathVariables": {},
@@ -134,7 +132,7 @@
 			"tests": null,
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1497186350850,
+			"time": 1497210441240,
 			"name": "Message - get following messages from message in a conversation copy",
 			"description": "",
 			"collectionId": "d25a7b98-097a-b36d-f2cc-2bff2ed62168",
@@ -265,7 +263,7 @@
 					"enabled": true
 				}
 			],
-			"url": "{{environment}}/messages",
+			"url": "{{environment}}/getPreviousMessages",
 			"queryParams": [],
 			"preRequestScript": null,
 			"pathVariables": {},
@@ -276,7 +274,7 @@
 			"tests": null,
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1497186350850,
+			"time": 1497205718586,
 			"name": "Message - get previous messages from message in a conversation",
 			"description": "",
 			"collectionId": "d25a7b98-097a-b36d-f2cc-2bff2ed62168",
@@ -487,46 +485,82 @@
 			"rawModeData": "{\n  \"broadcastMessage\" : \"Copistería Martínez: El encuadernado de tu TFG por solo 5€ (jaja, es broma)\"\n}"
 		},
 		{
-			"folder": null,
 			"id": "e2af6361-0e8a-dbfd-451b-d63069b2f634",
-			"name": "Update push token",
-			"dataMode": "raw",
-			"data": [],
-			"descriptionFormat": null,
-			"description": "",
-			"headers": "Content-Type: application/json\nAccept: application/json\nAuthorization: Bearer <token>",
-			"method": "POST",
-			"pathVariables": null,
+			"headers": "Content-Type: application/json\nAccept: application/json\nAuthorization: {{token}}\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "Accept",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "Authorization",
+					"value": "{{token}}",
+					"description": "",
+					"enabled": true
+				}
+			],
 			"url": "{{environment}}/update/push_token",
+			"queryParams": [],
 			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
 			"tests": null,
-			"currentHelper": null,
-			"helperAttributes": null,
-			"queryParams": null,
-			"headerData": null,
-			"pathVariableData": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1497209861290,
+			"name": "Update push token",
+			"description": "",
 			"collectionId": "d25a7b98-097a-b36d-f2cc-2bff2ed62168",
-			"rawModeData": "{}"
+			"rawModeData": "{\"pushToken\":\"eOParOKQAKM:APA91bF-D598Swt-L_UgOTNg1naQzT9lfq2MIiDpIGz-G4iuQfWxg0VgmFkCGBf6Yl25_vjmbk_b869dd3B3UxwNF62UaCAjT4JAa5TdJT27xSm838jA26jnFFjaBy3z0lR_4uDPXxjy\"}"
 		},
 		{
-			"folder": null,
 			"id": "f55ec40f-fc7d-dfea-2a55-cd22546f19ec",
-			"name": "Logout",
-			"dataMode": "raw",
-			"data": [],
-			"descriptionFormat": null,
-			"description": "",
-			"headers": "Accept: application/json\nContent-Type: application/json\nAuthorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwcm9mZXNvci1jY2U1bWpycG9uNjhhbjFxcXMyOHR2a2ZraiJ9.Z4ZxANYSsJb9YQLP-mFQ7Yc1izWTAxPo1gabhHPF4YTVxH-BbPOAhxrdG4-NfUOszc7Y59QDaeZoWYVZO_-pSg",
-			"method": "POST",
-			"pathVariables": null,
+			"headers": "Accept: application/json\nContent-Type: application/json\nAuthorization: {{token}}\n",
+			"headerData": [
+				{
+					"key": "Accept",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "Authorization",
+					"value": "{{token}}",
+					"description": "",
+					"enabled": true
+				}
+			],
 			"url": "{{environment}}/logout",
+			"queryParams": [],
 			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
 			"tests": null,
-			"currentHelper": null,
-			"helperAttributes": null,
-			"queryParams": null,
-			"headerData": null,
-			"pathVariableData": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1497204415310,
+			"name": "Logout",
+			"description": "",
 			"collectionId": "d25a7b98-097a-b36d-f2cc-2bff2ed62168",
 			"rawModeData": "{}"
 		}
