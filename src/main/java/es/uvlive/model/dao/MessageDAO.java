@@ -13,10 +13,16 @@ import es.uvlive.model.RolUV;
 
 public class MessageDAO extends BaseDAO {
 
+	private static final int MESSAGES_LIMIT = 5;
+	
 	private static final String QUERY_SEND_MESSAGE = "INSERT INTO " + MESSAGE_TABLE
 			+ " (text, timestamp, ConversationidConversation, RolUVidUser) VALUES (?, ?, ?, ?);";
 	
-	private static final String QUERY_GET_MESSAGES = "SELECT * FROM " + MESSAGE_TABLE + " WHERE " + MESSAGE_ID_CONVERSATION_FIELD + " = %s";
+	private static final String QUERY_GET_MESSAGES = "SELECT * FROM " + MESSAGE_TABLE + " WHERE " + MESSAGE_ID_CONVERSATION_FIELD + " = %s ORDER BY " + TIME_STAMP_FIELD + " DESC LIMIT " + MESSAGES_LIMIT + ";";
+
+	private static final String QUERY_GET_PREVIOUS_MESSAGES = "SELECT * FROM " + MESSAGE_TABLE + " WHERE " + TIME_STAMP_FIELD + " < (SELECT " + TIME_STAMP_FIELD + " FROM " + MESSAGE_TABLE +" WHERE " + MESSAGE_ID_FIELD + " = %d) AND " + MESSAGE_ID_CONVERSATION_FIELD + " = %d ORDER BY " + TIME_STAMP_FIELD + " DESC;";
+	
+	private static final String QUERY_GET_FOLLOWING_MESSAGES = "SELECT * FROM " + MESSAGE_TABLE + " WHERE " + TIME_STAMP_FIELD + " > (SELECT " + TIME_STAMP_FIELD + " FROM " + MESSAGE_TABLE +" WHERE " + MESSAGE_ID_FIELD + " = %d) AND " + MESSAGE_ID_CONVERSATION_FIELD + " = %d ORDER BY " + TIME_STAMP_FIELD + " ASC;";
 
 	public Message sendMessage(RolUV user, int idTutorial, String text) throws SQLException, ClassNotFoundException {
 		Message message = new Message();
@@ -50,8 +56,42 @@ public class MessageDAO extends BaseDAO {
             while(result.next()) {
                 Message message = new Message();
                 message.setIdMessage(result.getInt(1));
-                // Gets user by id to set RolUV user
-                // TODO setRolUV();
+                message.setText(result.getString(2));
+                message.setTimestamp(result.getString(3));
+                
+                messages.add(message);
+            }
+        }
+        
+		return messages;
+	}
+	
+	public Collection<Message> getPreviousMessages(int idConversation, int idMessage) throws ClassNotFoundException, SQLException {
+		Collection<Message> messages = new ArrayList<Message>();
+		
+        ResultSet result = query(String.format(QUERY_GET_PREVIOUS_MESSAGES, idMessage, idConversation));
+        if (result != null) {
+            while(result.next()) {
+                Message message = new Message();
+                message.setIdMessage(result.getInt(1));
+                message.setText(result.getString(2));
+                message.setTimestamp(result.getString(3));
+                
+                messages.add(message);
+            }
+        }
+        
+		return messages;
+	}
+	
+	public Collection<Message> getFollowingMessages(int idConversation, int idMessage) throws ClassNotFoundException, SQLException {
+		Collection<Message> messages = new ArrayList<Message>();
+		
+        ResultSet result = query(String.format(QUERY_GET_FOLLOWING_MESSAGES, idMessage, idConversation));
+        if (result != null) {
+            while(result.next()) {
+                Message message = new Message();
+                message.setIdMessage(result.getInt(1));
                 message.setText(result.getString(2));
                 message.setTimestamp(result.getString(3));
                 
