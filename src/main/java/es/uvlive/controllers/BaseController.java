@@ -11,6 +11,8 @@ import org.springframework.util.StringUtils;
 
 import es.uvlive.controllers.exceptions.TokenExpiredException;
 import es.uvlive.controllers.exceptions.UnauthorizedException;
+import es.uvlive.controllers.exceptions.UserDefinedException;
+import es.uvlive.controllers.exceptions.UserNotDefinedException;
 import es.uvlive.controllers.exceptions.WrongCredentialsException;
 import es.uvlive.model.UVLiveModel;
 import es.uvlive.utils.Logger;
@@ -22,6 +24,8 @@ public class BaseController {
     public static final int WRONG_CREDENTIALS_CODE = -1;
     public static final int UNAUTHORIZED_CODE = -2;
     public static final int TOKEN_EXPIRED = -3;
+    public static final int USER_DEFINED = -4;
+    public static final int USER_NOT_DEFINED = -5;
     
     protected UVLiveModel uvLiveModel = UVLiveModel.getInstance();
     
@@ -56,6 +60,13 @@ public class BaseController {
 	    			break;
 	    		case TokenExpiredException.MESSAGE:
 	    			code = TOKEN_EXPIRED;
+	    			break;
+	    		case UserDefinedException.MESSAGE:
+	    			code = USER_DEFINED;
+	    			break;
+	    		case UserNotDefinedException.MESSAGE:
+	    			code = USER_NOT_DEFINED;
+	    			break;
 	    	}
     	}
     	return code;

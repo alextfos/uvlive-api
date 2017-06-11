@@ -152,11 +152,7 @@ public class UVLiveModel {
 		User user = getUser(key);
 		
 		if (user != null && user instanceof Admin) {
-			if (!((Admin)user).checkUserExists(userName)) {
-				((Admin)user).registerBusinessman(dni, firstname, lastname, userName, password);
-			} else {
-				throw new UserDefinedException();
-			}
+			((Admin)user).registerBusinessman(dni, firstname, lastname, userName, password);
 		} else {
 			throw new UnauthorizedException();
 		}
@@ -176,11 +172,7 @@ public class UVLiveModel {
 		User user = getUser(key);
 		
 		if (user != null && user instanceof Admin) {
-			if (!((Admin)user).checkUserExists(userName)) {
-				((Admin)user).updateBusinessman(dni, firstname, lastname, userName, password);
-			} else {
-				throw new UserDefinedException();
-			}
+			((Admin)user).updateBusinessman(dni, firstname, lastname, userName, password);
 		} else {
 			throw new UnauthorizedException();
 		}
