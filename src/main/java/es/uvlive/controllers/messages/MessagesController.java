@@ -62,6 +62,73 @@ public class MessagesController extends BaseController{
     	return messageListResponse;
     }
     
+    @RequestMapping(value = "/getPreviousMessages", method = RequestMethod.POST,
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            headers={"Content-Type=application/json"})
+    public @ResponseBody
+    MessageListResponse getPreviousMessages(@RequestBody GetMessagesForm getMesagesForm, BindingResult result,
+            HttpServletRequest request, HttpServletResponse response) throws Exception
+    {
+    	MessageListResponse messageListResponse = new MessageListResponse();
+    	Collection<MessageResponse> messageResponseList = new ArrayList<MessageResponse>();
+    	Collection<Message> messages = new ArrayList<Message>();
+    	
+    	try {
+    		
+	    	messages = uvLiveModel.getPreviousMessages(getToken(request), getMesagesForm);
+	    	for (Message message : messages) {
+	    		MessageResponse messageResponse = new MessageResponse();
+	    		messageResponse.setIdMessage(message.getIdMessage());
+	    		messageResponse.setText(message.getText());
+	    		messageResponse.setTimestamp(message.getTimestamp());
+	    		
+	    		messageResponseList.add(messageResponse);
+	    	}
+	    	
+	    	messageListResponse.setMessages(messageResponseList);
+    	
+    	} catch (Exception e) {
+    		messageListResponse.setErrorCode(getErrorCode(e));
+    	}
+    	
+    	return messageListResponse;
+    }
+    
+    @RequestMapping(value = "/getFollowingMessages", method = RequestMethod.POST,
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            headers={"Content-Type=application/json"})
+    public @ResponseBody
+    MessageListResponse getFollowingMessages(@RequestBody GetMessagesForm getMesagesForm, BindingResult result,
+            HttpServletRequest request, HttpServletResponse response) throws Exception
+    {
+    	MessageListResponse messageListResponse = new MessageListResponse();
+    	Collection<MessageResponse> messageResponseList = new ArrayList<MessageResponse>();
+    	Collection<Message> messages = new ArrayList<Message>();
+    	
+    	try {
+    		
+	    	messages = uvLiveModel.getFollowingMessages(getToken(request), getMesagesForm);
+	    	for (Message message : messages) {
+	    		MessageResponse messageResponse = new MessageResponse();
+	    		messageResponse.setIdMessage(message.getIdMessage());
+	    		messageResponse.setText(message.getText());
+	    		messageResponse.setTimestamp(message.getTimestamp());
+	    		
+	    		messageResponseList.add(messageResponse);
+	    	}
+	    	
+	    	messageListResponse.setMessages(messageResponseList);
+    	
+    	} catch (Exception e) {
+    		messageListResponse.setErrorCode(getErrorCode(e));
+    	}
+    	
+    	return messageListResponse;
+    }
+    
+    
     @RequestMapping(value = "/send", method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE,

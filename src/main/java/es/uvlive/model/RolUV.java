@@ -125,6 +125,48 @@ public abstract class RolUV extends User {
 		
 		return messages;
 	}
+	
+	public Collection<Message> getPreviousMessages(int idConversation, int idMessage) throws ClassNotFoundException, SQLException {
+		Collection<Message> messages = new ArrayList<Message>();
+		Tutorial requestedTutorial = new Tutorial();
+		
+		for (Tutorial tutorial : userTutorials) {
+			if (tutorial.getIdTutorial() == idConversation) {
+				// User can read this conversation
+				requestedTutorial = tutorial;
+				if (requestedTutorial.getMessages() != null && !requestedTutorial.getMessages().isEmpty()){
+					messages = requestedTutorial.getMessages();
+				} else {
+					// Should get conversations messages
+					messages = new MessageDAO().getPreviousMessages(idConversation, idMessage);
+					// TODO update user conversations list with messages
+				}
+			}
+		}
+		
+		return messages;
+	}
+	
+	public Collection<Message> getFollowingMessages(int idConversation, int idMessage) throws ClassNotFoundException, SQLException {
+		Collection<Message> messages = new ArrayList<Message>();
+		Tutorial requestedTutorial = new Tutorial();
+		
+		for (Tutorial tutorial : userTutorials) {
+			if (tutorial.getIdTutorial() == idConversation) {
+				// User can read this conversation
+				requestedTutorial = tutorial;
+				if (requestedTutorial.getMessages() != null && !requestedTutorial.getMessages().isEmpty()){
+					messages = requestedTutorial.getMessages();
+				} else {
+					// Should get conversations messages
+					messages = new MessageDAO().getFollowingMessages(idConversation, idMessage);
+					// TODO update user conversations list with messages
+				}
+			}
+		}
+		
+		return messages;
+	}
 
 	public abstract Collection<RolUV> getUsers() throws ClassNotFoundException, SQLException;
 	
