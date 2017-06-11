@@ -1,5 +1,6 @@
 package es.uvlive.model;
 
+import es.uvlive.controllers.exceptions.TokenExpiredException;
 import es.uvlive.controllers.exceptions.UnauthorizedException;
 import es.uvlive.controllers.exceptions.WrongCredentialsException;
 import es.uvlive.model.dao.BusinessmanDAO;
@@ -75,11 +76,11 @@ public class SessionManager {
      * Gets user - Si hay algun tipo de ptoblema con el token, se lanzará una excepción de no autorizado
      * @param key
      */
-    public User getUser(String token) throws UnauthorizedException {
+    public User getUser(String token) throws TokenExpiredException {
     	try {
 			return usersCollection.get(getKey(token));
     	} catch (Exception e) {
-    		throw new UnauthorizedException();
+    		throw new TokenExpiredException();
     	}
     }
     

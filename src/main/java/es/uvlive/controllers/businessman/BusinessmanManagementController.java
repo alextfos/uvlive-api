@@ -74,12 +74,12 @@ public class BusinessmanManagementController extends BaseController {
 	public @ResponseBody BaseResponse registerBroadcast(@RequestBody BroadcastForm broadcastForm,
 		BindingResult result, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
+		BaseResponse baseResponse = new BaseResponse();
 		try {
-			String token = request.getHeader("Authorization");
-			uvLiveModel.registerBroadcast(token, broadcastForm.getBroadcastMessage());
+			uvLiveModel.registerBroadcast(getToken(request), broadcastForm.getBroadcastMessage());
 		} catch (Exception e) {
-			new BaseResponse().setErrorCode(getErrorCode(e));
+			baseResponse.setErrorCode(getErrorCode(e));
 		}
-		return new BaseResponse();
+		return baseResponse;
 	}
 }

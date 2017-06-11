@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.util.StringUtils;
 
+import es.uvlive.controllers.exceptions.TokenExpiredException;
 import es.uvlive.controllers.exceptions.UnauthorizedException;
 import es.uvlive.controllers.exceptions.WrongCredentialsException;
 import es.uvlive.model.UVLiveModel;
@@ -20,6 +21,7 @@ public class BaseController {
     public static final int OK_CODE = 0;
     public static final int WRONG_CREDENTIALS_CODE = -1;
     public static final int UNAUTHORIZED_CODE = -2;
+    public static final int TOKEN_EXPIRED = -3;
     
     protected UVLiveModel uvLiveModel = UVLiveModel.getInstance();
     
@@ -52,6 +54,8 @@ public class BaseController {
 	    		case WrongCredentialsException.MESSAGE:
 	    			code = WRONG_CREDENTIALS_CODE;
 	    			break;
+	    		case TokenExpiredException.MESSAGE:
+	    			code = TOKEN_EXPIRED;
 	    	}
     	}
     	return code;
