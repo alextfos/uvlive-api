@@ -201,7 +201,6 @@ public class UVLiveModel {
 		if (user instanceof Businessman) {
 			((Businessman)user).registerBroadcast(broadcastText);
 		}
-		throw new UnsupportedOperationException();
 	}
 
 	/**

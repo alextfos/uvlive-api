@@ -30,9 +30,11 @@ public class PermissionsController extends BaseController {
     {
     	BaseResponse baseResponse = new BaseResponse();
     	try {
-	    	// @Non-generated
-	    	String token = getToken(request);
-	    	uvLiveModel.blockStudent(token, permissionStudentForm.getIdStudent());
+    		if (permissionStudentForm.isValid()) {
+		    	// @Non-generated
+		    	String token = getToken(request);
+		    	uvLiveModel.blockStudent(token, permissionStudentForm.getIdStudent());
+    		}
     	} catch (Exception e) {
     		baseResponse.setErrorCode(getErrorCode(e));
     	}
@@ -50,9 +52,11 @@ public class PermissionsController extends BaseController {
     {
     	BaseResponse baseResponse = new BaseResponse();
     	try {
-	    	// @Non-generated
-	    	String token = getToken(request);
-	    	uvLiveModel.unblockStudent(token, permissionStudentForm.getIdStudent());
+    		if (permissionStudentForm.isValid()) {
+		    	// @Non-generated
+		    	String token = getToken(request);
+		    	uvLiveModel.unblockStudent(token, permissionStudentForm.getIdStudent());
+    		}
     	} catch (Exception e) {
     		baseResponse.setErrorCode(getErrorCode(e));
     	}

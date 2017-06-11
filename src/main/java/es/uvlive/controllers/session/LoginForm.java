@@ -49,7 +49,7 @@ public class LoginForm extends BaseForm {
 
 	@Override
 	public boolean isValid() {
-		return ValidationUtils.validateString(userName) || ValidationUtils.validatePassword(password) 
-				|| ValidationUtils.validateLoginType(loginType) || ValidationUtils.validateString(pushToken);
+		return ValidationUtils.validateString(userName) & ValidationUtils.validatePassword(password) 
+				& ValidationUtils.validateLoginType(loginType) & ValidationUtils.validateString(pushToken);
 	}
 }

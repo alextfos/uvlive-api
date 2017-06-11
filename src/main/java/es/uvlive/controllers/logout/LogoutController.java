@@ -8,6 +8,7 @@ package es.uvlive.controllers.logout;
 import es.uvlive.controllers.BaseController;
 import es.uvlive.controllers.BaseForm;
 import es.uvlive.controllers.BaseResponse;
+import es.uvlive.controllers.DefaultForm;
 import es.uvlive.controllers.session.LoginForm;
 import es.uvlive.model.UVLiveModel;
 
@@ -35,11 +36,12 @@ public class LogoutController extends BaseController {
             produces = MediaType.APPLICATION_JSON_VALUE,
             headers={"Content-Type=application/json"})
     public @ResponseBody
-    BaseResponse logout(@RequestBody BaseForm baseForm, BindingResult result,
+    BaseResponse logout(@RequestBody DefaultForm defaultForm, BindingResult result,
             HttpServletRequest request, HttpServletResponse response) throws Exception
     {
     	BaseResponse baseResponse = new BaseResponse();
     	try {
+    		
     		uvLiveModel.logout(getToken(request));
     	} catch (Exception e) {
     		baseResponse.setErrorCode(getErrorCode(e));

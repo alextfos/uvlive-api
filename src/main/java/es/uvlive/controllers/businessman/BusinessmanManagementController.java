@@ -19,10 +19,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import es.uvlive.controllers.BaseController;
 import es.uvlive.controllers.BaseResponse;
 
-/**
- *
- * @author alextfos
- */
 @Controller
 public class BusinessmanManagementController extends BaseController {
 
@@ -32,8 +28,10 @@ public class BusinessmanManagementController extends BaseController {
 			BindingResult result, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ValidateBusinessmanResponse validateBusinessmanResponse = new ValidateBusinessmanResponse();
 		try {
-			validateBusinessmanResponse
-					.setStatus(uvLiveModel.checkUserExists(getToken(request), validateBusinessmanForm.getUserName()));
+			if (validateBusinessmanForm.isValid()) {
+				validateBusinessmanResponse
+						.setStatus(uvLiveModel.checkUserExists(getToken(request), validateBusinessmanForm.getUserName()));
+			}
 		} catch (Exception e) {
 			validateBusinessmanResponse.setErrorCode(getErrorCode(e));
 		}
@@ -46,8 +44,10 @@ public class BusinessmanManagementController extends BaseController {
 			BindingResult result, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		SetBusinessmanResponse setBusinesmanResponse = new SetBusinessmanResponse();
 		try {
-			uvLiveModel.registerBusinessman(getToken(request), businessmanForm.getDni(), businessmanForm.getFirstName(),
+			if (businessmanForm.isValid()) {
+				uvLiveModel.registerBusinessman(getToken(request), businessmanForm.getDni(), businessmanForm.getFirstName(),
 				businessmanForm.getLastName(), businessmanForm.getUserName(), businessmanForm.getPassword());
+			}
 		} catch (Exception e) {
 			setBusinesmanResponse.setErrorCode(getErrorCode(e));
 		}
@@ -60,8 +60,10 @@ public class BusinessmanManagementController extends BaseController {
 			BindingResult result, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		SetBusinessmanResponse setBusinessmanResponse = new SetBusinessmanResponse();
 		try {
-			uvLiveModel.updateBusinessman(getToken(request), businessmanForm.getDni(), businessmanForm.getFirstName(),
-					businessmanForm.getLastName(), businessmanForm.getUserName(), businessmanForm.getPassword());
+			if (businessmanForm.isValid()) {
+				uvLiveModel.updateBusinessman(getToken(request), businessmanForm.getDni(), businessmanForm.getFirstName(),
+				businessmanForm.getLastName(), businessmanForm.getUserName(), businessmanForm.getPassword());
+			}
 		} catch (Exception e) {
 			setBusinessmanResponse.setErrorCode(getErrorCode(e));
 		}
@@ -75,8 +77,10 @@ public class BusinessmanManagementController extends BaseController {
 		BindingResult result, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
 		try {
-			String token = request.getHeader("Authorization");
-			uvLiveModel.registerBroadcast(token, broadcastForm.getBroadcastMessage());
+			if (broadcastForm.isValid()) {
+				String token = getToken(request);
+				uvLiveModel.registerBroadcast(token, broadcastForm.getBroadcastMessage());
+			}
 		} catch (Exception e) {
 			new BaseResponse().setErrorCode(getErrorCode(e));
 		}

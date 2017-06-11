@@ -23,19 +23,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-/**
- *
- * @author atraver
- */
 @Controller
-public class MessagesController extends BaseController{
+public class MessagesController extends BaseController {
     
     @RequestMapping(value = "/messages", method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE,
             headers={"Content-Type=application/json"})
     public @ResponseBody
-    MessageListResponse getMessages(@RequestBody GetMessagesForm getMesagesForm, BindingResult result,
+    MessageListResponse getMessages(@RequestBody GetMessagesForm getMessagesForm, BindingResult result,
             HttpServletRequest request, HttpServletResponse response) throws Exception
     {
     	MessageListResponse messageListResponse = new MessageListResponse();
@@ -43,18 +39,19 @@ public class MessagesController extends BaseController{
     	Collection<Message> messages = new ArrayList<Message>();
     	
     	try {
-	    	messages = uvLiveModel.getMessages(getToken(request), getMesagesForm.getIdConversation());
-	    	for (Message message : messages) {
-	    		MessageResponse messageResponse = new MessageResponse();
-	    		messageResponse.setIdMessage(message.getIdMessage());
-	    		messageResponse.setText(message.getText());
-	    		messageResponse.setTimestamp(message.getTimestamp());
-	    		
-	    		messageResponseList.add(messageResponse);
+    		if (getMessagesForm.isValid()) {
+		    	messages = uvLiveModel.getMessages(getToken(request), getMessagesForm.getIdConversation());
+		    	for (Message message : messages) {
+		    		MessageResponse messageResponse = new MessageResponse();
+		    		messageResponse.setIdMessage(message.getIdMessage());
+		    		messageResponse.setText(message.getText());
+		    		messageResponse.setTimestamp(message.getTimestamp());
+		    		
+		    		messageResponseList.add(messageResponse);
+		    	}
+		    	
+		    	messageListResponse.setMessages(messageResponseList);
 	    	}
-	    	
-	    	messageListResponse.setMessages(messageResponseList);
-    	
     	} catch (Exception e) {
     		messageListResponse.setErrorCode(getErrorCode(e));
     	}
@@ -67,7 +64,7 @@ public class MessagesController extends BaseController{
             produces = MediaType.APPLICATION_JSON_VALUE,
             headers={"Content-Type=application/json"})
     public @ResponseBody
-    MessageListResponse getPreviousMessages(@RequestBody GetMessagesForm getMesagesForm, BindingResult result,
+    MessageListResponse getPreviousMessages(@RequestBody GetMessagesForm getMessagesForm, BindingResult result,
             HttpServletRequest request, HttpServletResponse response) throws Exception
     {
     	MessageListResponse messageListResponse = new MessageListResponse();
@@ -75,19 +72,19 @@ public class MessagesController extends BaseController{
     	Collection<Message> messages = new ArrayList<Message>();
     	
     	try {
-    		
-	    	messages = uvLiveModel.getPreviousMessages(getToken(request), getMesagesForm);
-	    	for (Message message : messages) {
-	    		MessageResponse messageResponse = new MessageResponse();
-	    		messageResponse.setIdMessage(message.getIdMessage());
-	    		messageResponse.setText(message.getText());
-	    		messageResponse.setTimestamp(message.getTimestamp());
-	    		
-	    		messageResponseList.add(messageResponse);
-	    	}
-	    	
-	    	messageListResponse.setMessages(messageResponseList);
-    	
+    		if (getMessagesForm.isValid()) {
+		    	messages = uvLiveModel.getPreviousMessages(getToken(request), getMessagesForm);
+		    	for (Message message : messages) {
+		    		MessageResponse messageResponse = new MessageResponse();
+		    		messageResponse.setIdMessage(message.getIdMessage());
+		    		messageResponse.setText(message.getText());
+		    		messageResponse.setTimestamp(message.getTimestamp());
+		    		
+		    		messageResponseList.add(messageResponse);
+		    	}
+		    	
+		    	messageListResponse.setMessages(messageResponseList);
+    		}
     	} catch (Exception e) {
     		messageListResponse.setErrorCode(getErrorCode(e));
     	}
@@ -100,7 +97,7 @@ public class MessagesController extends BaseController{
             produces = MediaType.APPLICATION_JSON_VALUE,
             headers={"Content-Type=application/json"})
     public @ResponseBody
-    MessageListResponse getFollowingMessages(@RequestBody GetMessagesForm getMesagesForm, BindingResult result,
+    MessageListResponse getFollowingMessages(@RequestBody GetMessagesForm getMessagesForm, BindingResult result,
             HttpServletRequest request, HttpServletResponse response) throws Exception
     {
     	MessageListResponse messageListResponse = new MessageListResponse();
@@ -108,19 +105,19 @@ public class MessagesController extends BaseController{
     	Collection<Message> messages = new ArrayList<Message>();
     	
     	try {
-    		
-	    	messages = uvLiveModel.getFollowingMessages(getToken(request), getMesagesForm);
-	    	for (Message message : messages) {
-	    		MessageResponse messageResponse = new MessageResponse();
-	    		messageResponse.setIdMessage(message.getIdMessage());
-	    		messageResponse.setText(message.getText());
-	    		messageResponse.setTimestamp(message.getTimestamp());
-	    		
-	    		messageResponseList.add(messageResponse);
-	    	}
-	    	
-	    	messageListResponse.setMessages(messageResponseList);
-    	
+    		if (getMessagesForm.isValid()) {
+		    	messages = uvLiveModel.getFollowingMessages(getToken(request), getMessagesForm);
+		    	for (Message message : messages) {
+		    		MessageResponse messageResponse = new MessageResponse();
+		    		messageResponse.setIdMessage(message.getIdMessage());
+		    		messageResponse.setText(message.getText());
+		    		messageResponse.setTimestamp(message.getTimestamp());
+		    		
+		    		messageResponseList.add(messageResponse);
+		    	}
+		    	
+		    	messageListResponse.setMessages(messageResponseList);
+    		}
     	} catch (Exception e) {
     		messageListResponse.setErrorCode(getErrorCode(e));
     	}
@@ -142,8 +139,10 @@ public class MessagesController extends BaseController{
     	BaseResponse baseResponse = new BaseResponse();
     	try {
 	    	// @Non-generated
-	    	String token = request.getHeader("Authorization");
-	    	uvLiveModel.sendMessage(token, sendMessagesForm.getIdConversation(), sendMessagesForm.getMessage());
+	    	String token = getToken(request);
+	    	if (!token.isEmpty() && sendMessagesForm.isValid()) {
+	    		uvLiveModel.sendMessage(token, sendMessagesForm.getIdConversation(), sendMessagesForm.getMessage());
+	    	}
     	} catch (Exception e) {
     		baseResponse.setErrorCode(getErrorCode(e));
     	}

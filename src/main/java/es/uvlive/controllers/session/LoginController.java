@@ -41,15 +41,17 @@ public class LoginController extends BaseController {
     {
         LoginResponse loginResponse = new LoginResponse();
         try {
-        	String token = uvLiveModel.login(loginForm.getUserName(),loginForm.getPassword(),loginForm.getLoginType(), loginForm.getPushToken(), getToken(request));
-	        Logger.put(this, "Logging user "+ loginForm.getUserName() + ": " + (!StringUtils.isEmpty(token)?"logged":"not logged"));
-	        
-	        if (!StringUtils.isEmpty(token)) {
-	            loginResponse.setUser(loginForm.getUserName());
-	            String str = request.getSession().getId();
-	            response.setHeader("Set-Cookie", "JSESSIONID=" + str);
-	            loginResponse.setToken(token);
-	        }
+        	if (loginForm.isValid()) {
+	        	String token = uvLiveModel.login(loginForm.getUserName(),loginForm.getPassword(),loginForm.getLoginType(), loginForm.getPushToken(), getToken(request));
+		        Logger.put(this, "Logging user "+ loginForm.getUserName() + ": " + (!StringUtils.isEmpty(token)?"logged":"not logged"));
+		        
+		        if (!StringUtils.isEmpty(token)) {
+		            loginResponse.setUser(loginForm.getUserName());
+		            String str = request.getSession().getId();
+		            response.setHeader("Set-Cookie", "JSESSIONID=" + str);
+		            loginResponse.setToken(token);
+		        }
+        	}
         } catch (Exception e) {
         	loginResponse.setErrorCode(getErrorCode(e));
         }
