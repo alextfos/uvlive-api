@@ -9,8 +9,8 @@ import es.uvlive.model.Businessman;
 import es.uvlive.utils.Logger;
 
 public class BusinessmanDAO extends BaseDAO {
-
-	private static String QUERY_GET_BUSINESSMAN = "SELECT * FROM " + BUSINESSMAN_TABLE + "WHERE " + USER_NAME_FIELD + " ='%s'";
+	
+	private static String QUERY_GET_BUSINESSMAN = "SELECT * FROM " + USER_TABLE + " NATURAL JOIN " + BUSINESSMAN_TABLE + " WHERE " + USER_NAME_FIELD + " ='%s'";
 	private static String QUERY_SAVE_USER_BUSINESSMAN = "INSERT INTO " + USER_TABLE + "(" + USER_NAME_FIELD + "," + PASSWORD_FIELD + ") VALUES (?,?)";
 	private static String QUERY_SAVE_BUSINESSMAN_BUSINESSMAN = "INSERT INTO " + BUSINESSMAN_TABLE + "(" + DNI_FIELD + ") VALUES (?)";
 	private static String QUERY_UPDATE_BUSINESSMAN = "INSERT INTO " + BUSINESSMAN_TABLE + "(" + USER_NAME_FIELD + "," + PASSWORD_FIELD + ") VALUES ('%s','%s')";
@@ -25,7 +25,11 @@ public class BusinessmanDAO extends BaseDAO {
 		if (result != null) {
             if (result.next()) {
             	businessman = new Businessman();
-            	businessman.setUserId(result.getInt(USER_NAME_FIELD));
+            	businessman.setUserId(result.getInt(USER_ID_FIELD));
+            	businessman.setUsername(result.getString(USER_NAME_FIELD));
+            	businessman.setFirstname(result.getString(FIRST_NAME_FIELD));
+            	businessman.setLastname(result.getString(LAST_NAME_FIELD));
+            	businessman.setDni(result.getString(DNI_FIELD));
             }
         }
 		

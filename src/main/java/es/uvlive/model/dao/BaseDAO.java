@@ -24,7 +24,7 @@ public class BaseDAO {
     protected static final String ROL_UV_TABLE = "ROLUV";
     protected static final String STUDENT_TABLE = "Student";
     protected static final String TEACHER_TABLE = "Teacher";
-    protected static final String ADMIN_TABLE = "Administrator";
+    protected static final String ADMIN_TABLE = "Admin";
     
     protected static final String MESSAGE_TABLE = "Message";
     protected static final String CONVERSATION_TABLE = "Conversation";
