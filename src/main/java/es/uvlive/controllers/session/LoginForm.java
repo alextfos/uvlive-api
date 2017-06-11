@@ -6,12 +6,10 @@
 package es.uvlive.controllers.session;
 
 import es.uvlive.controllers.BaseForm;
+import es.uvlive.utils.ValidationUtils;
 
-/**
- *
- * @author atraverf
- */
 public class LoginForm extends BaseForm {
+	
     private String userName;
     private String password;
     private String loginType;
@@ -48,4 +46,10 @@ public class LoginForm extends BaseForm {
     public void setPushToken(String pushToken) {
         this.pushToken = pushToken;
     }
+
+	@Override
+	public boolean isValid() {
+		return ValidationUtils.validateString(userName) || ValidationUtils.validatePassword(password) 
+				|| ValidationUtils.validateLoginType(loginType) || ValidationUtils.validateString(pushToken);
+	}
 }

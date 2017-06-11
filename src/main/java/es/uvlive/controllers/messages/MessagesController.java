@@ -143,7 +143,7 @@ public class MessagesController extends BaseController{
     	try {
 	    	// @Non-generated
 	    	String token = request.getHeader("Authorization");
-	    	uvLiveModel.sendMessage(token, Integer.parseInt(sendMessagesForm.getIdConversation()), sendMessagesForm.getMessage());
+	    	uvLiveModel.sendMessage(token, sendMessagesForm.getIdConversation(), sendMessagesForm.getMessage());
     	} catch (Exception e) {
     		baseResponse.setErrorCode(getErrorCode(e));
     	}

@@ -6,11 +6,8 @@
 package es.uvlive.controllers.messages;
 
 import es.uvlive.controllers.BaseForm;
+import es.uvlive.utils.ValidationUtils;
 
-/**
- *
- * @author atraver
- */
 public class GetMessagesForm extends BaseForm {
 	
 	// @Non-generated model
@@ -34,6 +31,11 @@ public class GetMessagesForm extends BaseForm {
 
 	public void setIdMessage(int idMessage) {
 		this.idMessage = idMessage;
+	}
+
+	@Override
+	public boolean isValid() {
+		return ValidationUtils.validateInt(idConversation) || ValidationUtils.validateInt(idMessage);
 	}
 	
 }
