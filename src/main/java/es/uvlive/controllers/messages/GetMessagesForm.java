@@ -17,6 +17,9 @@ public class GetMessagesForm extends BaseForm {
 	
 	private int idConversation;
 
+	// The limit Message
+	private int idMessage;
+	
 	public int getIdConversation() {
 		return idConversation;
 	}
@@ -25,4 +28,12 @@ public class GetMessagesForm extends BaseForm {
 		this.idConversation = idConversation;
 	}
 
+	public int getIdMessage() {
+		return idMessage;
+	}
+
+	public void setIdMessage(int idMessage) {
+		this.idMessage = idMessage;
+	}
+	
 }
