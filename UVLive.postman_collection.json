@@ -12,6 +12,8 @@
 		"3c2c8652-fade-7f22-615b-c5d765eaf12e",
 		"c1ef8fa8-888b-e530-5885-0b39e1376f20",
 		"951979c0-57c2-8827-d7f1-98dc48691272",
+		"8db65b40-dd57-cb4c-a51e-dd0b9f56496f",
+		"25333191-8ff7-c8a8-0759-3da68f11aa8d",
 		"dbea351a-ce45-56a5-2f7b-c8f4d4e08782",
 		"51d6470a-86f5-0175-3a2f-eb973190539d",
 		"0bfd2bf4-a4b5-5291-e1e3-8a0668c8f81e",
@@ -97,6 +99,46 @@
 			"description": "",
 			"collectionId": "d25a7b98-097a-b36d-f2cc-2bff2ed62168",
 			"rawModeData": "{\n  \"userName\":\"profesor\",\n  \"password\":\"1006\",\n  \"loginType\":\"Teacher\",\n  \"pushToken\":\"eOParOKQAKM:APA91bF-D598Swt-L_UgOTNg1naQzT9lfq2MIiDpIGz-G4iuQfWxg0VgmFkCGBf6Yl25_vjmbk_b869dd3B3UxwNF62UaCAjT4JAa5TdJT27xSm838jA26jnFFjaBy3z0lR_4uDPXxjy\"\n}"
+		},
+		{
+			"id": "25333191-8ff7-c8a8-0759-3da68f11aa8d",
+			"headers": "Accept: application/json\nContent-Type: application/json\nAuthorization: {{token}}\n",
+			"headerData": [
+				{
+					"key": "Accept",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "Authorization",
+					"value": "{{token}}",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "{{environment}}/messages",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1497186350850,
+			"name": "Message - get following messages from message in a conversation copy",
+			"description": "",
+			"collectionId": "d25a7b98-097a-b36d-f2cc-2bff2ed62168",
+			"rawModeData": "{\n  \"idConversation\":\"1\",\n  \"idMessage\": \"8\"\n}"
 		},
 		{
 			"folder": null,
@@ -199,6 +241,46 @@
 			"description": "",
 			"collectionId": "d25a7b98-097a-b36d-f2cc-2bff2ed62168",
 			"rawModeData": ""
+		},
+		{
+			"id": "8db65b40-dd57-cb4c-a51e-dd0b9f56496f",
+			"headers": "Accept: application/json\nContent-Type: application/json\nAuthorization: {{token}}\n",
+			"headerData": [
+				{
+					"key": "Accept",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "Authorization",
+					"value": "{{token}}",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "{{environment}}/messages",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1497186350850,
+			"name": "Message - get previous messages from message in a conversation",
+			"description": "",
+			"collectionId": "d25a7b98-097a-b36d-f2cc-2bff2ed62168",
+			"rawModeData": "{\n  \"idConversation\":\"1\",\n  \"idMessage\": \"8\"\n}"
 		},
 		{
 			"id": "951979c0-57c2-8827-d7f1-98dc48691272",
