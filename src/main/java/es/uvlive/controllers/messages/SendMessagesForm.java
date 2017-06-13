@@ -6,21 +6,18 @@
 package es.uvlive.controllers.messages;
 
 import es.uvlive.controllers.BaseForm;
+import es.uvlive.utils.ValidationUtils;
 
-/**
- *
- * @author atraver
- */
 public class SendMessagesForm extends BaseForm {
 	// TODO @Non-generated Class
 	
-	private String idConversation;
+	private int idConversation;
 	private String message;
 	
-	public String getIdConversation() {
+	public int getIdConversation() {
 		return idConversation;
 	}
-	public void setIdConversation(String idConversation) {
+	public void setIdConversation(int idConversation) {
 		this.idConversation = idConversation;
 	}
 	public String getMessage() {
@@ -28,5 +25,10 @@ public class SendMessagesForm extends BaseForm {
 	}
 	public void setMessage(String message) {
 		this.message = message;
+	}
+	
+	@Override
+	public boolean isValid() {
+		return ValidationUtils.validateInt(idConversation) || ValidationUtils.validateString(message);
 	}
 }

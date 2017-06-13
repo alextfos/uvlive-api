@@ -18,10 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-/**
- *
- * @author alextfos
- */
 @Controller
 public class UpdateTokenController extends BaseController {
     @RequestMapping(value = "/update/push_token", method = RequestMethod.POST,
@@ -34,9 +30,10 @@ public class UpdateTokenController extends BaseController {
     	BaseResponse baseResponse = new BaseResponse();
     	
     	try {
-    		uvLiveModel.updateToken(getToken(request),pushTokenForm.getPushToken());
-            Logger.put(this,"Push token updated: " + pushTokenForm.getPushToken());
-    		
+    		if (pushTokenForm.isValid()) {
+	    		uvLiveModel.updateToken(getToken(request),pushTokenForm.getPushToken());
+	            Logger.put(this,"Push token updated: " + pushTokenForm.getPushToken());
+    		}
     	} catch (Exception e) {
     		baseResponse.setErrorCode(getErrorCode(e));
     	}

@@ -5,16 +5,17 @@
  */
 package es.uvlive.controllers.businessman;
 
-/**
- *
- * @author alextfos
- */
-public class SetBusinessmanForm {
-    private String dni;
+import es.uvlive.controllers.BaseForm;
+import es.uvlive.utils.ValidationUtils;
+
+public class SetBusinessmanForm extends BaseForm {
+    
+	private String dni;
     private String firstName;
     private String lastName;
     private String userName;
     private String password;
+    
 	public String getDni() {
 		return dni;
 	}
@@ -45,6 +46,11 @@ public class SetBusinessmanForm {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-    
-    
+	
+	@Override
+	public boolean isValid() {
+		return ValidationUtils.validateDNI(dni) || ValidationUtils.validateString(firstName) ||
+				ValidationUtils.validateString(lastName) || ValidationUtils.validateString(userName) || ValidationUtils.validatePassword(password);
+	}
+	
 }

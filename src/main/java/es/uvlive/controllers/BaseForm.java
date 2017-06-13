@@ -5,10 +5,6 @@
  */
 package es.uvlive.controllers;
 
-/**
- *
- * @author alextfos
- */
-public class BaseForm {
-    
+public abstract class BaseForm {
+    public abstract boolean isValid();
 }

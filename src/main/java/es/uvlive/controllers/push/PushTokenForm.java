@@ -5,18 +5,23 @@
  */
 package es.uvlive.controllers.push;
 
-/**
- *
- * @author atraver
- */
-public class PushTokenForm {
-    private String pushToken;
+import es.uvlive.controllers.BaseForm;
+import es.uvlive.utils.ValidationUtils;
 
-    public String getPushToken() {
-        return pushToken;
-    }
+public class PushTokenForm extends BaseForm {
 
-    public void setPushToken(String pushToken) {
-        this.pushToken = pushToken;
-    }
+	private String pushToken;
+
+	public String getPushToken() {
+		return pushToken;
+	}
+
+	public void setPushToken(String pushToken) {
+		this.pushToken = pushToken;
+	}
+
+	@Override
+	public boolean isValid() {
+		return ValidationUtils.validateString(pushToken);
+	}
 }

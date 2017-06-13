@@ -1,6 +1,7 @@
 package es.uvlive.controllers.permissions;
 
 import es.uvlive.controllers.BaseForm;
+import es.uvlive.utils.ValidationUtils;
 
 /**
  * Model for storing data from student to block/unblock
@@ -31,6 +32,14 @@ public class PermissionStudentForm extends BaseForm {
 	 */
 	public void setIdStudent(int idStudent) {
 		this.idStudent = idStudent;
+	}
+
+	/**
+	 * Checks if fields are valid
+	 */
+	@Override
+	public boolean isValid() {
+		return ValidationUtils.validateInt(idStudent);
 	}
 	
 }

@@ -6,6 +6,7 @@ import java.util.Collection;
 
 import es.uvlive.controllers.exceptions.UnauthorizedException;
 import es.uvlive.controllers.exceptions.UserDefinedException;
+import es.uvlive.controllers.messages.GetMessagesForm;
 import es.uvlive.utils.StringUtils;
 
 public class UVLiveModel {
@@ -192,7 +193,6 @@ public class UVLiveModel {
 		if (user instanceof Businessman) {
 			((Businessman)user).registerBroadcast(broadcastText);
 		}
-		throw new UnsupportedOperationException();
 	}
 
 	/**
@@ -239,6 +239,30 @@ public class UVLiveModel {
 		if (user instanceof RolUV) {
 			// Only RolUV users can send messages
 			messages = ((RolUV)user).getMessages(idConversation);
+		}
+		return messages;
+	}
+	
+	public Collection<Message> getPreviousMessages(String key, GetMessagesForm getMessagesForm) throws Exception {
+		Collection<Message> messages = new ArrayList<Message>();
+		User user = getUser(key);
+		if (getMessagesForm.getIdMessage() > 0 & getMessagesForm.getIdConversation() > 0) {
+			if (user instanceof RolUV) {
+				// Only RolUV users can send messages
+				messages = ((RolUV)user).getPreviousMessages(getMessagesForm.getIdConversation(), getMessagesForm.getIdMessage());
+			}
+		}
+		return messages;
+	}
+	
+	public Collection<Message> getFollowingMessages(String key, GetMessagesForm getMessagesForm) throws Exception {
+		Collection<Message> messages = new ArrayList<Message>();
+		User user = getUser(key);
+		if (getMessagesForm.getIdMessage() > 0 & getMessagesForm.getIdConversation() > 0) {
+			if (user instanceof RolUV) {
+				// Only RolUV users can send messages
+				messages = ((RolUV)user).getFollowingMessages(getMessagesForm.getIdConversation(), getMessagesForm.getIdMessage());
+			}
 		}
 		return messages;
 	}
