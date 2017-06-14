@@ -2,8 +2,8 @@ package es.uvlive.model;
 
 import java.sql.SQLException;
 
-import es.uvlive.controllers.exceptions.UserDefinedException;
-import es.uvlive.controllers.exceptions.UserNotDefinedException;
+import es.uvlive.exceptions.UserDefinedException;
+import es.uvlive.exceptions.UserNotDefinedException;
 
 public class Admin extends User {
 	

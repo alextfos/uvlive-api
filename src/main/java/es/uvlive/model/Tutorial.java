@@ -2,11 +2,11 @@ package es.uvlive.model;
 
 import java.util.*;
 
-import es.uvlive.requests.GoogleInterface;
-import es.uvlive.requests.NotificationRequest;
-import es.uvlive.requests.NotificationResponse;
-import es.uvlive.requests.RetrofitFactory;
-import es.uvlive.requests.NotificationRequest.Notification;
+import es.uvlive.api.requests.NotificationRequest;
+import es.uvlive.api.response.NotificationResponse;
+import es.uvlive.api.GoogleInterface;
+import es.uvlive.api.RetrofitFactory;
+import es.uvlive.api.requests.NotificationRequest.Notification;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

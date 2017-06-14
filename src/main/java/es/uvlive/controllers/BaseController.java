@@ -9,11 +9,11 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.util.StringUtils;
 
-import es.uvlive.controllers.exceptions.TokenExpiredException;
-import es.uvlive.controllers.exceptions.UnauthorizedException;
-import es.uvlive.controllers.exceptions.UserDefinedException;
-import es.uvlive.controllers.exceptions.UserNotDefinedException;
-import es.uvlive.controllers.exceptions.WrongCredentialsException;
+import es.uvlive.exceptions.TokenExpiredException;
+import es.uvlive.exceptions.UnauthorizedException;
+import es.uvlive.exceptions.UserDefinedException;
+import es.uvlive.exceptions.UserNotDefinedException;
+import es.uvlive.exceptions.WrongCredentialsException;
 import es.uvlive.model.UVLiveModel;
 import es.uvlive.utils.Logger;
 

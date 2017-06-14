@@ -5,7 +5,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import es.uvlive.controllers.exceptions.WrongCredentialsException;
+import es.uvlive.exceptions.WrongCredentialsException;
 import es.uvlive.model.Admin;
 import es.uvlive.model.Businessman;
 import es.uvlive.model.RolUV;

@@ -4,7 +4,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import es.uvlive.controllers.messages.MessageListResponse;
 import es.uvlive.model.dao.MessageDAO;
 import es.uvlive.model.dao.UserDAO;
 

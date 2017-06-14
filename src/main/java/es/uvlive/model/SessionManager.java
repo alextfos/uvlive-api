@@ -1,8 +1,8 @@
 package es.uvlive.model;
 
-import es.uvlive.controllers.exceptions.TokenExpiredException;
-import es.uvlive.controllers.exceptions.UnauthorizedException;
-import es.uvlive.controllers.exceptions.WrongCredentialsException;
+import es.uvlive.exceptions.TokenExpiredException;
+import es.uvlive.exceptions.UnauthorizedException;
+import es.uvlive.exceptions.WrongCredentialsException;
 import es.uvlive.model.dao.BusinessmanDAO;
 import es.uvlive.model.dao.UserDAO;
 import es.uvlive.utils.StringUtils;

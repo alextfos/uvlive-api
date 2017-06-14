@@ -4,9 +4,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import es.uvlive.controllers.exceptions.UnauthorizedException;
-import es.uvlive.controllers.exceptions.UserDefinedException;
-import es.uvlive.controllers.messages.GetMessagesForm;
+import es.uvlive.controllers.form.GetMessagesForm;
+import es.uvlive.exceptions.UnauthorizedException;
+import es.uvlive.exceptions.UserDefinedException;
 import es.uvlive.utils.StringUtils;
 
 public class UVLiveModel {
