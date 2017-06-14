@@ -38,12 +38,21 @@ public class SessionManager {
      * @param loginType
      */
     public String login(String userName, String password, String loginType, String pushToken, String token) throws Exception {
-    	if (!StringUtils.isEmpty(token) && usersCollection.containsKey(getKey(token))) {
+    	
+    	User user = null;
+    	try {
+    		user = getUser(token);
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    	}
+    	
+    	if (user != null) {
             return token;
         }
+    	
         String newToken = null;
         UserDAO userDao = new UserDAO();
-        User user = userDao.getUser(userName, password, loginType);
+        user = userDao.getUser(userName, password, loginType);
         if (user != null) {
         	String stringKey = userName+"-"+generateId();
         	newToken = Jwts.builder().setSubject(stringKey)
