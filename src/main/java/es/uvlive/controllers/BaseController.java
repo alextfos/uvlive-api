@@ -48,6 +48,13 @@ public class BaseController {
     
     protected int getErrorCode(Exception e) {
     	System.err.println("Generic error treatment: "+e.getMessage());
+    	String errorStr="";
+    	for (StackTraceElement stackTrace:e.getStackTrace()) {
+    		errorStr+="Class: " + stackTrace.getClassName();
+    		errorStr+="Method: " + stackTrace.getMethodName();
+    		errorStr+="[" + stackTrace.getLineNumber() + "]\n";
+    	}
+    	Logger.putError(this,"Message: "+e.getMessage() + "\nStackTrace:" + errorStr);
     	e.printStackTrace();
     	int code = UNKNOWN_ERROR_CODE;
     	if (!StringUtils.isEmpty(e.getMessage())) {

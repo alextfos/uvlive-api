@@ -46,7 +46,7 @@ public class UVLiveModel {
         String token = sessionManager.login(userName, password, loginType, pushToken, key);
         if (!StringUtils.isEmpty(token)) {
         	User user = sessionManager.getUser(token);
-        	if (user instanceof RolUV) {
+        	if (user != null && user instanceof RolUV) {
         		((RolUV)user).setTutorialsCatalog(this.tutorialCatalog);
         		((RolUV)user).init();
         	}
@@ -84,6 +84,8 @@ public class UVLiveModel {
 		if (user != null && user instanceof Teacher) {
 			((Teacher)user).blockStudent(idStudent);
 			sessionManager.blockUser(idStudent);
+		} else {
+			throw new UnauthorizedException();
 		}
 	}
 	
@@ -99,19 +101,9 @@ public class UVLiveModel {
 		if (user != null && user instanceof Teacher) {
 			((Teacher)user).unblockStudent(idStudent);
 			sessionManager.unblockUser(idStudent);
+		} else {
+			throw new UnauthorizedException();
 		}
-	}
-
-	// TODO Check in VP (Hint: No method with different name and same parameters
-	// was found)
-	/**
-	 * 
-	 * @param key
-	 * @param traderName
-	 */
-	public void validarNombreComerciante(String key, String traderName) {
-		// TODO - implement UVLiveModel.validarNombreComerciante
-		throw new UnsupportedOperationException();
 	}
 
 	// TODO @Non-generated
@@ -190,7 +182,7 @@ public class UVLiveModel {
 	 */
 	public void registerBroadcast(String key, String broadcastText) throws Exception {
 		User user = getUser(key);
-		if (user instanceof Businessman) {
+		if (user != null && user instanceof Businessman) {
 			((Businessman)user).registerBroadcast(broadcastText);
 		}
 	}
@@ -212,9 +204,11 @@ public class UVLiveModel {
 		// TODO @Non-generated
 		Collection <es.uvlive.model.Tutorial> tutorials = new ArrayList<es.uvlive.model.Tutorial>();
 		User user = getUser(key);
-		if (user instanceof RolUV) {
+		if (user != null && user instanceof RolUV) {
 			((RolUV) user).setTutorialsCatalog(this.tutorialCatalog);
 			tutorials = ((RolUV) user).getTutorials();
+		} else {
+			throw new UnauthorizedException();
 		}
 		
 		return tutorials;
@@ -228,17 +222,21 @@ public class UVLiveModel {
 	 */
 	public void sendMessage(String key, int idTutorial, String text) throws Exception {
 		User user = getUser(key);
-		if (user instanceof RolUV) {
+		if (user != null && user instanceof RolUV) {
 			((RolUV)user).sendMessage(idTutorial, text);
+		} else {
+			throw new UnauthorizedException();
 		}
 	}
 
 	public Collection<Message> getMessages(String key, int idConversation) throws Exception {
 		Collection<Message> messages = new ArrayList<Message>();
 		User user = getUser(key);
-		if (user instanceof RolUV) {
+		if (user != null && user instanceof RolUV) {
 			// Only RolUV users can send messages
 			messages = ((RolUV)user).getMessages(idConversation);
+		} else {
+			throw new UnauthorizedException();
 		}
 		return messages;
 	}
@@ -247,9 +245,11 @@ public class UVLiveModel {
 		Collection<Message> messages = new ArrayList<Message>();
 		User user = getUser(key);
 		if (getMessagesForm.getIdMessage() > 0 & getMessagesForm.getIdConversation() > 0) {
-			if (user instanceof RolUV) {
+			if (user != null && user instanceof RolUV) {
 				// Only RolUV users can send messages
 				messages = ((RolUV)user).getPreviousMessages(getMessagesForm.getIdConversation(), getMessagesForm.getIdMessage());
+			} else {
+				throw new UnauthorizedException();
 			}
 		}
 		return messages;
@@ -259,9 +259,11 @@ public class UVLiveModel {
 		Collection<Message> messages = new ArrayList<Message>();
 		User user = getUser(key);
 		if (getMessagesForm.getIdMessage() > 0 & getMessagesForm.getIdConversation() > 0) {
-			if (user instanceof RolUV) {
+			if (user != null && user instanceof RolUV) {
 				// Only RolUV users can send messages
 				messages = ((RolUV)user).getFollowingMessages(getMessagesForm.getIdConversation(), getMessagesForm.getIdMessage());
+			} else {
+				throw new UnauthorizedException();
 			}
 		}
 		return messages;
@@ -273,17 +275,21 @@ public class UVLiveModel {
 		
 		if (user != null && user instanceof RolUV) {
 			((RolUV)user).setPushToken(pushToken);
+		} else {
+			throw new UnauthorizedException();
 		}
 	}
 
 	public <T extends RolUV> Collection<RolUV> getUsers(String token) throws Exception {
 		User user = getUser(token);
-		if (user instanceof RolUV) {
+		if (user != null && user instanceof RolUV) {
 			if (user instanceof Teacher) {
 				return ((Teacher)user).getUsers();
 			} else if (user instanceof Student) {
 				return ((Student)user).getUsers();
 			}
+		} else {
+			throw new UnauthorizedException();
 		}
 		return null;
 	}

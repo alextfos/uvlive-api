@@ -362,7 +362,7 @@
 					"enabled": true
 				}
 			],
-			"url": "{{environment}}//rolUV/messages/following",
+			"url": "{{environment}}/rolUV/messages/following",
 			"queryParams": [],
 			"preRequestScript": null,
 			"pathVariables": {},
@@ -373,7 +373,7 @@
 			"tests": null,
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1497559938891,
+			"time": 1497563820099,
 			"name": "Get Following messages",
 			"description": "",
 			"collectionId": "c68677b3-6b58-b2de-72f2-5748c8b3a439",
@@ -442,7 +442,7 @@
 					"enabled": true
 				}
 			],
-			"url": "{{environment}}/send",
+			"url": "{{environment}}/rolUV/message/send",
 			"queryParams": [],
 			"preRequestScript": null,
 			"pathVariables": {},
@@ -453,7 +453,7 @@
 			"tests": null,
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1497559952171,
+			"time": 1497562063455,
 			"name": "Send message",
 			"description": "",
 			"collectionId": "c68677b3-6b58-b2de-72f2-5748c8b3a439",
