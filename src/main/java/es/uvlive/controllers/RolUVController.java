@@ -40,7 +40,7 @@ public class RolUVController extends BaseController {
     * @param response
     * @return
     */
-   @RequestMapping(value = "/conversations", method = RequestMethod.POST,
+   @RequestMapping(value = "/rolUV/conversations", method = RequestMethod.POST,
            consumes = MediaType.APPLICATION_JSON_VALUE,
            produces = MediaType.APPLICATION_JSON_VALUE,
            headers={"Content-Type=application/json"})
@@ -64,7 +64,7 @@ public class RolUVController extends BaseController {
    	return conversationListResponse;
    }
    
-   @RequestMapping(value = "/getusers", method = RequestMethod.POST,
+   @RequestMapping(value = "/rolUV/users", method = RequestMethod.POST,
            consumes = MediaType.APPLICATION_JSON_VALUE,
            produces = MediaType.APPLICATION_JSON_VALUE,
            headers={"Content-Type=application/json"})
@@ -93,7 +93,7 @@ public class RolUVController extends BaseController {
    	return usersListResponse;
    }
    
-   @RequestMapping(value = "/messages", method = RequestMethod.POST,
+   @RequestMapping(value = "/rolUV/messages", method = RequestMethod.POST,
            consumes = MediaType.APPLICATION_JSON_VALUE,
            produces = MediaType.APPLICATION_JSON_VALUE,
            headers={"Content-Type=application/json"})
@@ -126,7 +126,7 @@ public class RolUVController extends BaseController {
    	return messageListResponse;
    }
    
-   @RequestMapping(value = "/getPreviousMessages", method = RequestMethod.POST,
+   @RequestMapping(value = "/rolUV/messages/previous", method = RequestMethod.POST,
            consumes = MediaType.APPLICATION_JSON_VALUE,
            produces = MediaType.APPLICATION_JSON_VALUE,
            headers={"Content-Type=application/json"})
@@ -159,7 +159,7 @@ public class RolUVController extends BaseController {
    	return messageListResponse;
    }
    
-   @RequestMapping(value = "/getFollowingMessages", method = RequestMethod.POST,
+   @RequestMapping(value = "/rolUV/messages/following", method = RequestMethod.POST,
            consumes = MediaType.APPLICATION_JSON_VALUE,
            produces = MediaType.APPLICATION_JSON_VALUE,
            headers={"Content-Type=application/json"})
@@ -193,7 +193,7 @@ public class RolUVController extends BaseController {
    }
    
    
-   @RequestMapping(value = "/send", method = RequestMethod.POST,
+   @RequestMapping(value = "/rolUV/message/send", method = RequestMethod.POST,
            consumes = MediaType.APPLICATION_JSON_VALUE,
            produces = MediaType.APPLICATION_JSON_VALUE,
            headers={"Content-Type=application/json"})
@@ -216,7 +216,7 @@ public class RolUVController extends BaseController {
        return baseResponse;
    }
    
-   @RequestMapping(value = "/update/push_token", method = RequestMethod.POST,
+   @RequestMapping(value = "/rolUV/pushToken/update", method = RequestMethod.POST,
            consumes = MediaType.APPLICATION_JSON_VALUE,
            produces = MediaType.APPLICATION_JSON_VALUE,
            headers={"Content-Type=application/json"})

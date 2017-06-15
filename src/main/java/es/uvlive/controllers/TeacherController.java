@@ -16,7 +16,7 @@ import es.uvlive.controllers.response.BaseResponse;
 
 @Controller
 public class TeacherController extends BaseController {
-	@RequestMapping(value = "/permission/block", method = RequestMethod.POST,
+	@RequestMapping(value = "/teacher/student/block", method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE,
             headers={"Content-Type=application/json"})
@@ -38,7 +38,7 @@ public class TeacherController extends BaseController {
         return baseResponse;
     }
     
-    @RequestMapping(value = "/permission/unblock", method = RequestMethod.POST,
+    @RequestMapping(value = "/teacher/student/unblock", method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE,
             headers={"Content-Type=application/json"})

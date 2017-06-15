@@ -28,7 +28,7 @@ public class UserController extends BaseController {
     * @param response
     * @return
     */
-   @RequestMapping(value = "/login", method = RequestMethod.POST,
+   @RequestMapping(value = "/user/login", method = RequestMethod.POST,
            consumes = MediaType.APPLICATION_JSON_VALUE,
            produces = MediaType.APPLICATION_JSON_VALUE,
            headers={"Content-Type=application/json"})
@@ -58,7 +58,7 @@ public class UserController extends BaseController {
        return loginResponse;
    }
    
-   @RequestMapping(value = "/logout", method = RequestMethod.POST,
+   @RequestMapping(value = "/user/logout", method = RequestMethod.POST,
            consumes = MediaType.APPLICATION_JSON_VALUE,
            produces = MediaType.APPLICATION_JSON_VALUE,
            headers={"Content-Type=application/json"})

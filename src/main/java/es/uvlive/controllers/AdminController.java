@@ -34,7 +34,7 @@ public class AdminController extends BaseController {
     * @param response
     * @return
     */
-   @RequestMapping(value = "/logger", method = RequestMethod.POST)
+   @RequestMapping(value = "/admin/logs", method = RequestMethod.POST)
    public @ResponseBody LogListResponse logger(HttpServletRequest request, HttpServletResponse response) throws Exception
    {
        ArrayList<LogRegister> logs = Logger.getLogs();
@@ -53,7 +53,7 @@ public class AdminController extends BaseController {
        return logListResponse;
    }
    
-	   @RequestMapping(value = "/businessman/validate", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE, headers = {
+	   @RequestMapping(value = "/admin/merchantName/validate", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE, headers = {
 		"Content-Type=application/json" })
 	public @ResponseBody BaseResponse validateUserName(@RequestBody ValidateBusinessmanForm validateBusinessmanForm,
 		BindingResult result, HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -69,7 +69,7 @@ public class AdminController extends BaseController {
 	return validateBusinessmanResponse;
 	}
 	
-	@RequestMapping(value = "/businessman/register", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE, headers = {
+	@RequestMapping(value = "/admin/merchant/register", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE, headers = {
 		"Content-Type=application/json" })
 	public @ResponseBody BaseResponse registerBusinessman(@RequestBody SetBusinessmanForm businessmanForm,
 		BindingResult result, HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -85,7 +85,7 @@ public class AdminController extends BaseController {
 	return setBusinesmanResponse;
 	}
 	
-	@RequestMapping(value = "/businessman/update", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE, headers = {
+	@RequestMapping(value = "/admin/merchant/update", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE, headers = {
 		"Content-Type=application/json" })
 	public @ResponseBody BaseResponse updateBusinessman(@RequestBody SetBusinessmanForm businessmanForm,
 		BindingResult result, HttpServletRequest request, HttpServletResponse response) throws Exception {
