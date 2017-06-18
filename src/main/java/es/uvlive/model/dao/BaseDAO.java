@@ -56,7 +56,7 @@ public class BaseDAO {
     protected static final String MESSAGE_ID_FIELD = "idMessage";
     
     protected static final String BROADCAST_ID_MERCHANT_FIELD = "MerchantIdUser";
-    protected static final String BROADCAST_EXPIRATION_DATE = "expiration_date";
+    protected static final String BROADCAST_EXPIRATION_DATE = "expirationTimestamp";
     
     public BaseDAO() {
     	try {

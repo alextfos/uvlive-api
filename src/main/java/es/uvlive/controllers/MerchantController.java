@@ -24,7 +24,6 @@ public class MerchantController extends BaseController {
 			HttpServletRequest request, HttpServletResponse response) {
 		BaseResponse baseResponse = new BaseResponse();
 		try {
-			uvLiveModel.registerBroadcast(getToken(request), broadcastForm.getBroadcastMessage());
 			if (broadcastForm.isValid()) {
 				String token = getToken(request);
 				uvLiveModel.registerBroadcast(token, broadcastForm.getBroadcastMessage());
