@@ -32,7 +32,7 @@ public class UserController extends BaseController {
 	@RequestMapping(value = "/user/login", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE, headers = {
 			"Content-Type=application/json" })
 	public @ResponseBody BaseResponse login(@RequestBody LoginForm loginForm, BindingResult result,
-			HttpServletRequest request, HttpServletResponse response) throws Exception {
+			HttpServletRequest request, HttpServletResponse response) {
 		LoginResponse loginResponse = new LoginResponse();
 		try {
 			if (loginForm.isValid()) {
@@ -62,7 +62,7 @@ public class UserController extends BaseController {
 	@RequestMapping(value = "/user/logout", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE, headers = {
 			"Content-Type=application/json" })
 	public @ResponseBody BaseResponse logout(@RequestBody DefaultForm defaultForm, BindingResult result,
-			HttpServletRequest request, HttpServletResponse response) throws Exception {
+			HttpServletRequest request, HttpServletResponse response) {
 		BaseResponse baseResponse = new BaseResponse();
 		try {
 			uvLiveModel.logout(getToken(request));

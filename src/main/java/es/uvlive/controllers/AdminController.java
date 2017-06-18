@@ -81,8 +81,10 @@ public class AdminController extends BaseController {
 		try {
 			if (merchantForm.isValid()) {
 				uvLiveModel.registerMerchant(getToken(request), merchantForm.getDni(),
-						merchantForm.getFirstName(), merchantForm.getLastName(), merchantForm.getUserName(),
-						merchantForm.getPassword());
+				merchantForm.getFirstName(), merchantForm.getLastName(), merchantForm.getUserName(),
+				merchantForm.getPassword());
+			} else {
+				throw new ValidationFormException();
 			}
 		} catch (Exception e) {
 			setMerchantResponse.setErrorCode(getErrorCode(e));
@@ -98,8 +100,10 @@ public class AdminController extends BaseController {
 		try {
 			if (merchantForm.isValid()) {
 				uvLiveModel.updateMerchant(getToken(request), merchantForm.getDni(),
-						merchantForm.getFirstName(), merchantForm.getLastName(), merchantForm.getUserName(),
-						merchantForm.getPassword());
+				merchantForm.getFirstName(), merchantForm.getLastName(), merchantForm.getUserName(),
+				merchantForm.getPassword());
+			} else {
+				throw new ValidationFormException();
 			}
 		} catch (Exception e) {
 			setMerchantResponse.setErrorCode(getErrorCode(e));

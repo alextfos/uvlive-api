@@ -124,6 +124,8 @@ public class RolUVController extends BaseController {
 				}
 
 				messageListResponse.setMessages(messageResponseList);
+			} else {
+				throw new ValidationFormException();
 			}
 		} catch (Exception e) {
 			messageListResponse.setErrorCode(getErrorCode(e));
@@ -153,6 +155,8 @@ public class RolUVController extends BaseController {
 				}
 
 				messageListResponse.setMessages(messageResponseList);
+			} else {
+				throw new ValidationFormException();
 			}
 		} catch (Exception e) {
 			messageListResponse.setErrorCode(getErrorCode(e));
@@ -179,6 +183,8 @@ public class RolUVController extends BaseController {
 					messageResponseList.add(messageResponse);
 				}
 				messageListResponse.setMessages(messageResponseList);
+			} else {
+				throw new ValidationFormException();
 			}
 		} catch (Exception e) {
 			messageListResponse.setErrorCode(getErrorCode(e));
@@ -192,10 +198,10 @@ public class RolUVController extends BaseController {
 			HttpServletRequest request, HttpServletResponse response) {
 		BaseResponse baseResponse = new BaseResponse();
 		try {
-			// @Non-generated
-			String token = getToken(request);
-			if (!token.isEmpty() && sendMessagesForm.isValid()) {
-				uvLiveModel.sendMessage(token, sendMessagesForm.getIdConversation(), sendMessagesForm.getMessage());
+			if (sendMessagesForm.isValid()) {
+				uvLiveModel.sendMessage(getToken(request), sendMessagesForm.getIdConversation(), sendMessagesForm.getMessage());
+			} else {
+				throw new ValidationFormException();
 			}
 		} catch (Exception e) {
 			baseResponse.setErrorCode(getErrorCode(e));
@@ -214,6 +220,8 @@ public class RolUVController extends BaseController {
 			if (pushTokenForm.isValid()) {
 				uvLiveModel.updateToken(getToken(request), pushTokenForm.getPushToken());
 				Logger.put(this, "Push token updated: " + pushTokenForm.getPushToken());
+			} else {
+				throw new ValidationFormException();
 			}
 		} catch (Exception e) {
 			baseResponse.setErrorCode(getErrorCode(e));
