@@ -1,7 +1,13 @@
 package es.uvlive.model;
 
+import java.math.BigInteger;
+import java.security.Key;
+import java.security.SecureRandom;
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Set;
+
 import es.uvlive.exceptions.TokenExpiredException;
-import es.uvlive.exceptions.UnauthorizedException;
 import es.uvlive.exceptions.WrongCredentialsException;
 import es.uvlive.model.dao.BusinessmanDAO;
 import es.uvlive.model.dao.UserDAO;
@@ -10,12 +16,6 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.impl.crypto.MacProvider;
-
-import java.math.BigInteger;
-import java.security.Key;
-import java.security.SecureRandom;
-import java.sql.SQLException;
-import java.util.*;
 
 public class SessionManager {
 	
@@ -43,7 +43,7 @@ public class SessionManager {
     	try {
     		user = getUser(token);
     	} catch (Exception e) {
-    		e.printStackTrace();
+    		// Nothing to do here
     	}
     	
     	if (user != null) {
@@ -60,7 +60,9 @@ public class SessionManager {
               .compact();
             if (user instanceof Admin) {
             	((Admin)user).setSessionManager(this);
-            }
+            } else if (user instanceof RolUV) {
+				((RolUV)user).setSessionManager(this);
+			}
             if (user instanceof RolUV && !StringUtils.isEmpty(pushToken)) {
             	((RolUV)user).setPushToken(pushToken);
             }
@@ -173,5 +175,16 @@ public class SessionManager {
 			}
 		}
 	}
-	
+
+	public void addConversationToUser(int userId, Tutorial tutorial) {
+		Set<String> users = usersCollection.keySet();
+
+		for (String key : users) {
+			User currentUser = usersCollection.get(key);
+			if (currentUser.getUserId() == userId && currentUser instanceof RolUV) {
+				((RolUV)currentUser).getUserTutorials().add(tutorial);
+				tutorial.addRolUV(((RolUV)currentUser));
+			}
+		}
+	}
 }

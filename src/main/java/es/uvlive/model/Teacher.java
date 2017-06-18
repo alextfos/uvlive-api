@@ -3,20 +3,14 @@ package es.uvlive.model;
 import java.sql.SQLException;
 import java.util.Collection;
 
-import es.uvlive.model.dao.PermissionsDAO;
+import es.uvlive.exceptions.ConversationNotCreatedException;
+import es.uvlive.model.dao.RolUVDAO;
+import es.uvlive.model.dao.TeacherDAO;
 import es.uvlive.model.dao.UserDAO;
 
 public class Teacher extends RolUV {
 	
 	public static final String LOGIN_TYPE = "Teacher";
-	/**
-	 * 
-	 * @param student
-	 */
-	public boolean blockUser(Student student) {
-		// TODO - implement Teacher.blockUser
-		throw new UnsupportedOperationException();
-	}
 	
 	/**
 	 * Calls PermissionsDAO method and changes student status to blocked
@@ -25,7 +19,8 @@ public class Teacher extends RolUV {
 	 * @throws SQLException
 	 */
 	public void blockStudent(int idStudent) throws ClassNotFoundException, SQLException {
-		new PermissionsDAO().bockStudent(idStudent);
+		new TeacherDAO().bockStudent(idStudent);
+		getSessionManager().blockUser(idStudent);
 	}
 	
 	/**
@@ -35,12 +30,22 @@ public class Teacher extends RolUV {
 	 * @throws SQLException
 	 */
 	public void unblockStudent(int idStudent) throws ClassNotFoundException, SQLException {
-		new PermissionsDAO().unblockStudent(idStudent);
+		new TeacherDAO().unblockStudent(idStudent);
+		getSessionManager().unblockUser(idStudent);
 	}
 
 	@Override
 	public Collection<RolUV> getUsers() throws ClassNotFoundException, SQLException {
 		return new UserDAO().getStudents();
+	}
+
+	@Override
+	public void initConversation(int userId) throws ClassNotFoundException, SQLException, ConversationNotCreatedException {
+		int conversationId = new RolUVDAO().saveConversation(getUserId(),userId);
+		Tutorial tutorial = getTutorialCatalog().addAndGetConversation(conversationId);
+		tutorial.addRolUV(this);
+		getUserTutorials().add(tutorial);
+		getSessionManager().addConversationToUser(userId,tutorial);
 	}
 
 }

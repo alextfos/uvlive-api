@@ -4,6 +4,7 @@ import java.util.*;
 
 import es.uvlive.api.requests.NotificationRequest;
 import es.uvlive.api.response.NotificationResponse;
+import es.uvlive.utils.Logger;
 import es.uvlive.api.GoogleInterface;
 import es.uvlive.api.RetrofitFactory;
 import es.uvlive.api.requests.NotificationRequest.Notification;
@@ -76,7 +77,7 @@ public class Tutorial {
 		if(messages != null && message != null) {
 			messages.add(message);
 		}
-		for (RolUV rolUV: rolUVs) {
+		for (final RolUV rolUV: rolUVs) {
 			if (!currentUser.equals(rolUV)) {
 				String pushToken = rolUV.getPushToken();
 				GoogleInterface googleInterface = RetrofitFactory.getGoogleInterface();
@@ -88,7 +89,15 @@ public class Tutorial {
 		        callback.enqueue(new Callback<NotificationResponse>() {
 		            @Override
 		            public void onResponse(Call<NotificationResponse> call, Response<NotificationResponse> rspns) {
-		                System.out.println("Response");
+		                NotificationResponse response = rspns.body();
+		                if (response.getFailure() > 0) {
+		                	try {
+		                		rolUV.removePushToken();
+		                	} catch (Exception e) {
+		                		e.printStackTrace();
+		                		Logger.putError(Tutorial.this,e);
+		                	}
+		                }
 		            }
 	
 		            @Override

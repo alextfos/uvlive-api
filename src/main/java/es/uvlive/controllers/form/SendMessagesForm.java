@@ -8,7 +8,6 @@ package es.uvlive.controllers.form;
 import es.uvlive.utils.ValidationUtils;
 
 public class SendMessagesForm extends BaseForm {
-	// TODO @Non-generated Class
 	
 	private int idConversation;
 	private String message;

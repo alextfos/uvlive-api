@@ -27,26 +27,4 @@ public class RetrofitFactory {
         
         return retrofit.create(GoogleInterface.class);
     }
-    
-    // TODO Error policy
-    public static void main(String args[]) {
-        GoogleInterface googleInterface = RetrofitFactory.getGoogleInterface();
-        NotificationRequest notificationRequest = new NotificationRequest();
-        
-        notificationRequest.setNotification(new Notification("hola","funciono"));
-        notificationRequest.setTo("eOParOKQAKM:APA91bF-D598Swt-L_UgOTNg1naQzT9lfq2MIiDpIGz-G4iuQfWxg0VgmFkCGBf6Yl25_vjmbk_b869dd3B3UxwNF62UaCAjT4JAa5TdJT27xSm838jA26jnFFjaBy3z0lR_4uDPXxjy");
-        Call<NotificationResponse> callback = googleInterface.sendNotification(notificationRequest);
-        callback.enqueue(new Callback<NotificationResponse>() {
-            @Override
-            public void onResponse(Call<NotificationResponse> call, Response<NotificationResponse> rspns) {
-                System.out.println("Response");
-            }
-
-            @Override
-            public void onFailure(Call<NotificationResponse> call, Throwable thrwbl) {
-                System.out.println("Error: ");
-                thrwbl.printStackTrace();
-            }
-        });
-    }
 }

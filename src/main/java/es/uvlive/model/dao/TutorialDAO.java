@@ -12,7 +12,8 @@ public class TutorialDAO extends BaseDAO {
 	
 	private static final String QUERY_GET_USER_IDS = "SELECT * FROM " + CONVERSATION_ROL_UV_TABLE + " WHERE " + ROL_UV_ID_USER_FIELD + " = '%s'";
 	private static final String QUERY_GET_TUTORIALS = "SELECT * FROM " + CONVERSATION_TABLE;
-	
+	private static final String QUERY_GET_TUTORIALS_FROM_ID = "SELECT * FROM " + CONVERSATION_TABLE + " WHERE " + TUTORIAL_ID_FIELD + "=%d";
+
 	// @Non-generated
 	public Collection<es.uvlive.model.Tutorial> getTutorials() throws ClassNotFoundException, SQLException {
 		Collection<es.uvlive.model.Tutorial> tutorialsCollection = new ArrayList<es.uvlive.model.Tutorial>();
@@ -46,5 +47,18 @@ public class TutorialDAO extends BaseDAO {
         return idsOfTutorialsCollection;
 	}
 
+    public Tutorial getTutorial(int idConversation) throws ClassNotFoundException, SQLException {
+		ResultSet resultSet = query(String.format(QUERY_GET_TUTORIALS_FROM_ID,idConversation));
+		Tutorial tutorial = null;
+		
+		if (resultSet != null && resultSet.next()) {
+			tutorial = new Tutorial();
+            String  name = resultSet.getString(NAME_FIELD);
+            tutorial.setIdTutorial(idConversation);
+            tutorial.setName(name);
+		}
+		return tutorial;
+
+    }
 }
 

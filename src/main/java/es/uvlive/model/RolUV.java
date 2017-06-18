@@ -4,15 +4,18 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import es.uvlive.exceptions.ConversationNotCreatedException;
 import es.uvlive.model.dao.MessageDAO;
+import es.uvlive.model.dao.RolUVDAO;
 import es.uvlive.model.dao.UserDAO;
 
 public abstract class RolUV extends User {
 
 	private String pushToken;
 	
-	private TutorialCatalog tutorialsCatalog;
+	private TutorialCatalog tutorialCatalog;
 	private Collection<es.uvlive.model.Tutorial> userTutorials;
+	private SessionManager sessionManager;
 	
 	public RolUV() {
 		
@@ -24,17 +27,20 @@ public abstract class RolUV extends User {
 	 * @throws ClassNotFoundException 
 	 */
 	public void init() throws ClassNotFoundException, SQLException {
-		if (tutorialsCatalog != null) {
+		if (tutorialCatalog != null) {
 			if (userTutorials == null || userTutorials.isEmpty()) {
-				userTutorials = tutorialsCatalog.getTutorials(this);
+				userTutorials = tutorialCatalog.getTutorials(this);
 				for (Tutorial tutorial: userTutorials) {
 					tutorial.addRolUV(this);
 				}
 			}
 		}
-		
 	}
-	
+
+	public void setSessionManager(SessionManager sessionManager) {
+		this.sessionManager = sessionManager;
+	}
+
 	public String getPushToken() {
 		return pushToken;
 	}
@@ -62,7 +68,7 @@ public abstract class RolUV extends User {
 	 */
 	// @Non-generated
 	public void sendMessage(int idTutorial, String text) throws SQLException, ClassNotFoundException, Exception {
-		if (tutorialsCatalog == null) {
+		if (tutorialCatalog == null) {
 			throw new Exception();
 		}
 		
@@ -83,20 +89,11 @@ public abstract class RolUV extends User {
 
 	// TODO @Non-generated
 	/**
-	 * Gets tutorial catalog
-	 * @return tutorialsCatalog
-	 */
-	public TutorialCatalog getTutorialsCatalog() {
-		return tutorialsCatalog;
-	}
-
-	// TODO @Non-generated
-	/**
 	 * Sets tutorials catalog
 	 * @param tutorialCatalog
 	 */
 	public void setTutorialsCatalog(TutorialCatalog tutorialCatalog) {
-		this.tutorialsCatalog = tutorialCatalog;
+		this.tutorialCatalog = tutorialCatalog;
 	}
 
 	public Collection<Message> getMessages(int idConversation) throws ClassNotFoundException, SQLException {
@@ -162,6 +159,25 @@ public abstract class RolUV extends User {
 		return messages;
 	}
 
+	public TutorialCatalog getTutorialCatalog() {
+		return tutorialCatalog;
+	}
+
+	public Collection<Tutorial> getUserTutorials() {
+		return userTutorials;
+	}
+
+	public SessionManager getSessionManager() {
+		return sessionManager;
+	}
+	
+	public void removePushToken() throws SQLException {
+		pushToken = null;
+		new RolUVDAO().removePushToken(getUserId());
+	}
+
 	public abstract Collection<RolUV> getUsers() throws ClassNotFoundException, SQLException;
+
+	public abstract void initConversation(int userId) throws ClassNotFoundException, SQLException, ConversationNotCreatedException;
 	
 }

@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import com.mysql.jdbc.Statement;
 
 public class BaseDAO {
-	// TODO @Non-generated (Hint: nothing on this class is from VP)
+
     private static Connection sConnectionDB;
     // Debug environment
     private static final String URL = "jdbc:mysql://localhost/uvlive";
@@ -62,7 +62,7 @@ public class BaseDAO {
     	try {
     		connect();
     	} catch (Exception e) {
-    		System.err.println("Error intializing DAO object: " + e.getMessage());
+    		Logger.putError(this,e);
     	}
     }
     
@@ -103,12 +103,12 @@ public class BaseDAO {
         try {
             if (sConnectionDB != null) {
                 sConnectionDB.close();
-                Logger.put(this,"Disconnecting Database");
+                Logger.put(this,"Database disconnected");
             }
         } catch (SQLException ex) { 
-           Logger.put(this,"Error disconnecting to Database: "+ex.getMessage());
+           Logger.putError(this,"SQL Error disconnecting to Database: "+ex.getMessage());
         } catch (Exception e){
-           Logger.put(this,"Exception not handled in Database: "+e.toString());
+           Logger.putError(this,"Exception disconnecting to Database: "+e.toString());
         }
     }
 }

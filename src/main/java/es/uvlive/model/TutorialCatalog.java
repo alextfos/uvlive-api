@@ -3,6 +3,7 @@ package es.uvlive.model;
 import java.sql.SQLException;
 import java.util.*;
 
+import es.uvlive.exceptions.ConversationNotCreatedException;
 import es.uvlive.model.dao.TutorialDAO;
 
 public class TutorialCatalog {
@@ -32,9 +33,14 @@ public class TutorialCatalog {
 		return resultTutorials;
 	}
 	
-	// TODO @Non-generated
-	public void setTutorials(Collection<es.uvlive.model.Tutorial> tutorials) {
-		this.tutorials = tutorials;
+	public Tutorial addAndGetConversation(int idConversation) throws ClassNotFoundException, SQLException, ConversationNotCreatedException {
+		Tutorial tutorial = new TutorialDAO().getTutorial(idConversation);
+		if (tutorial != null) {
+			tutorials.add(tutorial);
+		} else {
+			throw new ConversationNotCreatedException();
+		}
+		return tutorial;
 	}
 	
 }

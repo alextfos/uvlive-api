@@ -3,8 +3,7 @@ package es.uvlive.controllers.form;
 import es.uvlive.utils.ValidationUtils;
 
 public class BroadcastForm extends BaseForm {
-	
-	// TODO @Non-generated
+
 	private String broadcastMessage;
 
 	public String getBroadcastMessage() {

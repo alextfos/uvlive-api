@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import es.uvlive.controllers.form.GetMessagesForm;
+import es.uvlive.controllers.form.InitConversationForm;
 import es.uvlive.controllers.form.PushTokenForm;
 import es.uvlive.controllers.form.SendMessagesForm;
 import es.uvlive.controllers.response.BaseResponse;
@@ -24,6 +25,7 @@ import es.uvlive.controllers.response.MessageListResponse;
 import es.uvlive.controllers.response.MessageResponse;
 import es.uvlive.controllers.response.UserResponse;
 import es.uvlive.controllers.response.UsersListResponse;
+import es.uvlive.exceptions.ValidationFormException;
 import es.uvlive.model.Message;
 import es.uvlive.model.RolUV;
 import es.uvlive.model.Tutorial;
@@ -64,6 +66,28 @@ public class RolUVController extends BaseController {
    	return conversationListResponse;
    }
    
+   @RequestMapping(value = "/rolUV/conversations/init", method = RequestMethod.POST,
+           consumes = MediaType.APPLICATION_JSON_VALUE,
+           produces = MediaType.APPLICATION_JSON_VALUE,
+           headers={"Content-Type=application/json"})
+   public @ResponseBody
+   BaseResponse initConversation(@RequestBody InitConversationForm initConversationForm, BindingResult result,
+           HttpServletRequest request, HttpServletResponse response) {
+   	BaseResponse baseResponse = new BaseResponse();
+   	
+   	try {
+   		if (initConversationForm.isValid()) {
+	    	uvLiveModel.initConversation(getToken(request), Integer.parseInt(initConversationForm.getIdUser()));
+   		} else {
+   			throw new ValidationFormException();
+   		}
+   	} catch (Exception e) {
+   		baseResponse.setErrorCode(getErrorCode(e));
+   	}
+   	
+   	return baseResponse;
+   }
+   
    @RequestMapping(value = "/rolUV/users", method = RequestMethod.POST,
            consumes = MediaType.APPLICATION_JSON_VALUE,
            produces = MediaType.APPLICATION_JSON_VALUE,
@@ -99,8 +123,7 @@ public class RolUVController extends BaseController {
            headers={"Content-Type=application/json"})
    public @ResponseBody
    MessageListResponse getMessages(@RequestBody GetMessagesForm getMessagesForm, BindingResult result,
-           HttpServletRequest request, HttpServletResponse response) throws Exception
-   {
+           HttpServletRequest request, HttpServletResponse response) {
    	MessageListResponse messageListResponse = new MessageListResponse();
    	Collection<MessageResponse> messageResponseList = new ArrayList<MessageResponse>();
    	Collection<Message> messages = new ArrayList<Message>();

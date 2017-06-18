@@ -5,8 +5,6 @@
  */
 package es.uvlive.utils;
 
-//import java.time.LocalDateTime;
-//import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
@@ -27,6 +25,16 @@ public class Logger {
     
     public static void put(String message) {
         put(LEVEL_VERBOSE, UNDEFINED, message);
+    }
+    
+    public static void putError(Object requesterObj, Exception e) {
+    	String errorStr="";
+    	for (StackTraceElement stackTrace:e.getStackTrace()) {
+    		errorStr+="Class: " + stackTrace.getClassName();
+    		errorStr+="Method: " + stackTrace.getMethodName();
+    		errorStr+="[" + stackTrace.getLineNumber() + "]\n";
+    	}
+    	putError(requesterObj,"Message: "+e.getMessage() + "\nStackTrace:" + errorStr);
     }
     
     public static void putError(Object requesterObj, String message) {

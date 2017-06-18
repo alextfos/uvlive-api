@@ -56,7 +56,6 @@ public class BusinessmanDAO extends BaseDAO {
 		update(String.format(QUERY_UPDATE_BUSINESSMAN_BUSINESSMAN,dni,username));
 	}
 
-	// TODO @check in VP (Hint: nothing of broadcast usecase is implemented)
 	public void registerBroadcast(Businessman businessman, String broadcastText) throws ClassNotFoundException, SQLException {
 		String timestamp = String.valueOf(((long) new Date().getTime()) / 1000);
 		

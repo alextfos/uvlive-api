@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import es.uvlive.controllers.form.GetMessagesForm;
+import es.uvlive.exceptions.ConversationNotCreatedException;
 import es.uvlive.exceptions.UnauthorizedException;
-import es.uvlive.exceptions.UserDefinedException;
 import es.uvlive.utils.StringUtils;
 
 public class UVLiveModel {
@@ -83,7 +83,6 @@ public class UVLiveModel {
 		User user = getUser(key);
 		if (user != null && user instanceof Teacher) {
 			((Teacher)user).blockStudent(idStudent);
-			sessionManager.blockUser(idStudent);
 		} else {
 			throw new UnauthorizedException();
 		}
@@ -100,7 +99,6 @@ public class UVLiveModel {
 		User user = getUser(key);
 		if (user != null && user instanceof Teacher) {
 			((Teacher)user).unblockStudent(idStudent);
-			sessionManager.unblockUser(idStudent);
 		} else {
 			throw new UnauthorizedException();
 		}
@@ -283,15 +281,24 @@ public class UVLiveModel {
 	public <T extends RolUV> Collection<RolUV> getUsers(String token) throws Exception {
 		User user = getUser(token);
 		if (user != null && user instanceof RolUV) {
-			if (user instanceof Teacher) {
-				return ((Teacher)user).getUsers();
-			} else if (user instanceof Student) {
-				return ((Student)user).getUsers();
+				return ((RolUV)user).getUsers();
+		} else {
+			throw new UnauthorizedException();
+		}
+	}
+	
+	public void initConversation(String token, int userId) throws Exception {
+		User user = getUser(token);
+		if (user != null && user instanceof RolUV) {
+			try {
+				((RolUV)user).initConversation(userId);
+			} catch(Exception e) {
+				e.printStackTrace();
+				throw new ConversationNotCreatedException();
 			}
 		} else {
 			throw new UnauthorizedException();
 		}
-		return null;
 	}
 
 }
