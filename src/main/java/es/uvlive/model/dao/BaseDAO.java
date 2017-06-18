@@ -28,7 +28,7 @@ public class BaseDAO {
     
     protected static final String MESSAGE_TABLE = "Message";
     protected static final String CONVERSATION_TABLE = "Conversation";
-    protected static final String BUSINESSMAN_TABLE = "Businessman";
+    protected static final String MERCHANT_TABLE = "Merchant";
     protected static final String BROADCAST_TABLE = "Broadcast";
     
     protected static final String CONVERSATION_ROL_UV_TABLE = "Conversation_RolUV";
@@ -43,19 +43,19 @@ public class BaseDAO {
     protected static final String PUSH_TOKEN_FIELD = "pushToken";
     protected static final String BLOCKED_FIELD = "blocked";
     
-    protected static final String BRODCAST_ID_FIELD = "idBroadCast";
+    protected static final String BRODCAST_ID_FIELD = "idBroadcast";
     protected static final String TEXT_FIELD = "text";
     protected static final String TIME_STAMP_FIELD = "timeStamp";
-    protected static final String TUTORIAL_ID_FIELD = "idTutorial";
+    protected static final String CONVERSATION_ID_FIELD = "idConversation";
     protected static final String NAME_FIELD = "name";
-    
-    protected static final String CONVERSATION_ID_TUTORIAL_FIELD = "ConversationidTutorial";
+
+    protected static final String CONVERSATION_ID_CONVERSATION_FIELD = "ConversationidConversation";
     protected static final String ROL_UV_ID_USER_FIELD = "RolUVidUser";
     
     protected static final String MESSAGE_ID_CONVERSATION_FIELD = "ConversationIdConversation";
     protected static final String MESSAGE_ID_FIELD = "idMessage";
     
-    protected static final String BROADCAST_ID_BUSINESSMAN_FIELD = "BusinessmanidBusinessman";
+    protected static final String BROADCAST_ID_MERCHANT_FIELD = "MerchantIdUser";
     protected static final String BROADCAST_EXPIRATION_DATE = "expiration_date";
     
     public BaseDAO() {

@@ -18,7 +18,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {"status"})
 @XmlRootElement(name = "response")
-public class ValidateBusinessmanResponse extends BaseResponse {
+public class ValidateMerchantNameResponse extends BaseResponse {
 
     @XmlElement(name = "status")
     private boolean status;

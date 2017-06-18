@@ -30,9 +30,9 @@ public class Admin extends User {
 	 * @throws ClassNotFoundException 
 	 * @throws UserDefinedException 
 	 */
-	public void registerBusinessman(String dni, String firstname, String lastname, String username, String password) throws ClassNotFoundException, SQLException, UserDefinedException {
+	public void registerMerchant(String dni, String firstname, String lastname, String username, String password) throws ClassNotFoundException, SQLException, UserDefinedException {
 		if (!checkUserExists(username)) {
-			sessionManager.registerBusinessman(dni,firstname,lastname,username,password);
+			sessionManager.registerMerchant(dni,firstname,lastname,username,password);
 		} else {
 			throw new UserDefinedException();
 		}
@@ -49,9 +49,9 @@ public class Admin extends User {
 	 * @throws ClassNotFoundException 
 	 * @throws UserNotDefinedException 
 	 */
-	public void updateBusinessman(String dni, String firstname, String lastname, String username, String password) throws ClassNotFoundException, SQLException, UserNotDefinedException {
+	public void updateMerchant(String dni, String firstname, String lastname, String username, String password) throws ClassNotFoundException, SQLException, UserNotDefinedException {
 		if (checkUserExists(username)) {
-			sessionManager.updateBusinessman(dni,firstname,lastname,username,password);
+			sessionManager.updateMerchant(dni,firstname,lastname,username,password);
 		} else {
 			throw new UserNotDefinedException();
 		}

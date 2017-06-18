@@ -13,93 +13,97 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import es.uvlive.controllers.form.SetBusinessmanForm;
-import es.uvlive.controllers.form.ValidateBusinessmanForm;
+import es.uvlive.controllers.form.SetMerchantForm;
+import es.uvlive.controllers.form.ValidateMerchantForm;
 import es.uvlive.controllers.response.BaseResponse;
 import es.uvlive.controllers.response.LogListResponse;
 import es.uvlive.controllers.response.LogResponse;
-import es.uvlive.controllers.response.SetBusinessmanResponse;
-import es.uvlive.controllers.response.ValidateBusinessmanResponse;
+import es.uvlive.controllers.response.SetMerchantResponse;
+import es.uvlive.controllers.response.ValidateMerchantNameResponse;
+import es.uvlive.exceptions.ValidationFormException;
 import es.uvlive.utils.LogRegister;
 import es.uvlive.utils.Logger;
 
 @Controller
 public class AdminController extends BaseController {
-	
+
 	/**
-    *
-    * @param loginForm
-    * @param result
-    * @param request
-    * @param response
-    * @return
-    */
-   @RequestMapping(value = "/admin/logs", method = RequestMethod.POST)
-   public @ResponseBody LogListResponse logger(HttpServletRequest request, HttpServletResponse response) throws Exception
-   {
-       ArrayList<LogRegister> logs = Logger.getLogs();
-       LogListResponse logListResponse = new LogListResponse();
-       ArrayList<LogResponse> logArrayList = new ArrayList();
-       
-       for (LogRegister log: logs) {
-           LogResponse logResponse = new LogResponse();
-           logResponse.setTimeStamp(log.getTimeStamp());
-           logResponse.setLevel(log.getLevel());
-           logResponse.setClazz(log.getClazz());
-           logResponse.setMessage(log.getMessage());
-           logArrayList.add(logResponse);
-       }
-       logListResponse.setLogs(logArrayList);
-       return logListResponse;
-   }
-   
-	   @RequestMapping(value = "/admin/merchantName/validate", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE, headers = {
-		"Content-Type=application/json" })
-	public @ResponseBody BaseResponse validateUserName(@RequestBody ValidateBusinessmanForm validateBusinessmanForm,
-		BindingResult result, HttpServletRequest request, HttpServletResponse response) throws Exception {
-	ValidateBusinessmanResponse validateBusinessmanResponse = new ValidateBusinessmanResponse();
-	try {
-		if (validateBusinessmanForm.isValid()) {
-			validateBusinessmanResponse
-					.setStatus(uvLiveModel.checkUserExists(getToken(request), validateBusinessmanForm.getUserName()));
+	 *
+	 * @param loginForm
+	 * @param result
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/admin/logs", method = RequestMethod.POST)
+	public @ResponseBody LogListResponse logger(HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		ArrayList<LogRegister> logs = Logger.getLogs();
+		LogListResponse logListResponse = new LogListResponse();
+		ArrayList<LogResponse> logArrayList = new ArrayList();
+
+		for (LogRegister log : logs) {
+			LogResponse logResponse = new LogResponse();
+			logResponse.setTimeStamp(log.getTimeStamp());
+			logResponse.setLevel(log.getLevel());
+			logResponse.setClazz(log.getClazz());
+			logResponse.setMessage(log.getMessage());
+			logArrayList.add(logResponse);
 		}
-	} catch (Exception e) {
-		validateBusinessmanResponse.setErrorCode(getErrorCode(e));
+		logListResponse.setLogs(logArrayList);
+		return logListResponse;
 	}
-	return validateBusinessmanResponse;
+
+	@RequestMapping(value = "/admin/merchantName/validate", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE, headers = {
+			"Content-Type=application/json" })
+	public @ResponseBody BaseResponse validateUserName(@RequestBody ValidateMerchantForm validateMerchantForm,
+			BindingResult result, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		ValidateMerchantNameResponse validateMerchantNameResponse = new ValidateMerchantNameResponse();
+		try {
+			if (validateMerchantForm.isValid()) {
+				validateMerchantNameResponse.setStatus(
+						uvLiveModel.checkUserExists(getToken(request), validateMerchantForm.getUserName()));
+			} else {
+				throw new ValidationFormException();
+			}
+		} catch (Exception e) {
+			validateMerchantNameResponse.setErrorCode(getErrorCode(e));
+		}
+		return validateMerchantNameResponse;
 	}
-	
+
 	@RequestMapping(value = "/admin/merchant/register", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE, headers = {
-		"Content-Type=application/json" })
-	public @ResponseBody BaseResponse registerBusinessman(@RequestBody SetBusinessmanForm businessmanForm,
-		BindingResult result, HttpServletRequest request, HttpServletResponse response) throws Exception {
-	SetBusinessmanResponse setBusinesmanResponse = new SetBusinessmanResponse();
-	try {
-		if (businessmanForm.isValid()) {
-			uvLiveModel.registerBusinessman(getToken(request), businessmanForm.getDni(), businessmanForm.getFirstName(),
-			businessmanForm.getLastName(), businessmanForm.getUserName(), businessmanForm.getPassword());
+			"Content-Type=application/json" })
+	public @ResponseBody BaseResponse registerMerchant(@RequestBody SetMerchantForm merchantForm,
+			BindingResult result, HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+		SetMerchantResponse setMerchantResponse = new SetMerchantResponse();
+		try {
+			if (merchantForm.isValid()) {
+				uvLiveModel.registerMerchant(getToken(request), merchantForm.getDni(),
+						merchantForm.getFirstName(), merchantForm.getLastName(), merchantForm.getUserName(),
+						merchantForm.getPassword());
+			}
+		} catch (Exception e) {
+			setMerchantResponse.setErrorCode(getErrorCode(e));
 		}
-	} catch (Exception e) {
-		setBusinesmanResponse.setErrorCode(getErrorCode(e));
+		return setMerchantResponse;
 	}
-	return setBusinesmanResponse;
-	}
-	
+
 	@RequestMapping(value = "/admin/merchant/update", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE, headers = {
-		"Content-Type=application/json" })
-	public @ResponseBody BaseResponse updateBusinessman(@RequestBody SetBusinessmanForm businessmanForm,
-		BindingResult result, HttpServletRequest request, HttpServletResponse response) throws Exception {
-	SetBusinessmanResponse setBusinessmanResponse = new SetBusinessmanResponse();
-	try {
-		if (businessmanForm.isValid()) {
-			uvLiveModel.updateBusinessman(getToken(request), businessmanForm.getDni(), businessmanForm.getFirstName(),
-			businessmanForm.getLastName(), businessmanForm.getUserName(), businessmanForm.getPassword());
+			"Content-Type=application/json" })
+	public @ResponseBody BaseResponse updateMerchant(@RequestBody SetMerchantForm merchantForm,
+			BindingResult result, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		SetMerchantResponse setMerchantResponse = new SetMerchantResponse();
+		try {
+			if (merchantForm.isValid()) {
+				uvLiveModel.updateMerchant(getToken(request), merchantForm.getDni(),
+						merchantForm.getFirstName(), merchantForm.getLastName(), merchantForm.getUserName(),
+						merchantForm.getPassword());
+			}
+		} catch (Exception e) {
+			setMerchantResponse.setErrorCode(getErrorCode(e));
 		}
-	} catch (Exception e) {
-		setBusinessmanResponse.setErrorCode(getErrorCode(e));
+		return setMerchantResponse;
 	}
-	return setBusinessmanResponse;
-	}
-	
-	
 }

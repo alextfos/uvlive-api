@@ -44,8 +44,7 @@ public class TeacherController extends BaseController {
             headers={"Content-Type=application/json"})
     public @ResponseBody
     BaseResponse unblockStudent(@RequestBody PermissionStudentForm permissionStudentForm, BindingResult result,
-            HttpServletRequest request, HttpServletResponse response) throws Exception
-    {
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
     	BaseResponse baseResponse = new BaseResponse();
     	try {
     		if (permissionStudentForm.isValid()) {

@@ -14,6 +14,7 @@ public class TutorialCatalog {
 		try {
 			tutorials = new TutorialDAO().getTutorials();
 		} catch (Exception e) {
+			e.printStackTrace();
 			System.out.println("Error intializing TutorialCatalog: " + e.getMessage());
 		}
 	}
@@ -23,7 +24,7 @@ public class TutorialCatalog {
 		Collection<es.uvlive.model.Tutorial> resultTutorials = new ArrayList<es.uvlive.model.Tutorial>();
 		ArrayList<Integer> idsOfTutorialsCollection = new TutorialDAO().getIdsOfUserTutorials(user);
 		for (Tutorial tutorial : tutorials) {
-			for (Integer idConversation : idsOfTutorialsCollection ){
+			for (Integer idConversation : idsOfTutorialsCollection ) {
 				if (tutorial.getIdTutorial() == idConversation) {
 					resultTutorials.add(tutorial);
 				}

@@ -5,32 +5,26 @@
  */
 package es.uvlive.controllers.response;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
-
 public class ConversationResponse {
-    private String idConversation;
-    private String name;
-    
-    public ConversationResponse() {
-    	
-    }
-    
-    public ConversationResponse(String idConversation,String name) {
-        this.idConversation=idConversation;
-        this.name = name;
-    }
-    
-    public String getIdConversation() {
-        return idConversation;
-    }
-    
-    public String getName() {
-        return name;
-    }
+	private String idConversation;
+	private String name;
+
+	public ConversationResponse() {
+
+	}
+
+	public ConversationResponse(String idConversation, String name) {
+		this.idConversation = idConversation;
+		this.name = name;
+	}
+
+	public String getIdConversation() {
+		return idConversation;
+	}
+
+	public String getName() {
+		return name;
+	}
 
 	public void setIdConversation(String idConversation) {
 		this.idConversation = idConversation;
@@ -39,6 +33,4 @@ public class ConversationResponse {
 	public void setName(String name) {
 		this.name = name;
 	}
-    
-    
 }

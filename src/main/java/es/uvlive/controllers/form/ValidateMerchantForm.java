@@ -7,7 +7,7 @@ package es.uvlive.controllers.form;
 
 import es.uvlive.utils.ValidationUtils;
 
-public class ValidateBusinessmanForm extends BaseForm {
+public class ValidateMerchantForm extends BaseForm {
 	
     private String userName;
 

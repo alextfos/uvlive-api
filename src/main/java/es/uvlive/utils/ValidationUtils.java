@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 import es.uvlive.model.Admin;
-import es.uvlive.model.Businessman;
+import es.uvlive.model.Merchant;
 import es.uvlive.model.Student;
 import es.uvlive.model.Teacher;
 
@@ -33,6 +33,6 @@ public class ValidationUtils {
 	
 	public static boolean validateLoginType(String loginType) {
 		return Student.LOGIN_TYPE.equals(loginType) | Teacher.LOGIN_TYPE.equals(loginType) |
-				Businessman.LOGIN_TYPE.equals(loginType) | Admin.LOGIN_TYPE.equals(loginType);
+				Merchant.LOGIN_TYPE.equals(loginType) | Admin.LOGIN_TYPE.equals(loginType);
 	}
 }

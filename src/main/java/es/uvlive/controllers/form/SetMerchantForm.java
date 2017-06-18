@@ -7,7 +7,7 @@ package es.uvlive.controllers.form;
 
 import es.uvlive.utils.ValidationUtils;
 
-public class SetBusinessmanForm extends BaseForm {
+public class SetMerchantForm extends BaseForm {
     
 	private String dni;
     private String firstName;

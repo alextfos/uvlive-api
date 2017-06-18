@@ -17,13 +17,10 @@ import es.uvlive.controllers.response.BaseResponse;
 @Controller
 public class MerchantController extends BaseController {
 
-
 	@RequestMapping(value = "/merchant/broadcast/register", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE, headers = {
 			"Content-Type=application/json" })
-	public @ResponseBody BaseResponse registerBroadcast(
-			@RequestBody BroadcastForm broadcastForm, BindingResult result,
+	public @ResponseBody BaseResponse registerBroadcast(@RequestBody BroadcastForm broadcastForm, BindingResult result,
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
-
 		BaseResponse baseResponse = new BaseResponse();
 		try {
 			uvLiveModel.registerBroadcast(getToken(request), broadcastForm.getBroadcastMessage());

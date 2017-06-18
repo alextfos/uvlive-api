@@ -10,6 +10,6 @@ package es.uvlive.controllers.response;
  *
  * @author alextfos
  */
-public class SetBusinessmanResponse extends BaseResponse {
+public class SetMerchantResponse extends BaseResponse {
     
 }

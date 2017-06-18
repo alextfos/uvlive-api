@@ -10,13 +10,13 @@ public class RolUVDAO extends BaseDAO {
 	
 	private static final String QUERY_GET_STUDENT = "SELECT " + USER_ID_FIELD + " FROM " + USER_TABLE + " NATURAL JOIN " + STUDENT_TABLE + " WHERE " + USER_ID_FIELD + "=%d";
 	private static final String QUERY_GET_TEACHER = "SELECT " + USER_ID_FIELD + " FROM " + USER_TABLE + " NATURAL JOIN " + TEACHER_TABLE + " WHERE " + USER_ID_FIELD + "=%d";
-	private static final String QUERY_GET_COMMON_CONVERSATIONS = "SELECT COUNT(DISTINCT " + CONVERSATION_ID_TUTORIAL_FIELD + ") FROM " + CONVERSATION_ROL_UV_TABLE + " WHERE "
-	+ ROL_UV_ID_USER_FIELD + " = %d OR " + ROL_UV_ID_USER_FIELD + " = %d GROUP BY " + CONVERSATION_ID_TUTORIAL_FIELD;
+	private static final String QUERY_GET_COMMON_CONVERSATIONS = "SELECT COUNT(DISTINCT " + CONVERSATION_ID_CONVERSATION_FIELD + ") FROM " + CONVERSATION_ROL_UV_TABLE + " WHERE "
+	+ ROL_UV_ID_USER_FIELD + " = %d OR " + ROL_UV_ID_USER_FIELD + " = %d GROUP BY " + CONVERSATION_ID_CONVERSATION_FIELD;
 	// TODO : SELECT * FROM Conversation where idTutorial = (SELECT DISTINCT ConversationidTutorial FROM Conversation_RolUV WHERE RolUVidUser = 12 OR RolUVidUser = 11 GROUP BY ConversationidTutorial); 
 	// And add a parameter to dinstinct personal conversation to group conversation
-	private static final String QUERY_GET_MAX_ID = "SELECT MAX(" + TUTORIAL_ID_FIELD + ") FROM " + CONVERSATION_TABLE;
-	private static final String QUERY_INSERT_CONVERSATION = "INSERT INTO " + CONVERSATION_TABLE + " (" + TUTORIAL_ID_FIELD + ", " + NAME_FIELD + ") VALUES (?,?);";
-	private static final String QUERY_INSERT_CONVERSATION_ROL_UV = "INSERT INTO " + CONVERSATION_ROL_UV_TABLE + " (" + CONVERSATION_ID_TUTORIAL_FIELD + "," + ROL_UV_ID_USER_FIELD +  ") VALUES (?,?)";
+	private static final String QUERY_GET_MAX_ID = "SELECT MAX(" + CONVERSATION_ID_FIELD + ") FROM " + CONVERSATION_TABLE;
+	private static final String QUERY_INSERT_CONVERSATION = "INSERT INTO " + CONVERSATION_TABLE + " (" + CONVERSATION_ID_FIELD + ", " + NAME_FIELD + ") VALUES (?,?);";
+	private static final String QUERY_INSERT_CONVERSATION_ROL_UV = "INSERT INTO " + CONVERSATION_ROL_UV_TABLE + " (" + CONVERSATION_ID_CONVERSATION_FIELD + "," + ROL_UV_ID_USER_FIELD +  ") VALUES (?,?)";
 	
 	private static final String QUERY_REMOVE_PUSH_TOKEN = "UPDATE " + ROL_UV_TABLE + " SET " + PUSH_TOKEN_FIELD + " = '' WHERE " + USER_ID_FIELD + "= %d";
 	

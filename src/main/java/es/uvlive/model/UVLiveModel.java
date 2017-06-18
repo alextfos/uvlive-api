@@ -138,12 +138,12 @@ public class UVLiveModel {
 	 * @param userName
 	 * @param password
 	 */
-	public void registerBusinessman(String key, String dni, String firstname, String lastname, String userName,
-			String password) throws Exception {
+	public void registerMerchant(String key, String dni, String firstname, String lastname, String userName,
+								 String password) throws Exception {
 		User user = getUser(key);
 		
 		if (user != null && user instanceof Admin) {
-			((Admin)user).registerBusinessman(dni, firstname, lastname, userName, password);
+			((Admin)user).registerMerchant(dni, firstname, lastname, userName, password);
 		} else {
 			throw new UnauthorizedException();
 		}
@@ -158,12 +158,12 @@ public class UVLiveModel {
 	 * @param userName
 	 * @param password
 	 */
-	public void updateBusinessman(String key, String dni, String firstname, String lastname, String userName,
-			String password) throws Exception {
+	public void updateMerchant(String key, String dni, String firstname, String lastname, String userName,
+                               String password) throws Exception {
 		User user = getUser(key);
 		
 		if (user != null && user instanceof Admin) {
-			((Admin)user).updateBusinessman(dni, firstname, lastname, userName, password);
+			((Admin)user).updateMerchant(dni, firstname, lastname, userName, password);
 		} else {
 			throw new UnauthorizedException();
 		}
@@ -172,7 +172,7 @@ public class UVLiveModel {
 
 	// TODO Check in VP (Hint: broadcastText String)
 	/**
-	 * Registers Broadcast requested by Businessman
+	 * Registers Broadcast requested by Merchant
 	 * @param key
 	 * @param String
 	 * @throws SQLException 
@@ -180,8 +180,8 @@ public class UVLiveModel {
 	 */
 	public void registerBroadcast(String key, String broadcastText) throws Exception {
 		User user = getUser(key);
-		if (user != null && user instanceof Businessman) {
-			((Businessman)user).registerBroadcast(broadcastText);
+		if (user != null && user instanceof Merchant) {
+			((Merchant)user).registerBroadcast(broadcastText);
 		}
 	}
 

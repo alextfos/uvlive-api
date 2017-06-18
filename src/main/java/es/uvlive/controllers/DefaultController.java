@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class DefaultController {
-    
-   @RequestMapping(value = "/", method = RequestMethod.GET)
-   public String index(ModelMap map) {
-       map.put("msg", "Enhorabuena, el Servidor se ha lanzado correctamente!");
-       return "index";
-   }
-    
+
+	@RequestMapping(value = "/", method = RequestMethod.GET)
+	public String index(ModelMap map) {
+		map.put("msg", "Enhorabuena, el Servidor se ha lanzado correctamente!");
+		return "index";
+	}
+
 }

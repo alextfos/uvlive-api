@@ -6,22 +6,18 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import es.uvlive.exceptions.WrongCredentialsException;
-import es.uvlive.model.Admin;
-import es.uvlive.model.Businessman;
-import es.uvlive.model.RolUV;
-import es.uvlive.model.Student;
-import es.uvlive.model.Teacher;
-import es.uvlive.model.User;
-import es.uvlive.utils.Logger;
+import es.uvlive.model.*;
+import es.uvlive.model.Merchant;
 
 public class UserDAO extends BaseDAO {
 
+	private static final String QUERY_GET_USER = "SELECT * FROM " + USER_TABLE + " WHERE " + USER_NAME_FIELD + " ='%s'";
 	private static final String QUERY_LOGIN_USER = "SELECT * FROM " + USER_TABLE + " WHERE " + USER_NAME_FIELD + " = '%s' AND password = '%s'";
 	private static final String QUERY_LOGIN_ROL_UV = "SELECT * FROM " + ROL_UV_TABLE + " WHERE " + USER_ID_FIELD + " = '%d'";
 	private static final String QUERY_LOGIN_STUDENT = "SELECT * FROM " + STUDENT_TABLE + " WHERE " + USER_ID_FIELD + " = '%d'";
 	private static final String QUERY_LOGIN_TEACHER = "SELECT * FROM " + TEACHER_TABLE + " WHERE " + USER_ID_FIELD + " = '%d'";
 	private static final String QUERY_LOGIN_ADMIN = "SELECT * FROM " + ADMIN_TABLE + " WHERE " + USER_ID_FIELD + " = '%d'";
-	private static final String QUERY_LOGIN_BUSINESSMAN = "SELECT * FROM " + BUSINESSMAN_TABLE + " WHERE " + USER_ID_FIELD + " = '%d'";
+	private static final String QUERY_LOGIN_MERCHANT = "SELECT * FROM " + MERCHANT_TABLE + " WHERE " + USER_ID_FIELD + " = '%d'";
 	
 	private static final String QUERY_SAVE_PUSH_TOKEN = "UPDATE " + ROL_UV_TABLE + " SET " + PUSH_TOKEN_FIELD + " = '%s' WHERE " + USER_ID_FIELD + "= %d";
 	
@@ -54,24 +50,28 @@ public class UserDAO extends BaseDAO {
                 	case Student.LOGIN_TYPE:
                         user = new Student();
                         user.setUserId(userId);
+                        user.setUsername(name);
                         getRolUvData((RolUV) user);
                         getStudentData((Student)user);
                         break;
                     case Teacher.LOGIN_TYPE:
                         user = new Teacher();
                         user.setUserId(userId);
+                        user.setUsername(name);
                         getRolUvData((RolUV)user);
                         getTeacherData((Teacher)user);
                         break;
                     case Admin.LOGIN_TYPE:
                         user = new Admin();
                         user.setUserId(userId);
+                        user.setUsername(name);
                         getAdminData((Admin)user);
                         break;
-                    case Businessman.LOGIN_TYPE:
-                    	user = new Businessman();
+                    case Merchant.LOGIN_TYPE:
+                    	user = new Merchant();
                     	user.setUserId(userId);
-                    	getBusinessmanData((Businessman)user);
+                    	user.setUsername(name);
+                    	getMerchantData((Merchant)user);
                     	break;
                 	default:
                 		return null;
@@ -82,6 +82,22 @@ public class UserDAO extends BaseDAO {
             }
         }
         return user;
+	}
+
+	public User getUser(String userName) throws ClassNotFoundException, SQLException {
+		User user = null;
+		ResultSet result = query(String.format(QUERY_GET_USER,userName));
+
+		if (result != null) {
+			if (result.next()) {
+				user = new User();
+				user.setUsername(result.getString(USER_NAME_FIELD));
+				user.setFirstname(result.getString(FIRST_NAME_FIELD));
+				user.setLastname(result.getString(LAST_NAME_FIELD));
+			}
+		}
+
+		return user;
 	}
 	
 	public void savePushToken(int userId, String pushToken) throws SQLException {
@@ -98,8 +114,8 @@ public class UserDAO extends BaseDAO {
         }
 	}
 	
-	protected void getBusinessmanData(Businessman user) throws ClassNotFoundException, SQLException, WrongCredentialsException {
-		String sqlQuery = String.format(QUERY_LOGIN_BUSINESSMAN,user.getUserId());
+	protected void getMerchantData(Merchant user) throws ClassNotFoundException, SQLException, WrongCredentialsException {
+		String sqlQuery = String.format(QUERY_LOGIN_MERCHANT,user.getUserId());
 		ResultSet result = query(sqlQuery);
         if (result!=null && result.next()) {
             user.setDni(result.getString(DNI_FIELD));
