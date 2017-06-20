@@ -10,27 +10,37 @@ public class MessageResponse extends BaseResponse {
 	private int idMessage;
 	private String text;
 	private int timestamp;
-	//private User user;
-	
-	public MessageResponse() {
-		//user = new User();
-	}
+	private String owner;
+
 	public int getIdMessage() {
 		return idMessage;
 	}
+
 	public void setIdMessage(int idMessage) {
 		this.idMessage = idMessage;
 	}
+
 	public String getText() {
 		return text;
 	}
+
 	public void setText(String text) {
 		this.text = text;
 	}
+
 	public int getTimestamp() {
 		return timestamp;
 	}
+
 	public void setTimestamp(int timestamp) {
 		this.timestamp = timestamp;
+	}
+
+	public void setOwner(String owner) {
+		this.owner = owner;
+	}
+
+	public String getOwner() {
+		return owner;
 	}
 }

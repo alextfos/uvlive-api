@@ -9,7 +9,8 @@ public class Message {
 	// @TODO check in VP (Hint: int message)
 	private String text;
 	private int timestamp;
-	
+	private String owner;
+
 	// TODO @Non-generated
 	public RolUV getRolUV() {
 		return rolUV;
@@ -49,7 +50,15 @@ public class Message {
 	public void setTimestamp(int timestamp) {
 		this.timestamp = timestamp;
 	}
-	
+
+	public void setOwner(String owner) {
+		this.owner = owner;
+	}
+
+	public String getOwner() {
+		return owner;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (o instanceof Message) {

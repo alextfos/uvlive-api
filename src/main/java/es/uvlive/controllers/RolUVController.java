@@ -119,7 +119,7 @@ public class RolUVController extends BaseController {
 					messageResponse.setIdMessage(message.getIdMessage());
 					messageResponse.setText(message.getText());
 					messageResponse.setTimestamp(message.getTimestamp());
-
+					messageResponse.setOwner(message.getOwner());
 					messageResponseList.add(messageResponse);
 				}
 
@@ -150,6 +150,7 @@ public class RolUVController extends BaseController {
 					messageResponse.setIdMessage(message.getIdMessage());
 					messageResponse.setText(message.getText());
 					messageResponse.setTimestamp(message.getTimestamp());
+					messageResponse.setOwner(message.getOwner());
 
 					messageResponseList.add(messageResponse);
 				}
@@ -180,6 +181,8 @@ public class RolUVController extends BaseController {
 					messageResponse.setIdMessage(message.getIdMessage());
 					messageResponse.setText(message.getText());
 					messageResponse.setTimestamp(message.getTimestamp());
+					messageResponse.setOwner(message.getOwner());
+
 					messageResponseList.add(messageResponse);
 				}
 				messageListResponse.setMessages(messageResponseList);

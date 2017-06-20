@@ -67,7 +67,7 @@ public abstract class RolUV extends User {
 	 * @throws ClassNotFoundException 
 	 */
 	// @Non-generated
-	public void sendMessage(int idTutorial, String text) throws SQLException, ClassNotFoundException, Exception {
+	public void sendMessage(int idTutorial, String text) throws Exception {
 		if (tutorialCatalog == null) {
 			throw new Exception();
 		}
@@ -97,20 +97,19 @@ public abstract class RolUV extends User {
 	}
 
 	public Collection<Message> getMessages(int idConversation) throws ClassNotFoundException, SQLException {
-		Collection<Message> messages = new ArrayList<Message>();
+		Collection<Message> messages = new ArrayList<>();
 		Tutorial requestedTutorial = new Tutorial();
 		
 		for (Tutorial tutorial : userTutorials) {
 			if (tutorial.getIdTutorial() == idConversation) {
 				// User can read this conversation
 				requestedTutorial = tutorial;
-				if (requestedTutorial.getMessages() != null && !requestedTutorial.getMessages().isEmpty()){
+				/*if (requestedTutorial.getMessages() != null && !requestedTutorial.getMessages().isEmpty()){
 					messages = requestedTutorial.getMessages();
-				} else {
+				} else {*/
 					// Should get conversations messages
 					messages = new MessageDAO().getMessages(idConversation);
-					// TODO update user conversations list with messages
-				}
+				//}
 			}
 		}
 		
@@ -118,20 +117,19 @@ public abstract class RolUV extends User {
 	}
 	
 	public Collection<Message> getPreviousMessages(int idConversation, int idMessage) throws ClassNotFoundException, SQLException {
-		Collection<Message> messages = new ArrayList<Message>();
+		Collection<Message> messages = new ArrayList<>();
 		Tutorial requestedTutorial = new Tutorial();
 		
 		for (Tutorial tutorial : userTutorials) {
 			if (tutorial.getIdTutorial() == idConversation) {
 				// User can read this conversation
 				requestedTutorial = tutorial;
-				if (requestedTutorial.getMessages() != null && !requestedTutorial.getMessages().isEmpty()){
+				/*if (requestedTutorial.getMessages() != null && !requestedTutorial.getMessages().isEmpty()){
 					messages = requestedTutorial.getMessages();
-				} else {
+				} else {*/
 					// Should get conversations messages
 					messages = new MessageDAO().getPreviousMessages(idConversation, idMessage);
-					// TODO update user conversations list with messages
-				}
+				//}
 			}
 		}
 		
@@ -139,20 +137,20 @@ public abstract class RolUV extends User {
 	}
 	
 	public Collection<Message> getFollowingMessages(int idConversation, int idMessage) throws ClassNotFoundException, SQLException {
-		Collection<Message> messages = new ArrayList<Message>();
+		Collection<Message> messages = new ArrayList<>();
 		Tutorial requestedTutorial = new Tutorial();
 		
 		for (Tutorial tutorial : userTutorials) {
 			if (tutorial.getIdTutorial() == idConversation) {
 				// User can read this conversation
 				requestedTutorial = tutorial;
-				if (requestedTutorial.getMessages() != null && !requestedTutorial.getMessages().isEmpty()){
+				/*if (requestedTutorial.getMessages() != null && !requestedTutorial.getMessages().isEmpty()){
 					messages = requestedTutorial.getMessages();
-				} else {
+				} else {*/
 					// Should get conversations messages
 					messages = new MessageDAO().getFollowingMessages(idConversation, idMessage);
 					// TODO update user conversations list with messages
-				}
+				//}
 			}
 		}
 		
