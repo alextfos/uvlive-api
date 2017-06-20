@@ -15,7 +15,7 @@ public class MerchantDAO extends BaseDAO {
 	+ FIRST_NAME_FIELD + "='%s', " + LAST_NAME_FIELD + "='%s' WHERE " + USER_NAME_FIELD + "='%s'";
 	private static final String QUERY_UPDATE_MERCHANT_MERCHANT = "UPDATE " + MERCHANT_TABLE + " SET " + DNI_FIELD + "='%s' WHERE " + USER_ID_FIELD + "=(SELECT " + USER_ID_FIELD + " FROM " + USER_TABLE + " WHERE " + USER_NAME_FIELD + "='%s')" ;
 	
-	private static final String QUERY_SAVE_BROADCAST = "INSERT INTO " + BROADCAST_TABLE + "(" + TEXT_FIELD + "," + BROADCAST_ID_MERCHANT_FIELD + ", "+ BROADCAST_EXPIRATION_DATE +") VALUES (?, ?, ?)";
+	private static final String QUERY_SAVE_BROADCAST = "INSERT INTO " + BROADCAST_TABLE + "(" + TEXT_FIELD + "," + BROADCAST_EXPIRATION_DATE + ", "+ BROADCAST_ID_MERCHANT_FIELD +") VALUES (?, ?, ?)";
 	
 	// UPDATE MyGuests SET lastname='Doe' WHERE id=2" TODO
 
@@ -39,12 +39,12 @@ public class MerchantDAO extends BaseDAO {
 	}
 
 	public void saveBroadcast(Merchant merchant, String broadcastText) throws ClassNotFoundException, SQLException {
-		String timestamp = String.valueOf(((long) new Date().getTime()) / 1000);
+		int timestamp = (int) (((long) new Date().getTime()) / 1000);
 		
 		PreparedStatement preparedStatement = getPreparedStatement(QUERY_SAVE_BROADCAST);
 		preparedStatement.setString(1, broadcastText);
-		preparedStatement.setInt(2, merchant.getUserId());
-		preparedStatement.setString(3, timestamp);
+		preparedStatement.setInt(2, timestamp);
+		preparedStatement.setInt(3, merchant.getUserId());
 		insert(preparedStatement);
 	}
 }
