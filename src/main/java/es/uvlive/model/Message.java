@@ -1,12 +1,14 @@
 package es.uvlive.model;
 
+import com.google.gson.Gson;
+
 public class Message {
 
 	private RolUV rolUV;
 	private int idMessage;
 	// @TODO check in VP (Hint: int message)
 	private String text;
-	private String timestamp;
+	private int timestamp;
 	
 	// TODO @Non-generated
 	public RolUV getRolUV() {
@@ -39,12 +41,25 @@ public class Message {
 	}
 
 	// TODO @Non-generated
-	public String getTimestamp() {
+	public int getTimestamp() {
 		return timestamp;
 	}
 
 	// TODO @Non-generated
-	public void setTimestamp(String timestamp) {
+	public void setTimestamp(int timestamp) {
 		this.timestamp = timestamp;
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if (o instanceof Message) {
+			return ((Message)o).idMessage == this.idMessage;
+		}
+		return false;
+	}
+	
+	@Override
+	public String toString() {
+		return new Gson().toJson(this);
 	}
 }
