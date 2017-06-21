@@ -1,27 +1,56 @@
 package es.uvlive.eda;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
-
+import java.util.*;
+/*
+* Uso: la primera carga se realiza mediante el método addAll para cargar los mensajes provinientes de la BD
+* A partir de este momento se sincronizarán solamente los mensajes nuevos que no esten ya en la BD
+*
+* */
 public class ElasticList<T> implements List<T> {
-	
-	private static final int MAX_SIZE = 10;
-	private static final int BUFFER_SIZE = 2;
-	
+
+	private int maxSize;
+	private int bufferSize;
 	private int size;
+
 	private ElasticItem<T> firstElement;
 	private ElasticItem<T> lastElement;
+	private ElasticItem<T> lastSync;
 	
 	private OnFillBufferCallback<T> onFillBufferCallback;
 	
-	public ElasticList(OnFillBufferCallback<T> onFillBufferCallback) {
+	public ElasticList(int maxSize, int bufferSize, OnFillBufferCallback<T> onFillBufferCallback) {
 		size = 0;
+		this.maxSize = maxSize;
+		this.bufferSize = bufferSize;
 		this.onFillBufferCallback = onFillBufferCallback;
 	}
-	
+
+	@Override
+	public boolean addAll(Collection<? extends T> c) {
+		if (c == null) {
+			return Boolean.TRUE;
+		}
+		for (T e:c) {
+			if (e != null) {
+				ElasticItem<T> elasticItem = new ElasticItem<>(e);
+				elasticItem.setNextElement(firstElement);
+				if (firstElement != null) {
+					firstElement.setPreviousElement(elasticItem);
+				}
+
+				if (lastElement == null) {
+					lastElement = elasticItem;
+				}
+				size++;
+				firstElement = elasticItem;
+			} else {
+				return Boolean.FALSE;
+			}
+		}
+		lastSync = firstElement;
+		return Boolean.TRUE;
+	}
+
 	@Override
 	public int size() {
 		return size;
@@ -141,26 +170,45 @@ public class ElasticList<T> implements List<T> {
 	}
 	
 	private void checkAndSendBuffer() {
-		if (size == MAX_SIZE) {
+		if (size >= maxSize) {
 			ElasticItem<T> element = lastElement;
 			int index = 0;
 			ArrayList<T> elements = new ArrayList<>();
 			
-			while (element.getPreviousElement() != null && index<BUFFER_SIZE) {
-				elements.add(element.getElement());
+			while (element.getPreviousElement() != null && index<bufferSize) {
+				if (lastSync == null) {
+					elements.add(element.getElement());
+				}
+				if (element.equals(lastSync)) {
+					lastSync = null;
+				}
 				element = element.getPreviousElement();
 				index++;
 			}
 			
 			element.setNextElement(null);
 			lastElement = element;
-			size-=BUFFER_SIZE;
-			
-			onFillBufferCallback.onBufferFilled(elements);
+			size-=bufferSize;
+
+			if(elements.size()>0) {
+				onFillBufferCallback.onBufferFilled(elements);
+			}
 		}
 	}
 	
-	public static interface OnFillBufferCallback<T> {
+	@Override
+	public String toString() {
+		String txt = "";
+		ElasticItem<T> currentElement = firstElement;
+		txt += currentElement.getElement().toString()+"\t\n";
+		while (currentElement.getNextElement() != null) {
+			currentElement = currentElement.getNextElement();
+			txt += currentElement.getElement().toString()+"\t\n";
+		}
+		return txt;
+	}
+	
+	public interface OnFillBufferCallback<T> {
 		void onBufferFilled(List<T> elements);
 	}
 	
@@ -171,11 +219,6 @@ public class ElasticList<T> implements List<T> {
 		throw new UnsupportedOperationException();
 	}
 
-	@Override
-	@Deprecated
-	public boolean addAll(Collection<? extends T> c) {
-		throw new UnsupportedOperationException();
-	}
 	
 	@Override
 	@Deprecated
@@ -207,7 +250,7 @@ public class ElasticList<T> implements List<T> {
 	public <T> T[] toArray(T[] a) {
 		throw new UnsupportedOperationException();
 	}
-	
+
 
 	@Override
 	@Deprecated
