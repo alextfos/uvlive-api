@@ -1,7 +1,6 @@
 package es.uvlive.model.dao;
 
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 
@@ -15,8 +14,8 @@ public class MerchantDAO extends BaseDAO {
 	+ FIRST_NAME_FIELD + "='%s', " + LAST_NAME_FIELD + "='%s' WHERE " + USER_NAME_FIELD + "='%s'";
 	private static final String QUERY_UPDATE_MERCHANT_MERCHANT = "UPDATE " + MERCHANT_TABLE + " SET " + DNI_FIELD + "='%s' WHERE " + USER_ID_FIELD + "=(SELECT " + USER_ID_FIELD + " FROM " + USER_TABLE + " WHERE " + USER_NAME_FIELD + "='%s')" ;
 	
-	private static final String QUERY_SAVE_BROADCAST = "INSERT INTO " + BROADCAST_TABLE + "(" + TEXT_FIELD + "," + BROADCAST_EXPIRATION_DATE + ", "+ BROADCAST_ID_MERCHANT_FIELD +") VALUES (?, ?, ?)";
-	
+	private static final String QUERY_SAVE_BROADCAST = "INSERT INTO " + BROADCAST_TABLE + "(" + TITLE_FIELD + ", " + TEXT_FIELD + "," + BROADCAST_CREATION_TIMESTAMP + ", "+ BROADCAST_ID_MERCHANT_FIELD +") VALUES (?,?, ?, ?)";
+
 	// UPDATE MyGuests SET lastname='Doe' WHERE id=2" TODO
 
 	
@@ -38,13 +37,14 @@ public class MerchantDAO extends BaseDAO {
 		update(String.format(QUERY_UPDATE_MERCHANT_MERCHANT,dni,username));
 	}
 
-	public void saveBroadcast(Merchant merchant, String broadcastText) throws ClassNotFoundException, SQLException {
+	public void saveBroadcast(Merchant merchant, String title, String broadcastText) throws ClassNotFoundException, SQLException {
 		int timestamp = (int) (((long) new Date().getTime()) / 1000);
 		
 		PreparedStatement preparedStatement = getPreparedStatement(QUERY_SAVE_BROADCAST);
-		preparedStatement.setString(1, broadcastText);
-		preparedStatement.setInt(2, timestamp);
-		preparedStatement.setInt(3, merchant.getUserId());
+		preparedStatement.setString(1,title);
+		preparedStatement.setString(2, broadcastText);
+		preparedStatement.setInt(3, timestamp);
+		preparedStatement.setInt(4, merchant.getUserId());
 		insert(preparedStatement);
 	}
 }

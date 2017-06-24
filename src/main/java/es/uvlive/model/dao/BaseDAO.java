@@ -42,6 +42,7 @@ public class BaseDAO {
     protected static final String DNI_FIELD = "dni";
     protected static final String PUSH_TOKEN_FIELD = "pushToken";
     protected static final String BLOCKED_FIELD = "blocked";
+    protected static final String TITLE_FIELD = "title";
     
     protected static final String BRODCAST_ID_FIELD = "idBroadcast";
     protected static final String TEXT_FIELD = "text";
@@ -56,7 +57,7 @@ public class BaseDAO {
     protected static final String MESSAGE_ID_FIELD = "idMessage";
     
     protected static final String BROADCAST_ID_MERCHANT_FIELD = "MerchantIdUser";
-    protected static final String BROADCAST_EXPIRATION_DATE = "expirationTimestamp";
+    protected static final String BROADCAST_CREATION_TIMESTAMP = "creationTimestamp";
     
     public BaseDAO() {
     	try {

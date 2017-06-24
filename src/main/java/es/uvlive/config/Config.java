@@ -20,16 +20,14 @@ import com.fasterxml.jackson.datatype.joda.JodaModule;
 @Configuration
 @ComponentScan("es.uvlive")
 @EnableWebMvc
-//@EnableAutoConfiguration
-//@EnableConfigurationProperties
 public class Config extends WebMvcConfigurerAdapter {  
     
     @Bean  
     public UrlBasedViewResolver setupViewResolver() {  
         UrlBasedViewResolver resolver = new UrlBasedViewResolver();  
-        resolver.setPrefix("/WEB-INF/jsp/");  
-        resolver.setSuffix(".jsp");  
-        resolver.setViewClass(JstlView.class);  
+        resolver.setPrefix("/WEB-INF/jsp/");
+        resolver.setSuffix(".jsp");
+        resolver.setViewClass(JstlView.class);
         return resolver;  
     }
     

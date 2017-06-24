@@ -4,7 +4,9 @@ import java.math.BigInteger;
 import java.security.Key;
 import java.security.SecureRandom;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Set;
 
 import es.uvlive.exceptions.TokenExpiredException;
@@ -190,5 +192,12 @@ public class SessionManager {
 				tutorial.addRolUV(((RolUV) currentUser));
 			}
 		}
+	}
+
+	public List<User> getUsers() {
+		ArrayList<User> userArrayList = new ArrayList<>();
+		userArrayList.addAll(usersCollection.values());
+
+		return userArrayList;
 	}
 }

@@ -3,11 +3,21 @@ package es.uvlive.model;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
+import es.uvlive.api.GoogleInterface;
+import es.uvlive.api.RetrofitFactory;
+import es.uvlive.api.requests.NotificationRequest;
+import es.uvlive.api.response.NotificationResponse;
 import es.uvlive.controllers.form.GetMessagesForm;
 import es.uvlive.exceptions.ConversationNotCreatedException;
 import es.uvlive.exceptions.UnauthorizedException;
+import es.uvlive.model.dao.BroadcastDAO;
+import es.uvlive.utils.Logger;
 import es.uvlive.utils.StringUtils;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class UVLiveModel {
 	
@@ -178,10 +188,10 @@ public class UVLiveModel {
 	 * @throws SQLException 
 	 * @throws ClassNotFoundException 
 	 */
-	public void registerBroadcast(String key, String broadcastText) throws Exception {
+	public void registerBroadcast(String key, String title, String broadcastText) throws Exception {
 		User user = getUser(key);
 		if (user != null && user instanceof Merchant) {
-			((Merchant)user).registerBroadcast(broadcastText);
+			((Merchant)user).registerBroadcast(title, broadcastText);
 		}
 	}
 
@@ -189,9 +199,43 @@ public class UVLiveModel {
 	 * 
 	 * @param text
 	 */
-	public void sendBroadcast(String text) {
-		// TODO - implement UVLiveModel.sendBroadcast
-		throw new UnsupportedOperationException();
+	public void sendBroadcasts() throws SQLException, ClassNotFoundException {
+		List<Broadcast> broadcastList = new BroadcastDAO().getBroadcasts();
+		List<User> users = sessionManager.getUsers();
+		for (final User user: users) {
+			if (user instanceof RolUV) {
+				String pushToken = ((RolUV)user).getPushToken();
+				for (Broadcast broadcast:broadcastList) {
+					GoogleInterface googleInterface = RetrofitFactory.getGoogleInterface();
+					NotificationRequest notificationRequest = new NotificationRequest();
+
+					notificationRequest.setNotification(new NotificationRequest.Notification(broadcast.getTitle(), broadcast.getText()));
+					notificationRequest.setTo(pushToken);
+					Call<NotificationResponse> callback = googleInterface.sendNotification(notificationRequest);
+					callback.enqueue(new Callback<NotificationResponse>() {
+						@Override
+						public void onResponse(Call<NotificationResponse> call, Response<NotificationResponse> rspns) {
+							NotificationResponse response = rspns.body();
+							if (response.getFailure() > 0) {
+								try {
+									((RolUV)user).removePushToken();
+								} catch (Exception e) {
+									e.printStackTrace();
+									Logger.putError(UVLiveModel.this, e);
+								}
+							}
+						}
+
+						@Override
+						public void onFailure(Call<NotificationResponse> call, Throwable thrwbl) {
+							System.out.println("Error: ");
+							thrwbl.printStackTrace();
+						}
+					});
+				}
+			}
+		}
+
 	}
 
 	/**

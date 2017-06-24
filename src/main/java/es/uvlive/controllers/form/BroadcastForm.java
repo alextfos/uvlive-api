@@ -4,6 +4,7 @@ import es.uvlive.utils.ValidationUtils;
 
 public class BroadcastForm extends BaseForm {
 
+	private String title;
 	private String broadcastMessage;
 
 	public String getBroadcastMessage() {
@@ -14,9 +15,17 @@ public class BroadcastForm extends BaseForm {
 		this.broadcastMessage = broadcastMessage;
 	}
 
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
 	@Override
 	public boolean isValid() {
-		return ValidationUtils.validateString(broadcastMessage);
+		return ValidationUtils.validateString(title) && ValidationUtils.validateString(broadcastMessage);
 	}
 	
 }

@@ -26,7 +26,7 @@ public class MerchantController extends BaseController {
 		try {
 			if (broadcastForm.isValid()) {
 				String token = getToken(request);
-				uvLiveModel.registerBroadcast(token, broadcastForm.getBroadcastMessage());
+				uvLiveModel.registerBroadcast(token, broadcastForm.getTitle(), broadcastForm.getBroadcastMessage());
 			} else {
 				throw new ValidationFormException();
 			}

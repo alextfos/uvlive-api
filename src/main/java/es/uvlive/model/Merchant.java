@@ -19,8 +19,8 @@ public class Merchant extends User {
 		this.dni = dni;
 	}
 
-	public void registerBroadcast(String broadcastText) throws ClassNotFoundException, SQLException {
-		new MerchantDAO().saveBroadcast(this, broadcastText);
+	public void registerBroadcast(String title, String broadcastText) throws ClassNotFoundException, SQLException {
+		new MerchantDAO().saveBroadcast(this, title, broadcastText);
 	}
 	
 }
