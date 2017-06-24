@@ -8,6 +8,7 @@ import java.util.*;
 * */
 public class ElasticList<T> implements List<T> {
 
+	private static final int NO_POSITION = -1;
 	private int maxSize;
 	private int bufferSize;
 	private int size;
@@ -166,7 +167,7 @@ public class ElasticList<T> implements List<T> {
 				index++;
 			}
 		}
-		return -1;
+		return NO_POSITION;
 	}
 	
 	private void checkAndSendBuffer() {
@@ -194,6 +195,25 @@ public class ElasticList<T> implements List<T> {
 				onFillBufferCallback.onBufferFilled(elements);
 			}
 		}
+	}
+
+	@Override
+	public List<T> subList(int fromIndex, int toIndex) {
+		if (fromIndex>=size) {
+			return null;
+		}
+		ArrayList<T> subList = new ArrayList<>();
+
+		ElasticItem<T> element = firstElement;
+		for (int index=0 ; element.getNextElement() != null && index != fromIndex ; index++) {
+			element = element.getNextElement();
+		}
+		
+		for (int i=fromIndex ; i<toIndex && element.getNextElement() !=null ; i++) {
+			subList.add(element.getElement());
+			element = element.getNextElement();
+		}
+		return subList;
 	}
 	
 	@Override
@@ -285,12 +305,6 @@ public class ElasticList<T> implements List<T> {
 	@Override
 	@Deprecated
 	public ListIterator<T> listIterator(int index) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	@Deprecated
-	public List<T> subList(int fromIndex, int toIndex) {
 		throw new UnsupportedOperationException();
 	}
 }

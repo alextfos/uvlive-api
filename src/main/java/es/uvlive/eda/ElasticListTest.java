@@ -10,6 +10,7 @@ public class ElasticListTest {
 	private static final int NUM_ELEMENTS = 30;
 	private static final int MAX_SIZE = 20;
 	private static final int BUFFER_SIZE = 2;
+	private static final int PAGE_SIZE = 10;
 	
 	public static void main(String args[]) {
 		ElasticList<Message> testList;
@@ -53,8 +54,23 @@ public class ElasticListTest {
 			testList.add(message);
 		}
 		
-		System.out.println("List content: \n\n" + testList);
+		List<Message> arrayList = testList.subList(0, 5);
+		arrayList = testList.subList(17,testList.size());
+		arrayList = testList.subList(25, 100);
 		
+		System.out.println("List content: \n\n" + testList);
+
+		// GET Last PAGE_SIZE messages
+		int posMessage = testList.indexOf(messageArrayList.get(NUM_ELEMENTS-1));
+		int posInit = (posMessage-PAGE_SIZE)>0?(posMessage-PAGE_SIZE):0;
+		arrayList = testList.subList(posInit,posMessage);
+		int limitDB = PAGE_SIZE-arrayList.size();
+
+		// GET Next PAGE_SIZE messages
+		posMessage = testList.indexOf(messageArrayList.get(NUM_ELEMENTS-1));
+		posInit = (posMessage+PAGE_SIZE)<testList.size()?(posMessage+PAGE_SIZE):testList.size();
+		arrayList = testList.subList(posInit,posMessage);
+		limitDB = PAGE_SIZE-arrayList.size();
 	}
 
 }
