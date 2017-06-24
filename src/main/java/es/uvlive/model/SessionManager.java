@@ -9,15 +9,24 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
+import es.uvlive.api.GoogleInterface;
+import es.uvlive.api.RetrofitFactory;
+import es.uvlive.api.requests.NotificationRequest;
+import es.uvlive.api.requests.Operation;
+import es.uvlive.api.response.NotificationResponse;
 import es.uvlive.exceptions.TokenExpiredException;
 import es.uvlive.exceptions.WrongCredentialsException;
 import es.uvlive.model.dao.MerchantDAO;
 import es.uvlive.model.dao.UserDAO;
+import es.uvlive.utils.Logger;
 import es.uvlive.utils.StringUtils;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.impl.crypto.MacProvider;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class SessionManager {
 
@@ -190,8 +199,39 @@ public class SessionManager {
 			if (currentUser.getUserId() == userId && currentUser instanceof RolUV) {
 				((RolUV) currentUser).getUserTutorials().add(tutorial);
 				tutorial.addRolUV(((RolUV) currentUser));
+				notifyConversationsChanged((RolUV) currentUser);
 			}
 		}
+	}
+
+	private void notifyConversationsChanged(final RolUV rolUV) {
+		String pushToken = rolUV.getPushToken();
+		GoogleInterface googleInterface = RetrofitFactory.getGoogleInterface();
+		NotificationRequest notificationRequest = new NotificationRequest();
+
+		notificationRequest.setData(new Operation("GET","CONVERSATIONS"));
+		notificationRequest.setTo(pushToken);
+		Call<NotificationResponse> callback = googleInterface.sendNotification(notificationRequest);
+		callback.enqueue(new Callback<NotificationResponse>() {
+			@Override
+			public void onResponse(Call<NotificationResponse> call, Response<NotificationResponse> rspns) {
+				NotificationResponse response = rspns.body();
+				if (response.getFailure() > 0) {
+					try {
+						rolUV.removePushToken();
+					} catch (Exception e) {
+						e.printStackTrace();
+						Logger.putError(SessionManager.this,e);
+					}
+				}
+			}
+
+			@Override
+			public void onFailure(Call<NotificationResponse> call, Throwable thrwbl) {
+				System.out.println("Error: ");
+				thrwbl.printStackTrace();
+			}
+		});
 	}
 
 	public List<User> getUsers() {

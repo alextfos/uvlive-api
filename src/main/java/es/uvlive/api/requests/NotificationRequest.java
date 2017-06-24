@@ -12,6 +12,7 @@ package es.uvlive.api.requests;
 public class NotificationRequest {
     private Notification notification;
     private String to;
+    private Operation data;
 
     public Notification getNotification() {
         return notification;
@@ -28,33 +29,12 @@ public class NotificationRequest {
     public void setTo(String to) {
         this.to = to;
     }
-    
-    
-    
-    public static class Notification {
-        private String title;
-        private String text;
 
-        public Notification(String title, String text) {
-            this.title = title;
-            this.text = text;
-        }
-        
-        public String getTitle() {
-            return title;
-        }
+    public Operation getData() {
+        return data;
+    }
 
-        public void setTitle(String title) {
-            this.title = title;
-        }
-
-        public String getText() {
-            return text;
-        }
-
-        public void setText(String text) {
-            this.text = text;
-        }
-        
+    public void setData(Operation data) {
+        this.data = data;
     }
 }

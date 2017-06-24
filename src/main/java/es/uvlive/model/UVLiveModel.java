@@ -7,6 +7,7 @@ import java.util.List;
 
 import es.uvlive.api.GoogleInterface;
 import es.uvlive.api.RetrofitFactory;
+import es.uvlive.api.requests.Notification;
 import es.uvlive.api.requests.NotificationRequest;
 import es.uvlive.api.response.NotificationResponse;
 import es.uvlive.controllers.form.GetMessagesForm;
@@ -209,7 +210,7 @@ public class UVLiveModel {
 					GoogleInterface googleInterface = RetrofitFactory.getGoogleInterface();
 					NotificationRequest notificationRequest = new NotificationRequest();
 
-					notificationRequest.setNotification(new NotificationRequest.Notification(broadcast.getTitle(), broadcast.getText()));
+					notificationRequest.setNotification(new Notification(broadcast.getTitle(), broadcast.getText()));
 					notificationRequest.setTo(pushToken);
 					Call<NotificationResponse> callback = googleInterface.sendNotification(notificationRequest);
 					callback.enqueue(new Callback<NotificationResponse>() {

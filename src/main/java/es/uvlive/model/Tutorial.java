@@ -3,11 +3,11 @@ package es.uvlive.model;
 import java.util.*;
 
 import es.uvlive.api.requests.NotificationRequest;
+import es.uvlive.api.requests.Operation;
 import es.uvlive.api.response.NotificationResponse;
 import es.uvlive.utils.Logger;
 import es.uvlive.api.GoogleInterface;
 import es.uvlive.api.RetrofitFactory;
-import es.uvlive.api.requests.NotificationRequest.Notification;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -83,7 +83,7 @@ public class Tutorial {
 				GoogleInterface googleInterface = RetrofitFactory.getGoogleInterface();
 		        NotificationRequest notificationRequest = new NotificationRequest();
 		        
-		        notificationRequest.setNotification(new Notification("GET","MESSAGES"));
+		        notificationRequest.setData(new Operation("GET","MESSAGES"));
 		        notificationRequest.setTo(pushToken);
 		        Call<NotificationResponse> callback = googleInterface.sendNotification(notificationRequest);
 		        callback.enqueue(new Callback<NotificationResponse>() {
