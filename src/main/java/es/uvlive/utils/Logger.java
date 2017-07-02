@@ -51,8 +51,7 @@ public class Logger {
      */
     public static void put(String level, String clazz, String message) {
         //LogRegister logRegister = new LogRegister(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS")),level,clazz,message);
-        
-    	// @Non-generated
+
     	LogRegister logRegister = new LogRegister(DateUtils.format(DateUtils.getCurrentDate()),level,clazz,message);
         logger.add(logRegister);
         System.out.println(logRegister);

@@ -24,8 +24,7 @@ public class UserDAO extends BaseDAO {
 	private static final String QUERY_STUDENTS_USERS = "SELECT * FROM " + STUDENT_TABLE + " left join " + USER_TABLE + " on " + STUDENT_TABLE + "." + USER_ID_FIELD + " = " + USER_TABLE + "." + USER_ID_FIELD + ";";
 	
 	private static final String QUERY_TEACHERS_USERS = "SELECT * FROM " + TEACHER_TABLE + " left join " + USER_TABLE + " on " + TEACHER_TABLE + "." + USER_ID_FIELD + " = " + USER_TABLE + "." + USER_ID_FIELD + ";";
-	
-	// TODO @Non-generated (Hint: nothing on this class is from VP)
+
 	/**
 	 * 
 	 * @param userName

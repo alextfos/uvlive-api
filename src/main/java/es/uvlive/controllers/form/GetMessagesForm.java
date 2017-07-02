@@ -9,11 +9,8 @@ import es.uvlive.utils.ValidationUtils;
 
 public class GetMessagesForm extends BaseForm {
 	
-	// @Non-generated model
-	
 	private int idConversation;
 
-	// The limit Message
 	private int idMessage;
 	
 	public int getIdConversation() {

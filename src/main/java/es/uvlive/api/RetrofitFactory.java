@@ -5,12 +5,6 @@
  */
 package es.uvlive.api;
 
-import es.uvlive.api.requests.NotificationRequest;
-import es.uvlive.api.requests.NotificationRequest.Notification;
-import es.uvlive.api.response.NotificationResponse;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 

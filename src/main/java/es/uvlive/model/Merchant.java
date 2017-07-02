@@ -7,8 +7,7 @@ import es.uvlive.model.dao.MerchantDAO;
 public class Merchant extends User {
 	
 	public static final String LOGIN_TYPE = "Merchant";
-	
-	// @Non-generated
+
 	private String dni;
 
 	public String getDni() {
