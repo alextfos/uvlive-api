@@ -51,7 +51,7 @@ public class RolUVController extends BaseController {
 			Collection<Conversation> conversations = uvLiveModel.getConversations(getToken(request));
 			for (Conversation conversation : conversations) {
 				ConversationResponse conversationResponse = new ConversationResponse();
-				conversationResponse.setIdConversation(String.valueOf(conversation.getIdConversation()));
+				conversationResponse.setIdConversation(conversation.getIdConversation());
 				conversationResponse.setName(conversation.getName());
 				conversationListResponse.add(conversationResponse);
 			}

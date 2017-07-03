@@ -6,19 +6,19 @@
 package es.uvlive.controllers.response;
 
 public class ConversationResponse {
-	private String idConversation;
+	private int idConversation;
 	private String name;
 
 	public ConversationResponse() {
 
 	}
 
-	public ConversationResponse(String idConversation, String name) {
+	public ConversationResponse(int idConversation, String name) {
 		this.idConversation = idConversation;
 		this.name = name;
 	}
 
-	public String getIdConversation() {
+	public int getIdConversation() {
 		return idConversation;
 	}
 
@@ -26,7 +26,7 @@ public class ConversationResponse {
 		return name;
 	}
 
-	public void setIdConversation(String idConversation) {
+	public void setIdConversation(int idConversation) {
 		this.idConversation = idConversation;
 	}
 
