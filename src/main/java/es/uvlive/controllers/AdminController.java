@@ -54,7 +54,7 @@ public class AdminController extends BaseController {
 		return logListResponse;
 	}
 
-	@RequestMapping(value = "/admin/merchantName/validate", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE, headers = {
+	@RequestMapping(value = "/admin/merchantName/exists", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE, headers = {
 			"Content-Type=application/json" })
 	public @ResponseBody BaseResponse validateUserName(@RequestBody ValidateMerchantForm validateMerchantForm,
 			BindingResult result, HttpServletRequest request, HttpServletResponse response) throws Exception {
