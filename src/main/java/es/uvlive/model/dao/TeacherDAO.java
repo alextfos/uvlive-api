@@ -8,7 +8,6 @@ public class TeacherDAO extends BaseDAO {
 	private static final int UNBLOCKED = 0;
 	private static final int BLOCKED = 1;
 
-	// TODO @Non-generated
 	/**
 	 * Changes Student status to blocked
 	 * @throws ClassNotFoundException
@@ -21,7 +20,6 @@ public class TeacherDAO extends BaseDAO {
 		insert(preparedStatement);
 	}
 
-	// TODO @Non-generated
 	/**
 	 * Changes Student status to unblocked
 	 * @param idStudent

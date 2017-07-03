@@ -2,51 +2,55 @@ package es.uvlive.model;
 
 import com.google.gson.Gson;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 public class Message {
 
-	private RolUV rolUV;
+	private static AtomicInteger nextId;
+	
 	private int idMessage;
-	// @TODO check in VP (Hint: int message)
+	private RolUV rolUV;
 	private String text;
 	private int timestamp;
 	private String owner;
+	private Conversation conversation;
 
-	// TODO @Non-generated
+	public static void initMessageId(int maxId) {
+		nextId = new AtomicInteger(maxId);
+	}
+
+	public Message() {
+		idMessage = nextId.incrementAndGet();
+	}
+	
 	public RolUV getRolUV() {
 		return rolUV;
 	}
 	
-	// TODO @Non-generated
 	public void setRolUV(RolUV rolUV) {
 		this.rolUV = rolUV;
 	}
 	
-	// TODO @Non-generated
 	public int getIdMessage() {
 		return idMessage;
 	}
-
-	// TODO @Non-generated
+	
 	public void setIdMessage(int idMessage) {
 		this.idMessage = idMessage;
 	}
-
-	// TODO @Non-generated
+	
 	public String getText() {
 		return text;
 	}
-
-	// TODO @Non-generated
+	
 	public void setText(String text) {
 		this.text = text;
 	}
-
-	// TODO @Non-generated
+	
 	public int getTimestamp() {
 		return timestamp;
 	}
-
-	// TODO @Non-generated
+	
 	public void setTimestamp(int timestamp) {
 		this.timestamp = timestamp;
 	}
@@ -70,5 +74,13 @@ public class Message {
 	@Override
 	public String toString() {
 		return new Gson().toJson(this);
+	}
+
+	public void setConversation(Conversation conversation) {
+		this.conversation = conversation;
+	}
+
+	public Conversation getConversation() {
+		return conversation;
 	}
 }

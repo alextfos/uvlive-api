@@ -14,6 +14,7 @@ import es.uvlive.controllers.form.GetMessagesForm;
 import es.uvlive.exceptions.ConversationNotCreatedException;
 import es.uvlive.exceptions.UnauthorizedException;
 import es.uvlive.model.dao.BroadcastDAO;
+import es.uvlive.model.dao.MessageDAO;
 import es.uvlive.utils.Logger;
 import es.uvlive.utils.StringUtils;
 import retrofit2.Call;
@@ -22,10 +23,13 @@ import retrofit2.Response;
 
 public class UVLiveModel {
 	
-	// TODO @Non-generated
+	public static final int PAGE_SIZE = 10;
+	public static final int BUFFER_SIZE = 2;
+	public static final int LIST_SIZE = 10;
+
 	private static UVLiveModel sUVLiveModel;
 
-	private TutorialCatalog tutorialCatalog;
+	private ConversationCatalog conversationCatalog;
 	private SessionManager sessionManager;
 
 	public static UVLiveModel getInstance() {
@@ -35,18 +39,12 @@ public class UVLiveModel {
 		return sUVLiveModel;
 	}
 
-	// TODO @Non-generated method
 	public UVLiveModel() {
-		tutorialCatalog = new TutorialCatalog();
+		conversationCatalog = new ConversationCatalog();
 		sessionManager = new SessionManager();
+		Message.initMessageId(new MessageDAO().getMaxMessageId());
 	}
 
-	public void updateCourse() {
-        // TODO - implement UVLiveModel.actualizarCurso
-        throw new UnsupportedOperationException();
-    }
-
-    // TODO @Non-generated method
     /**
      * 
      * @param userName
@@ -58,14 +56,13 @@ public class UVLiveModel {
         if (!StringUtils.isEmpty(token)) {
         	User user = sessionManager.getUser(token);
         	if (user != null && user instanceof RolUV) {
-        		((RolUV)user).setTutorialsCatalog(this.tutorialCatalog);
+        		((RolUV)user).setConversationCatalog(this.conversationCatalog);
         		((RolUV)user).init();
         	}
         }
         return token;
     }
-    
-    // TODO @Non-generated method
+
     /**
      * Logout
      * @param token
@@ -77,19 +74,9 @@ public class UVLiveModel {
     /**
      * 
      * @param key
-     */
-    public boolean containsUser(String key) {
-            // TODO - implement UVLiveModel.containsUser
-            throw new UnsupportedOperationException();
-    }
-
-    /**
-     * 
-     * @param key
      * @param Student
      * @throws Exception 
      */
-    // TODO check names in VP (Hint: idAlumno)
 	public void blockStudent(String key, int idStudent) throws Exception {
 		User user = getUser(key);
 		if (user != null && user instanceof Teacher) {
@@ -105,7 +92,6 @@ public class UVLiveModel {
      * @param Student
      * @throws Exception 
      */
-    // TODO @Non-generated
 	public void unblockStudent(String key, int idStudent) throws Exception {
 		User user = getUser(key);
 		if (user != null && user instanceof Teacher) {
@@ -115,7 +101,6 @@ public class UVLiveModel {
 		}
 	}
 
-	// TODO @Non-generated
 	/**
 	 * Gets User by session token
 	 * 
@@ -181,7 +166,6 @@ public class UVLiveModel {
 		
 	}
 
-	// TODO Check in VP (Hint: broadcastText String)
 	/**
 	 * Registers Broadcast requested by Merchant
 	 * @param key
@@ -243,30 +227,29 @@ public class UVLiveModel {
 	 * 
 	 * @param key
 	 */
-	public Collection<es.uvlive.model.Tutorial> getTutorials(String key) throws Exception {
-		// TODO @Non-generated
-		Collection <es.uvlive.model.Tutorial> tutorials = new ArrayList<es.uvlive.model.Tutorial>();
+	public Collection<Conversation> getConversations(String key) throws Exception {
+		Collection <Conversation> conversations = new ArrayList<Conversation>();
 		User user = getUser(key);
 		if (user != null && user instanceof RolUV) {
-			((RolUV) user).setTutorialsCatalog(this.tutorialCatalog);
-			tutorials = ((RolUV) user).getTutorials();
+			((RolUV) user).setConversationCatalog(this.conversationCatalog);
+			conversations = ((RolUV) user).getConversations();
 		} else {
 			throw new UnauthorizedException();
 		}
 		
-		return tutorials;
+		return conversations;
 	}
 	
 	/**
 	 * 
 	 * @param key
-	 * @param idTutorial
+	 * @param idConversation
 	 * @param text
 	 */
-	public void sendMessage(String key, int idTutorial, String text) throws Exception {
+	public void sendMessage(String key, int idConversation, String text) throws Exception {
 		User user = getUser(key);
 		if (user != null && user instanceof RolUV) {
-			((RolUV)user).sendMessage(idTutorial, text);
+			((RolUV)user).sendMessage(idConversation, text);
 		} else {
 			throw new UnauthorizedException();
 		}
@@ -311,8 +294,7 @@ public class UVLiveModel {
 		}
 		return messages;
 	}
-	
-	// @Non-generated
+
 	public void updateToken(String key, String pushToken) throws Exception {
 		User user = getUser(key);
 		

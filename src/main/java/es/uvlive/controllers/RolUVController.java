@@ -6,6 +6,7 @@ import java.util.Collection;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import es.uvlive.model.Conversation;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -28,7 +29,6 @@ import es.uvlive.controllers.response.UsersListResponse;
 import es.uvlive.exceptions.ValidationFormException;
 import es.uvlive.model.Message;
 import es.uvlive.model.RolUV;
-import es.uvlive.model.Tutorial;
 import es.uvlive.model.User;
 import es.uvlive.utils.Logger;
 
@@ -48,11 +48,11 @@ public class RolUVController extends BaseController {
 
 		ConversationsListResponse conversationListResponse = new ConversationsListResponse();
 		try {
-			Collection<Tutorial> tutorials = uvLiveModel.getTutorials(getToken(request));
-			for (Tutorial tutorial : tutorials) {
+			Collection<Conversation> conversations = uvLiveModel.getConversations(getToken(request));
+			for (Conversation conversation : conversations) {
 				ConversationResponse conversationResponse = new ConversationResponse();
-				conversationResponse.setIdConversation(String.valueOf(tutorial.getIdTutorial()));
-				conversationResponse.setName(tutorial.getName());
+				conversationResponse.setIdConversation(String.valueOf(conversation.getIdConversation()));
+				conversationResponse.setName(conversation.getName());
 				conversationListResponse.add(conversationResponse);
 			}
 		} catch (Exception e) {

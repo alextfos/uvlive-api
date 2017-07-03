@@ -13,10 +13,7 @@ public class MerchantDAO extends BaseDAO {
 	private static final String QUERY_UPDATE_USER_MERCHANT = "UPDATE " + USER_TABLE + " SET " + USER_NAME_FIELD + "='%s', " + PASSWORD_FIELD + "='%s', "
 	+ FIRST_NAME_FIELD + "='%s', " + LAST_NAME_FIELD + "='%s' WHERE " + USER_NAME_FIELD + "='%s'";
 	private static final String QUERY_UPDATE_MERCHANT_MERCHANT = "UPDATE " + MERCHANT_TABLE + " SET " + DNI_FIELD + "='%s' WHERE " + USER_ID_FIELD + "=(SELECT " + USER_ID_FIELD + " FROM " + USER_TABLE + " WHERE " + USER_NAME_FIELD + "='%s')" ;
-	
 	private static final String QUERY_SAVE_BROADCAST = "INSERT INTO " + BROADCAST_TABLE + "(" + TITLE_FIELD + ", " + TEXT_FIELD + "," + BROADCAST_CREATION_TIMESTAMP + ", "+ BROADCAST_ID_MERCHANT_FIELD +") VALUES (?,?, ?, ?)";
-
-	// UPDATE MyGuests SET lastname='Doe' WHERE id=2" TODO
 
 	
 	public void saveMerchant(String dni, String firstname, String lastname, String username, String password) throws ClassNotFoundException, SQLException {

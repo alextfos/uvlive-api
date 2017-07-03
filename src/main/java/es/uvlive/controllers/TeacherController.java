@@ -27,7 +27,6 @@ public class TeacherController extends BaseController {
     	BaseResponse baseResponse = new BaseResponse();
     	try {
     		if (permissionStudentForm.isValid()) {
-		    	// @Non-generated
 		    	String token = getToken(request);
 		    	uvLiveModel.blockStudent(token, permissionStudentForm.getIdStudent());
     		}
@@ -48,7 +47,6 @@ public class TeacherController extends BaseController {
     	BaseResponse baseResponse = new BaseResponse();
     	try {
     		if (permissionStudentForm.isValid()) {
-		    	// @Non-generated
 		    	String token = getToken(request);
 		    	uvLiveModel.unblockStudent(token, permissionStudentForm.getIdStudent());
     		}

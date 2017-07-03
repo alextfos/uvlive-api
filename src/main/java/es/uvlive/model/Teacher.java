@@ -42,10 +42,10 @@ public class Teacher extends RolUV {
 	@Override
 	public void initConversation(int userId) throws ClassNotFoundException, SQLException, ConversationNotCreatedException {
 		int conversationId = new RolUVDAO().saveConversation(getUserId(),userId);
-		Tutorial tutorial = getTutorialCatalog().addAndGetConversation(conversationId);
-		tutorial.addRolUV(this);
-		getUserTutorials().add(tutorial);
-		getSessionManager().addConversationToUser(userId,tutorial);
+		Conversation conversation = getConversationCatalog().addAndGetConversation(conversationId);
+		conversation.addRolUV(this);
+		getUserConversations().add(conversation);
+		getSessionManager().addConversationToUser(userId, conversation);
 	}
 
 }

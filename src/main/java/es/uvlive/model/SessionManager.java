@@ -32,16 +32,14 @@ public class SessionManager {
 
 	public static final Key SIGNATURE_KEY = MacProvider.generateKey();
 
-	// TODO @Non-generated, VP overwrites with collection
 	private HashMap<String, User> usersCollection;
-	// TODO @Non-generated
+
 	private SecureRandom random = new SecureRandom();
 
 	public SessionManager() {
 		usersCollection = new HashMap<>();
 	}
 
-	// TODO @Non-generated method
 	/**
 	 * 
 	 * @param userName
@@ -83,7 +81,6 @@ public class SessionManager {
 		return newToken;
 	}
 
-	// TODO @Non-generated method
 	/**
 	 * Logout
 	 * 
@@ -93,7 +90,6 @@ public class SessionManager {
 		usersCollection.remove(token);
 	}
 
-	// TODO @Non-generated method
 	/**
 	 * Gets user - Si hay algun tipo de ptoblema con el token, se lanzará una
 	 * excepción de no autorizado
@@ -113,7 +109,6 @@ public class SessionManager {
 		return claims.getSubject();
 	}
 
-	// TODO @Non-generated method
 	/**
 	 * Gets a new generated Id
 	 * 
@@ -157,7 +152,6 @@ public class SessionManager {
 		new MerchantDAO().updateMerchant(dni, firstname, lastname, username, password);
 	}
 
-	// TODO @Non-generated
 	/**
 	 * Blocks Student user by id
 	 * 
@@ -174,7 +168,6 @@ public class SessionManager {
 		}
 	}
 
-	// TODO @Non-generated
 	/**
 	 * Unblocks Student user by id
 	 * 
@@ -191,14 +184,14 @@ public class SessionManager {
 		}
 	}
 
-	public void addConversationToUser(int userId, Tutorial tutorial) {
+	public void addConversationToUser(int userId, Conversation conversation) {
 		Set<String> users = usersCollection.keySet();
 
 		for (String key : users) {
 			User currentUser = usersCollection.get(key);
 			if (currentUser.getUserId() == userId && currentUser instanceof RolUV) {
-				((RolUV) currentUser).getUserTutorials().add(tutorial);
-				tutorial.addRolUV(((RolUV) currentUser));
+				((RolUV) currentUser).getUserConversations().add(conversation);
+				conversation.addRolUV(((RolUV) currentUser));
 				notifyConversationsChanged((RolUV) currentUser);
 			}
 		}

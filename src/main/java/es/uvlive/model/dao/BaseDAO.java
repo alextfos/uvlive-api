@@ -1,14 +1,12 @@
 package es.uvlive.model.dao;
 
-import es.uvlive.model.UVLiveModel;
-import es.uvlive.utils.Logger;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import com.mysql.jdbc.Statement;
+import es.uvlive.utils.Logger;
 
 public class BaseDAO {
 
@@ -93,6 +91,13 @@ public class BaseDAO {
             connect();
         }
         preparedStatement.executeUpdate();
+    }
+
+    protected void insertBatch(PreparedStatement preparedStatement) throws ClassNotFoundException, SQLException {
+        if (!(sConnectionDB != null && !sConnectionDB.isClosed())) {
+            connect();
+        }
+        preparedStatement.executeBatch();
     }
     
     protected void update(String query) throws SQLException {

@@ -1,79 +1,54 @@
 package es.uvlive.model;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
+import es.uvlive.api.GoogleInterface;
+import es.uvlive.api.RetrofitFactory;
 import es.uvlive.api.requests.NotificationRequest;
 import es.uvlive.api.requests.Operation;
 import es.uvlive.api.response.NotificationResponse;
+import es.uvlive.eda.ElasticList;
+import es.uvlive.model.dao.MessageDAO;
 import es.uvlive.utils.Logger;
-import es.uvlive.api.GoogleInterface;
-import es.uvlive.api.RetrofitFactory;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class Tutorial {
+public class Conversation implements ElasticList.OnFillBufferCallback<Message> {
 
-	// TODO Check in VP
 	Collection<RolUV> rolUVs;
-	private Collection<Message> messages;
-	private int idTutorial;
-	// @Non-generated
+	private ElasticList<Message> messages;
+	private int idConversation;
 	private String name;
 
-	// @Non-generated
-	public Tutorial() {
-		this.messages = new ArrayList<Message>();
+	public Conversation() {
+		this.messages = new ElasticList<>(UVLiveModel.LIST_SIZE,UVLiveModel.BUFFER_SIZE,this);
 		rolUVs = new ArrayList<>();
-	}
-	
-	// @Non-generated
-	public Collection<RolUV> getRolUVs() {
-		return rolUVs;
-	}
-
-	// @Non-generated
-	public void setRolUVs(Collection<RolUV> rolUVs) {
-		this.rolUVs = rolUVs;
 	}
 	
 	public void addRolUV(RolUV rolUV) {
 		rolUVs.add(rolUV);
 	}
 
-	// @Non-generated
-	public Collection<Message> getMessages() {
-		return messages;
+	public int getIdConversation() {
+		return idConversation;
 	}
 
-	// @Non-generated
-	public void setMessages(Collection<Message> messages) {
-		this.messages = messages;
+	public void setIdConversation(int idConversation) {
+		this.idConversation = idConversation;
 	}
 
-	// @Non-generated
-	public int getIdTutorial() {
-		return idTutorial;
-	}
-
-	// @Non-generated
-	public void setIdTutorial(int idTutorial) {
-		this.idTutorial = idTutorial;
-	}
-
-	// @Non-generated
 	public String getName() {
 		return name;
 	}
 
-	// @Non-generated
 	public void setName(String name) {
 		this.name = name;
 	}
-	
-	// @Non-generated
+
 	public void sendMessage(RolUV currentUser, Message message) {
-		// TODO no
 		if(messages != null && message != null) {
 			messages.add(message);
 		}
@@ -95,7 +70,7 @@ public class Tutorial {
 		                		rolUV.removePushToken();
 		                	} catch (Exception e) {
 		                		e.printStackTrace();
-		                		Logger.putError(Tutorial.this,e);
+		                		Logger.putError(Conversation.this,e);
 		                	}
 		                }
 		            }
@@ -107,6 +82,15 @@ public class Tutorial {
 		            }
 		        });
 			}
+		}
+	}
+
+	@Override
+	public void onBufferFilled(List<Message> elements) {
+		try {
+			new MessageDAO().saveMessages(elements);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
 		}
 	}
 }

@@ -1,6 +1,7 @@
 package es.uvlive.utils;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.GregorianCalendar;
 
 public class DateUtils {
@@ -13,5 +14,9 @@ public class DateUtils {
 	
 	public static GregorianCalendar getCurrentDate() {
 		return new GregorianCalendar();
+	}
+
+	public static int getCurrentTimestamp() {
+		return (int) (new Date().getTime() / 1000);
 	}
 }

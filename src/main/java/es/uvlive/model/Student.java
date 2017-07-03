@@ -10,8 +10,7 @@ import es.uvlive.model.dao.UserDAO;
 public class Student extends RolUV {
 	
 	public static final String LOGIN_TYPE = "Student";
-	
-	// TODO @Non-generated
+
 	private boolean blocked;
 
 	public boolean isBlocked() {
@@ -30,9 +29,9 @@ public class Student extends RolUV {
 	@Override
 	public void initConversation(int userId) throws ClassNotFoundException, SQLException, ConversationNotCreatedException {
 		int conversationId = new RolUVDAO().saveConversation(userId,getUserId());
-		Tutorial tutorial = getTutorialCatalog().addAndGetConversation(conversationId);
-		getUserTutorials().add(tutorial);
-		getSessionManager().addConversationToUser(userId,tutorial);
+		Conversation conversation = getConversationCatalog().addAndGetConversation(conversationId);
+		getUserConversations().add(conversation);
+		getSessionManager().addConversationToUser(userId, conversation);
 	}
 	
 }
