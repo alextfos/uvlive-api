@@ -5,22 +5,12 @@
  */
 package es.uvlive.controllers.response;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
-
 /**
  *
  * @author alextfos
  */
-@XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {"status"})
-@XmlRootElement(name = "response")
 public class ValidateMerchantNameResponse extends BaseResponse {
 
-    @XmlElement(name = "status")
     private boolean status;
 
     public boolean isStatus() {

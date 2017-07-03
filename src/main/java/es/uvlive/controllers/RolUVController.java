@@ -109,7 +109,7 @@ public class RolUVController extends BaseController {
 			BindingResult result, HttpServletRequest request, HttpServletResponse response) {
 		MessageListResponse messageListResponse = new MessageListResponse();
 		Collection<MessageResponse> messageResponseList = new ArrayList<MessageResponse>();
-		Collection<Message> messages = new ArrayList<Message>();
+		Collection<Message> messages;
 
 		try {
 			if (getMessagesForm.isValid()) {
@@ -139,11 +139,11 @@ public class RolUVController extends BaseController {
 	public @ResponseBody MessageListResponse getPreviousMessages(@RequestBody GetMessagesForm getMessagesForm,
 			BindingResult result, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		MessageListResponse messageListResponse = new MessageListResponse();
-		Collection<MessageResponse> messageResponseList = new ArrayList<MessageResponse>();
-		Collection<Message> messages = new ArrayList<Message>();
+		Collection<MessageResponse> messageResponseList = new ArrayList<>();
+		Collection<Message> messages;
 
 		try {
-			if (getMessagesForm.isValid()) {
+			if (getMessagesForm.isValid() && getMessagesForm.getIdMessage()>0) {
 				messages = uvLiveModel.getPreviousMessages(getToken(request), getMessagesForm);
 				for (Message message : messages) {
 					MessageResponse messageResponse = new MessageResponse();
@@ -170,11 +170,11 @@ public class RolUVController extends BaseController {
 	public @ResponseBody MessageListResponse getFollowingMessages(@RequestBody GetMessagesForm getMessagesForm,
 			BindingResult result, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		MessageListResponse messageListResponse = new MessageListResponse();
-		Collection<MessageResponse> messageResponseList = new ArrayList<MessageResponse>();
-		Collection<Message> messages = new ArrayList<Message>();
+		Collection<MessageResponse> messageResponseList = new ArrayList<>();
+		Collection<Message> messages;
 
 		try {
-			if (getMessagesForm.isValid()) {
+			if (getMessagesForm.isValid() && getMessagesForm.getIdMessage()>0) {
 				messages = uvLiveModel.getFollowingMessages(getToken(request), getMessagesForm);
 				for (Message message : messages) {
 					MessageResponse messageResponse = new MessageResponse();

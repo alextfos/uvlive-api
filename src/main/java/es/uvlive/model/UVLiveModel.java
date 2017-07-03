@@ -256,7 +256,7 @@ public class UVLiveModel {
 	}
 
 	public Collection<Message> getMessages(String key, int idConversation) throws Exception {
-		Collection<Message> messages = new ArrayList<Message>();
+		Collection<Message> messages;
 		User user = getUser(key);
 		if (user != null && user instanceof RolUV) {
 			// Only RolUV users can send messages
@@ -268,29 +268,24 @@ public class UVLiveModel {
 	}
 	
 	public Collection<Message> getPreviousMessages(String key, GetMessagesForm getMessagesForm) throws Exception {
-		Collection<Message> messages = new ArrayList<Message>();
+		Collection<Message> messages;
 		User user = getUser(key);
-		if (getMessagesForm.getIdMessage() > 0 & getMessagesForm.getIdConversation() > 0) {
-			if (user != null && user instanceof RolUV) {
-				// Only RolUV users can send messages
-				messages = ((RolUV)user).getPreviousMessages(getMessagesForm.getIdConversation(), getMessagesForm.getIdMessage());
-			} else {
-				throw new UnauthorizedException();
-			}
+		if (user != null && user instanceof RolUV) {
+			messages = ((RolUV)user).getPreviousMessages(getMessagesForm.getIdConversation(), getMessagesForm.getIdMessage());
+		} else {
+			throw new UnauthorizedException();
 		}
 		return messages;
 	}
 	
 	public Collection<Message> getFollowingMessages(String key, GetMessagesForm getMessagesForm) throws Exception {
-		Collection<Message> messages = new ArrayList<Message>();
+		Collection<Message> messages;
 		User user = getUser(key);
-		if (getMessagesForm.getIdMessage() > 0 & getMessagesForm.getIdConversation() > 0) {
-			if (user != null && user instanceof RolUV) {
-				// Only RolUV users can send messages
-				messages = ((RolUV)user).getFollowingMessages(getMessagesForm.getIdConversation(), getMessagesForm.getIdMessage());
-			} else {
-				throw new UnauthorizedException();
-			}
+		if (user != null && user instanceof RolUV) {
+			// Only RolUV users can send messages
+			messages = ((RolUV)user).getFollowingMessages(getMessagesForm.getIdConversation(), getMessagesForm.getIdMessage());
+		} else {
+			throw new UnauthorizedException();
 		}
 		return messages;
 	}

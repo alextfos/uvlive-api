@@ -41,7 +41,6 @@ public class UserController extends BaseController {
 
 				if (!StringUtils.isEmpty(token)) {
 					Logger.put(this, loginForm.getUserName() + " logged");
-					loginResponse.setUser(loginForm.getUserName());
 					String str = request.getSession().getId();
 					response.setHeader("Set-Cookie", "JSESSIONID=" + str);
 					loginResponse.setToken(token);

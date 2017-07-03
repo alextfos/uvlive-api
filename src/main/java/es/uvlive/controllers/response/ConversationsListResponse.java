@@ -5,23 +5,10 @@
  */
 package es.uvlive.controllers.response;
 
-import es.uvlive.controllers.response.ConversationResponse;
-
 import java.util.ArrayList;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
 
-@XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "conversations", propOrder = {
-    "conversations"
-})
-@XmlRootElement(name = "response")
 public class ConversationsListResponse extends BaseResponse {
 
-    @XmlElement(name = "conversations")
     private ArrayList<ConversationResponse> conversations;
     
     public ConversationsListResponse () {

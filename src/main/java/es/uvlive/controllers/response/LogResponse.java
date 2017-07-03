@@ -5,30 +5,11 @@
  */
 package es.uvlive.controllers.response;
 
-import java.util.ArrayList;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
-
-@XmlAccessorType(XmlAccessType.FIELD)
-    @XmlType(name = "LogResponse", propOrder = {
-        "timeStamp","level","clazz","message"
-    })
-    @XmlRootElement(name = "response")
 public class LogResponse extends BaseResponse {
-    
-    @XmlElement(name = "timeStamp")
+
     private String timeStamp;
-    
-    @XmlElement(name = "level")
     private String level;
-    
-    @XmlElement(name = "clazz")
     private String clazz;
-    
-    @XmlElement(name = "message")
     private String message;
 
     public String getTimeStamp() {

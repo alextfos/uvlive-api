@@ -10,7 +10,6 @@ import es.uvlive.utils.ValidationUtils;
 public class GetMessagesForm extends BaseForm {
 	
 	private int idConversation;
-
 	private int idMessage;
 	
 	public int getIdConversation() {
@@ -31,7 +30,7 @@ public class GetMessagesForm extends BaseForm {
 
 	@Override
 	public boolean isValid() {
-		return ValidationUtils.validateInt(idConversation) || ValidationUtils.validateInt(idMessage);
+		return ValidationUtils.validateInt(idConversation);
 	}
 	
 }

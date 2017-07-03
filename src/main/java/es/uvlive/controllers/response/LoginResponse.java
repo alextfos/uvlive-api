@@ -5,33 +5,12 @@
  */
 package es.uvlive.controllers.response;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
 
-@XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "user", "token"
-})
-@XmlRootElement(name = "response")
 public class LoginResponse extends BaseResponse {
 
-    @XmlElement(name = "user")
-    private String user;
     @XmlElement(name = "token")
     private String token;
-    
-    // Getters and Setters
-    public String getUser() {
-        return user;
-    }
-
-    public void setUser(String user) {
-        this.user = user;
-    }
     
     public void setToken(String token) {
         this.token = token;
