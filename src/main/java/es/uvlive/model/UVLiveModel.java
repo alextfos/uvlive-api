@@ -51,7 +51,7 @@ public class UVLiveModel {
      * @param password
      * @param loginType
      */
-    public String login(String userName, String password, String loginType, String pushToken, String key) throws Exception {
+    public synchronized String login(String userName, String password, String loginType, String pushToken, String key) throws Exception {
         String token = sessionManager.login(userName, password, loginType, pushToken, key);
         if (!StringUtils.isEmpty(token)) {
         	User user = sessionManager.getUser(token);
@@ -67,7 +67,7 @@ public class UVLiveModel {
      * Logout
      * @param token
      */
-    public void logout(String token) {
+    public synchronized void logout(String token) {
         sessionManager.logout(token);
     }
 
@@ -77,7 +77,7 @@ public class UVLiveModel {
      * @param Student
      * @throws Exception 
      */
-	public void blockStudent(String key, int idStudent) throws Exception {
+	public synchronized void blockStudent(String key, int idStudent) throws Exception {
 		User user = getUser(key);
 		if (user != null && user instanceof Teacher) {
 			((Teacher)user).blockStudent(idStudent);
@@ -92,7 +92,7 @@ public class UVLiveModel {
      * @param Student
      * @throws Exception 
      */
-	public void unblockStudent(String key, int idStudent) throws Exception {
+	public synchronized void unblockStudent(String key, int idStudent) throws Exception {
 		User user = getUser(key);
 		if (user != null && user instanceof Teacher) {
 			((Teacher)user).unblockStudent(idStudent);
@@ -107,7 +107,7 @@ public class UVLiveModel {
 	 * @param key
 	 * @return logged User
 	 */
-	public User getUser(String key) throws Exception {
+	public synchronized User getUser(String key) throws Exception {
 		return sessionManager.getUser(key);
 	}
 
@@ -116,7 +116,7 @@ public class UVLiveModel {
 	 * @param key
 	 * @param userName
 	 */
-	public boolean checkUserExists(String key, String userName) throws Exception {
+	public synchronized boolean checkUserExists(String key, String userName) throws Exception {
 		User user = getUser(key);
 		if (user != null && user instanceof Admin) {
 			return ((Admin) user).checkUserExists(userName);
@@ -134,7 +134,7 @@ public class UVLiveModel {
 	 * @param userName
 	 * @param password
 	 */
-	public void registerMerchant(String key, String dni, String firstname, String lastname, String userName,
+	public synchronized void registerMerchant(String key, String dni, String firstname, String lastname, String userName,
 								 String password) throws Exception {
 		User user = getUser(key);
 		
@@ -154,7 +154,7 @@ public class UVLiveModel {
 	 * @param userName
 	 * @param password
 	 */
-	public void updateMerchant(String key, String dni, String firstname, String lastname, String userName,
+	public synchronized void updateMerchant(String key, String dni, String firstname, String lastname, String userName,
                                String password) throws Exception {
 		User user = getUser(key);
 		
@@ -173,7 +173,7 @@ public class UVLiveModel {
 	 * @throws SQLException 
 	 * @throws ClassNotFoundException 
 	 */
-	public void registerBroadcast(String key, String title, String broadcastText) throws Exception {
+	public synchronized void registerBroadcast(String key, String title, String broadcastText) throws Exception {
 		User user = getUser(key);
 		if (user != null && user instanceof Merchant) {
 			((Merchant)user).registerBroadcast(title, broadcastText);
@@ -184,7 +184,7 @@ public class UVLiveModel {
 	 * 
 	 * @param text
 	 */
-	public void sendBroadcasts() throws SQLException, ClassNotFoundException {
+	public synchronized void sendBroadcasts() throws SQLException, ClassNotFoundException {
 		List<Broadcast> broadcastList = new BroadcastDAO().getBroadcasts();
 		List<User> users = sessionManager.getUsers();
 		for (final User user: users) {
@@ -227,7 +227,7 @@ public class UVLiveModel {
 	 * 
 	 * @param key
 	 */
-	public Collection<Conversation> getConversations(String key) throws Exception {
+	public synchronized Collection<Conversation> getConversations(String key) throws Exception {
 		Collection <Conversation> conversations = new ArrayList<Conversation>();
 		User user = getUser(key);
 		if (user != null && user instanceof RolUV) {
@@ -246,7 +246,7 @@ public class UVLiveModel {
 	 * @param idConversation
 	 * @param text
 	 */
-	public void sendMessage(String key, int idConversation, String text) throws Exception {
+	public synchronized void sendMessage(String key, int idConversation, String text) throws Exception {
 		User user = getUser(key);
 		if (user != null && user instanceof RolUV) {
 			((RolUV)user).sendMessage(idConversation, text);
@@ -255,7 +255,7 @@ public class UVLiveModel {
 		}
 	}
 
-	public Collection<Message> getMessages(String key, int idConversation) throws Exception {
+	public synchronized Collection<Message> getMessages(String key, int idConversation) throws Exception {
 		Collection<Message> messages;
 		User user = getUser(key);
 		if (user != null && user instanceof RolUV) {
@@ -267,7 +267,7 @@ public class UVLiveModel {
 		return messages;
 	}
 	
-	public Collection<Message> getPreviousMessages(String key, GetMessagesForm getMessagesForm) throws Exception {
+	public synchronized Collection<Message> getPreviousMessages(String key, GetMessagesForm getMessagesForm) throws Exception {
 		Collection<Message> messages;
 		User user = getUser(key);
 		if (user != null && user instanceof RolUV) {
@@ -278,7 +278,7 @@ public class UVLiveModel {
 		return messages;
 	}
 	
-	public Collection<Message> getFollowingMessages(String key, GetMessagesForm getMessagesForm) throws Exception {
+	public synchronized Collection<Message> getFollowingMessages(String key, GetMessagesForm getMessagesForm) throws Exception {
 		Collection<Message> messages;
 		User user = getUser(key);
 		if (user != null && user instanceof RolUV) {
@@ -290,7 +290,7 @@ public class UVLiveModel {
 		return messages;
 	}
 
-	public void updateToken(String key, String pushToken) throws Exception {
+	public synchronized void updateToken(String key, String pushToken) throws Exception {
 		User user = getUser(key);
 		
 		if (user != null && user instanceof RolUV) {
@@ -300,7 +300,7 @@ public class UVLiveModel {
 		}
 	}
 
-	public <T extends RolUV> Collection<RolUV> getUsers(String token) throws Exception {
+	public synchronized <T extends RolUV> Collection<RolUV> getUsers(String token) throws Exception {
 		User user = getUser(token);
 		if (user != null && user instanceof RolUV) {
 				return ((RolUV)user).getUsers();
@@ -309,7 +309,7 @@ public class UVLiveModel {
 		}
 	}
 	
-	public void initConversation(String token, int userId) throws Exception {
+	public synchronized void initConversation(String token, int userId) throws Exception {
 		User user = getUser(token);
 		if (user != null && user instanceof RolUV) {
 			try {

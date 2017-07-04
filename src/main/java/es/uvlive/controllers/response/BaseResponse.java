@@ -5,20 +5,6 @@
  */
 package es.uvlive.controllers.response;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
-
-/**
- *
- * @author atraverf
- */
-@XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "errorCode"
-})
-@XmlRootElement(name = "response")
 public class BaseResponse {
     
 	private static final int OK_CODE = 0;
