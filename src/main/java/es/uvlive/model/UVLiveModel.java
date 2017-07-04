@@ -1,16 +1,10 @@
 package es.uvlive.model;
 
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 import es.uvlive.api.GoogleInterface;
 import es.uvlive.api.RetrofitFactory;
 import es.uvlive.api.requests.Notification;
 import es.uvlive.api.requests.NotificationRequest;
 import es.uvlive.api.response.NotificationResponse;
-import es.uvlive.controllers.form.GetMessagesForm;
 import es.uvlive.exceptions.ConversationNotCreatedException;
 import es.uvlive.exceptions.UnauthorizedException;
 import es.uvlive.model.dao.BroadcastDAO;
@@ -20,6 +14,10 @@ import es.uvlive.utils.StringUtils;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 public class UVLiveModel {
 	
@@ -50,6 +48,8 @@ public class UVLiveModel {
      * @param userName
      * @param password
      * @param loginType
+	 * @return token
+	 * @throws Exception
      */
     public synchronized String login(String userName, String password, String loginType, String pushToken, String key) throws Exception {
         String token = sessionManager.login(userName, password, loginType, pushToken, key);
@@ -74,7 +74,7 @@ public class UVLiveModel {
     /**
      * 
      * @param key
-     * @param Student
+     * @param idStudent
      * @throws Exception 
      */
 	public synchronized void blockStudent(String key, int idStudent) throws Exception {
@@ -89,7 +89,7 @@ public class UVLiveModel {
     /**
      * 
      * @param key
-     * @param Student
+     * @param idStudent
      * @throws Exception 
      */
 	public synchronized void unblockStudent(String key, int idStudent) throws Exception {
@@ -106,6 +106,7 @@ public class UVLiveModel {
 	 * 
 	 * @param key
 	 * @return logged User
+	 * @throws Exception
 	 */
 	public synchronized User getUser(String key) throws Exception {
 		return sessionManager.getUser(key);
@@ -115,6 +116,7 @@ public class UVLiveModel {
 	 * 
 	 * @param key
 	 * @param userName
+	 * @throws Exception
 	 */
 	public synchronized boolean checkUserExists(String key, String userName) throws Exception {
 		User user = getUser(key);
@@ -133,6 +135,7 @@ public class UVLiveModel {
 	 * @param lastname
 	 * @param userName
 	 * @param password
+	 * @throws Exception
 	 */
 	public synchronized void registerMerchant(String key, String dni, String firstname, String lastname, String userName,
 								 String password) throws Exception {
@@ -153,6 +156,7 @@ public class UVLiveModel {
 	 * @param lastname
 	 * @param userName
 	 * @param password
+	 * @throws Exception
 	 */
 	public synchronized void updateMerchant(String key, String dni, String firstname, String lastname, String userName,
                                String password) throws Exception {
@@ -169,9 +173,9 @@ public class UVLiveModel {
 	/**
 	 * Registers Broadcast requested by Merchant
 	 * @param key
-	 * @param String
-	 * @throws SQLException 
-	 * @throws ClassNotFoundException 
+	 * @param title
+	 * @param broadcastText
+	 * @throws Exception
 	 */
 	public synchronized void registerBroadcast(String key, String title, String broadcastText) throws Exception {
 		User user = getUser(key);
@@ -182,9 +186,9 @@ public class UVLiveModel {
 
 	/**
 	 * 
-	 * @param text
+	 * @throws Exception
 	 */
-	public synchronized void sendBroadcasts() throws SQLException, ClassNotFoundException {
+	public synchronized void sendBroadcasts() throws Exception {
 		List<Broadcast> broadcastList = new BroadcastDAO().getBroadcasts();
 		List<User> users = sessionManager.getUsers();
 		for (final User user: users) {
@@ -226,6 +230,7 @@ public class UVLiveModel {
 	/**
 	 * 
 	 * @param key
+	 * @throws Exception
 	 */
 	public synchronized Collection<Conversation> getConversations(String key) throws Exception {
 		Collection <Conversation> conversations = new ArrayList<Conversation>();
@@ -245,6 +250,7 @@ public class UVLiveModel {
 	 * @param key
 	 * @param idConversation
 	 * @param text
+	 * @throws Exception
 	 */
 	public synchronized void sendMessage(String key, int idConversation, String text) throws Exception {
 		User user = getUser(key);
@@ -255,6 +261,13 @@ public class UVLiveModel {
 		}
 	}
 
+	/**
+	 *
+	 * @param key
+	 * @param idConversation
+	 * @return messages
+	 * @throws Exception
+	 */
 	public synchronized Collection<Message> getMessages(String key, int idConversation) throws Exception {
 		Collection<Message> messages;
 		User user = getUser(key);
@@ -266,24 +279,31 @@ public class UVLiveModel {
 		}
 		return messages;
 	}
-	
-	public synchronized Collection<Message> getPreviousMessages(String key, GetMessagesForm getMessagesForm) throws Exception {
+
+	/**
+	 *
+	 * @param key
+	 * @param idConversation
+	 * @param idMessage
+	 * @return messages
+	 * @throws Exception
+	 */
+	public synchronized Collection<Message> getPreviousMessages(String key, int idConversation, int idMessage) throws Exception {
 		Collection<Message> messages;
 		User user = getUser(key);
 		if (user != null && user instanceof RolUV) {
-			messages = ((RolUV)user).getPreviousMessages(getMessagesForm.getIdConversation(), getMessagesForm.getIdMessage());
+			messages = ((RolUV)user).getPreviousMessages(idConversation, idMessage);
 		} else {
 			throw new UnauthorizedException();
 		}
 		return messages;
 	}
 	
-	public synchronized Collection<Message> getFollowingMessages(String key, GetMessagesForm getMessagesForm) throws Exception {
+	public synchronized Collection<Message> getFollowingMessages(String key, int idConversation, int idMessage) throws Exception {
 		Collection<Message> messages;
 		User user = getUser(key);
 		if (user != null && user instanceof RolUV) {
-			// Only RolUV users can send messages
-			messages = ((RolUV)user).getFollowingMessages(getMessagesForm.getIdConversation(), getMessagesForm.getIdMessage());
+			messages = ((RolUV)user).getFollowingMessages(idConversation, idMessage);
 		} else {
 			throw new UnauthorizedException();
 		}

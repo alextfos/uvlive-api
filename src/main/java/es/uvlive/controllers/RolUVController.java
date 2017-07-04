@@ -144,7 +144,7 @@ public class RolUVController extends BaseController {
 
 		try {
 			if (getMessagesForm.isValid() && getMessagesForm.getIdMessage()>0) {
-				messages = uvLiveModel.getPreviousMessages(getToken(request), getMessagesForm);
+				messages = uvLiveModel.getPreviousMessages(getToken(request), getMessagesForm.getIdConversation(), getMessagesForm.getIdMessage());
 				for (Message message : messages) {
 					MessageResponse messageResponse = new MessageResponse();
 					messageResponse.setIdMessage(message.getIdMessage());
@@ -175,7 +175,7 @@ public class RolUVController extends BaseController {
 
 		try {
 			if (getMessagesForm.isValid() && getMessagesForm.getIdMessage()>0) {
-				messages = uvLiveModel.getFollowingMessages(getToken(request), getMessagesForm);
+				messages = uvLiveModel.getFollowingMessages(getToken(request), getMessagesForm.getIdConversation(), getMessagesForm.getIdMessage());
 				for (Message message : messages) {
 					MessageResponse messageResponse = new MessageResponse();
 					messageResponse.setIdMessage(message.getIdMessage());
