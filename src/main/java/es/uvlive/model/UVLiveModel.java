@@ -43,6 +43,13 @@ public class UVLiveModel {
 		Message.initMessageId(new MessageDAO().getMaxMessageId());
 	}
 
+	/**
+	*
+	*/
+	public synchronized void updateCourse() throws Exception {
+		// Sync process
+	}
+
     /**
      * 
      * @param userName

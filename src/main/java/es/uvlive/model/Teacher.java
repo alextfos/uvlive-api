@@ -20,7 +20,7 @@ public class Teacher extends RolUV {
 	 */
 	public void blockStudent(int idStudent) throws ClassNotFoundException, SQLException {
 		new TeacherDAO().bockStudent(idStudent);
-		getSessionManager().blockUser(idStudent);
+		getSessionManager().blockStudent(idStudent);
 	}
 	
 	/**
@@ -31,7 +31,7 @@ public class Teacher extends RolUV {
 	 */
 	public void unblockStudent(int idStudent) throws ClassNotFoundException, SQLException {
 		new TeacherDAO().unblockStudent(idStudent);
-		getSessionManager().unblockUser(idStudent);
+		getSessionManager().unblockStudent(idStudent);
 	}
 
 	@Override

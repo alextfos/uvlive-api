@@ -30,6 +30,7 @@ public class Student extends RolUV {
 	public void initConversation(int userId) throws ClassNotFoundException, SQLException, ConversationNotCreatedException {
 		int conversationId = new RolUVDAO().saveConversation(userId,getUserId());
 		Conversation conversation = getConversationCatalog().addAndGetConversation(conversationId);
+		conversation.addRolUV(this);
 		getUserConversations().add(conversation);
 		getSessionManager().addConversationToUser(userId, conversation);
 	}

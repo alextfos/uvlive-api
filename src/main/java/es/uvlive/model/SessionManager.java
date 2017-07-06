@@ -157,7 +157,7 @@ public class SessionManager {
 	 * 
 	 * @param idStudent
 	 */
-	public void blockUser(int idStudent) {
+	public void blockStudent(int idStudent) {
 		Set<String> users = usersCollection.keySet();
 
 		for (String key : users) {
@@ -173,7 +173,7 @@ public class SessionManager {
 	 * 
 	 * @param idStudent
 	 */
-	public void unblockUser(int idStudent) {
+	public void unblockStudent(int idStudent) {
 		Set<String> users = usersCollection.keySet();
 
 		for (String key : users) {

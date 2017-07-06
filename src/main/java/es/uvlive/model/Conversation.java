@@ -48,7 +48,7 @@ public class Conversation implements ElasticList.OnFillBufferCallback<Message> {
 		this.name = name;
 	}
 
-	public void sendMessage(RolUV currentUser, Message message) {
+	public void notifyUsersNewMessage(RolUV currentUser, Message message) {
 		if(messages != null && message != null) {
 			messages.add(message);
 		}

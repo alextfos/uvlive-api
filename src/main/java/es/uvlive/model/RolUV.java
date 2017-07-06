@@ -93,7 +93,9 @@ public abstract class RolUV extends User {
 			message.setOwner(getFirstname() + " " + getLastname());
 			message.setConversation(currentConversation);
 
-			currentConversation.sendMessage(this,message);
+			currentConversation.notifyUsersNewMessage(this,message);
+		} else {
+			throw new Exception();
 		}
 	}
 
