@@ -3,6 +3,7 @@ package es.uvlive.model;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import es.uvlive.exceptions.ConversationNotCreatedException;
 import es.uvlive.exceptions.UserBlockedException;
@@ -112,32 +113,46 @@ public abstract class RolUV extends User {
 		
 		for (Conversation conversation : userConversations) {
 			if (conversation.getIdConversation() == idConversation) {
-				messages = new MessageDAO().getMessages(idConversation);
+				messages = conversation.getLastMessages(UVLiveModel.PAGE_SIZE);
+				// messages = new MessageDAO().getMessages(idConversation,UVLiveModel.PAGE_SIZE);
 			}
 		}
 		
 		return messages;
 	}
 	
-	public Collection<Message> getPreviousMessages(int idConversation, int idMessage) throws ClassNotFoundException, SQLException {
-		Collection<Message> messages = new ArrayList<>();
+	public Collection<Message> getPreviousMessages(int idConversation, int timestamp) throws ClassNotFoundException, SQLException {
+		List<Message> messages = new ArrayList<>();
 		
 		for (Conversation conversation : userConversations) {
 			if (conversation.getIdConversation() == idConversation) {
-				messages = new MessageDAO().getPreviousMessages(idConversation, idMessage);
+				if (conversation.containsTimestamp(timestamp)) {
+					messages = conversation.getPreviousMessages(timestamp,UVLiveModel.PAGE_SIZE);
+					if (messages.size()<UVLiveModel.PAGE_SIZE) {
+						messages.addAll(new MessageDAO().getPreviousMessages(idConversation, messages.get(messages.size()-1).getTimestamp(),UVLiveModel.PAGE_SIZE-messages.size()));
+					}
+				} else {
+					messages = new MessageDAO().getPreviousMessages(idConversation, timestamp,UVLiveModel.PAGE_SIZE);
+				}
 			}
 		}
 		
 		return messages;
 	}
 	
-	public Collection<Message> getFollowingMessages(int idConversation, int idMessage) throws ClassNotFoundException, SQLException {
-		Collection<Message> messages = new ArrayList<>();
-		Conversation requestedConversation = new Conversation();
+	public Collection<Message> getFollowingMessages(int idConversation, int timestamp) throws ClassNotFoundException, SQLException {
+		List<Message> messages = new ArrayList<>();
 		
 		for (Conversation conversation : userConversations) {
 			if (conversation.getIdConversation() == idConversation) {
-				messages = new MessageDAO().getFollowingMessages(idConversation, idMessage);
+				if (conversation.containsTimestamp(timestamp)) {
+					messages = conversation.getFollowingMessages(timestamp,UVLiveModel.PAGE_SIZE);
+					if (messages.size()<UVLiveModel.PAGE_SIZE) {
+						messages.addAll(new MessageDAO().getPreviousMessages(idConversation, messages.get(0).getTimestamp(),UVLiveModel.PAGE_SIZE-messages.size()));
+					}
+				} else {
+					messages = new MessageDAO().getFollowingMessages(idConversation, timestamp,UVLiveModel.PAGE_SIZE);
+				}
 			}
 		}
 		

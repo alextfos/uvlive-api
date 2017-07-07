@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class Message {
+public class Message implements Comparable<Message> {
 
 	private static AtomicInteger nextId;
 	
@@ -64,14 +64,6 @@ public class Message {
 	}
 
 	@Override
-	public boolean equals(Object o) {
-		if (o instanceof Message) {
-			return ((Message)o).idMessage == this.idMessage;
-		}
-		return false;
-	}
-	
-	@Override
 	public String toString() {
 		return new Gson().toJson(this);
 	}
@@ -82,5 +74,26 @@ public class Message {
 
 	public Conversation getConversation() {
 		return conversation;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (o instanceof Message) {
+			return ((Message)o).idMessage == this.idMessage;
+		}
+		return false;
+	}
+
+	@Override
+	public int compareTo(Message o) {
+		int result = 0;
+
+		if (this.timestamp < o.timestamp) {
+			result = -1;
+		} else if (this.timestamp > o.timestamp) {
+			result = 1;
+		}
+
+		return result;
 	}
 }

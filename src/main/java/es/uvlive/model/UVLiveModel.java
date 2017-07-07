@@ -279,7 +279,6 @@ public class UVLiveModel {
 		Collection<Message> messages;
 		User user = getUser(key);
 		if (user != null && user instanceof RolUV) {
-			// Only RolUV users can send messages
 			messages = ((RolUV)user).getMessages(idConversation);
 		} else {
 			throw new UnauthorizedException();
@@ -295,22 +294,22 @@ public class UVLiveModel {
 	 * @return messages
 	 * @throws Exception
 	 */
-	public synchronized Collection<Message> getPreviousMessages(String key, int idConversation, int idMessage) throws Exception {
+	public synchronized Collection<Message> getPreviousMessages(String key, int idConversation, int timestamp) throws Exception {
 		Collection<Message> messages;
 		User user = getUser(key);
 		if (user != null && user instanceof RolUV) {
-			messages = ((RolUV)user).getPreviousMessages(idConversation, idMessage);
+			messages = ((RolUV)user).getPreviousMessages(idConversation, timestamp);
 		} else {
 			throw new UnauthorizedException();
 		}
 		return messages;
 	}
 	
-	public synchronized Collection<Message> getFollowingMessages(String key, int idConversation, int idMessage) throws Exception {
+	public synchronized Collection<Message> getFollowingMessages(String key, int idConversation, int timestamp) throws Exception {
 		Collection<Message> messages;
 		User user = getUser(key);
 		if (user != null && user instanceof RolUV) {
-			messages = ((RolUV)user).getFollowingMessages(idConversation, idMessage);
+			messages = ((RolUV)user).getFollowingMessages(idConversation, timestamp);
 		} else {
 			throw new UnauthorizedException();
 		}

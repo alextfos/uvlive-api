@@ -26,6 +26,14 @@ public class ElasticList<T> implements List<T> {
 		this.onFillBufferCallback = onFillBufferCallback;
 	}
 
+	public T getFirstElement() {
+		return firstElement.getElement();
+	}
+
+	public T getLastElement() {
+		return lastElement.getElement();
+	}
+
 	@Override
 	public boolean addAll(Collection<? extends T> c) {
 		if (c == null) {

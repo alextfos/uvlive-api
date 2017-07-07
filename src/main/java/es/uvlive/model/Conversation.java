@@ -6,6 +6,7 @@ import java.util.List;
 
 import es.uvlive.api.GoogleInterface;
 import es.uvlive.api.RetrofitFactory;
+import es.uvlive.api.requests.NewMessagesOperation;
 import es.uvlive.api.requests.NotificationRequest;
 import es.uvlive.api.requests.Operation;
 import es.uvlive.api.response.NotificationResponse;
@@ -18,7 +19,7 @@ import retrofit2.Response;
 
 public class Conversation implements ElasticList.OnFillBufferCallback<Message> {
 
-	Collection<RolUV> rolUVs;
+	private Collection<RolUV> rolUVs;
 	private ElasticList<Message> messages;
 	private int idConversation;
 	private String name;
@@ -58,7 +59,7 @@ public class Conversation implements ElasticList.OnFillBufferCallback<Message> {
 				GoogleInterface googleInterface = RetrofitFactory.getGoogleInterface();
 		        NotificationRequest notificationRequest = new NotificationRequest();
 		        
-		        notificationRequest.setData(new Operation("GET","MESSAGES"));
+		        notificationRequest.setData(new NewMessagesOperation("GET","MESSAGES",idConversation));
 		        notificationRequest.setTo(pushToken);
 		        Call<NotificationResponse> callback = googleInterface.sendNotification(notificationRequest);
 		        callback.enqueue(new Callback<NotificationResponse>() {
@@ -83,6 +84,37 @@ public class Conversation implements ElasticList.OnFillBufferCallback<Message> {
 		        });
 			}
 		}
+	}
+
+	public boolean containsTimestamp(int timestamp) {
+		return messages.getFirstElement().getTimestamp() <= timestamp &&
+				messages.getLastElement().getTimestamp() >= timestamp;
+	}
+
+	public List<Message> getPreviousMessages(int timestamp, int pageSize) {
+		List<Message> messageList = messages.subList(0,messages.size());
+		for (Message message: messageList) {
+			if (message.getTimestamp() == timestamp) {
+				int position = messageList.indexOf(message);
+				return messageList.subList((position-pageSize)<0?0:position-pageSize,position);
+			}
+		}
+		return new ArrayList();
+	}
+
+	public List<Message> getFollowingMessages(int timestamp, int pageSize) {
+		List<Message> messageList = messages.subList(0,messages.size());
+		for (Message message: messageList) {
+			if (message.getTimestamp() == timestamp) {
+				int position = messageList.indexOf(message);
+				return messageList.subList(position,(position+pageSize)>messageList.size()?messageList.size():position+pageSize);
+			}
+		}
+		return new ArrayList();
+	}
+
+	public List<Message> getLastMessages(int pageSize) {
+		return messages.subList(messages.size()-pageSize,messages.size());
 	}
 
 	@Override
