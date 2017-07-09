@@ -5,29 +5,27 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
+import java.util.Collections;
 import java.util.List;
 
 import es.uvlive.model.Message;
-import es.uvlive.model.RolUV;
-import es.uvlive.model.UVLiveModel;
 
 public class MessageDAO extends BaseDAO {
 
 	private static final String QUERY_SAVE_MESSAGE = "INSERT INTO " + MESSAGE_TABLE
-			+ " (text, timestamp, ConversationidConversation, RolUVidUser) VALUES (?, ?, ?, ?);";
+			+ " (idMessage,text, timestamp, ConversationidConversation, RolUVidUser) VALUES (?,?, ?, ?, ?);";
 
 	private static final String QUERY_GET_MESSAGES = "SELECT * FROM " + MESSAGE_TABLE + " JOIN " + USER_TABLE + " WHERE " +
-			ROL_UV_ID_USER_FIELD  + " = " + USER_ID_FIELD + " AND " + MESSAGE_ID_CONVERSATION_FIELD + " = %s ORDER BY " +
-			TIME_STAMP_FIELD + " DESC LIMIT %d";
+			ROL_UV_ID_USER_FIELD  + " = " + USER_ID_FIELD + " AND " + MESSAGE_ID_CONVERSATION_FIELD + " = %d ORDER BY " +
+			MESSAGE_ID_FIELD + " DESC LIMIT %d";
 
 	private static final String QUERY_GET_PREVIOUS_MESSAGES = "SELECT * FROM " + MESSAGE_TABLE + " JOIN " + USER_TABLE +
 			" WHERE " + ROL_UV_ID_USER_FIELD + " = " + USER_ID_FIELD + " AND " + TIME_STAMP_FIELD + " < %d AND " +
-			MESSAGE_ID_CONVERSATION_FIELD + " = %d ORDER BY " + TIME_STAMP_FIELD + " DESC LIMIT %d";
+			MESSAGE_ID_CONVERSATION_FIELD + " = %d ORDER BY " + MESSAGE_ID_FIELD + " DESC LIMIT %d";
 
 	private static final String QUERY_GET_FOLLOWING_MESSAGES = "SELECT * FROM " + MESSAGE_TABLE + " JOIN " + USER_TABLE +
 			" WHERE " + ROL_UV_ID_USER_FIELD + " = " + USER_ID_FIELD + " AND " + TIME_STAMP_FIELD + " > %d AND " +
-			MESSAGE_ID_CONVERSATION_FIELD + " = %d ORDER BY " + TIME_STAMP_FIELD + " DESC LIMIT %d";
+			MESSAGE_ID_CONVERSATION_FIELD + " = %d ORDER BY " + MESSAGE_ID_FIELD + " ASC LIMIT %d";
 
 	private static final String QUERY_GET_MAX_MESSAGE_ID = "SELECT MAX(" + MESSAGE_ID_FIELD + ") FROM " + MESSAGE_TABLE;
 
@@ -35,10 +33,11 @@ public class MessageDAO extends BaseDAO {
 		PreparedStatement preparedStatement = getPreparedStatement(QUERY_SAVE_MESSAGE);
 
 		for (Message message: messageList) {
-			preparedStatement.setString(1, message.getText());
-			preparedStatement.setInt(2, message.getTimestamp());
-			preparedStatement.setInt(3, message.getConversation().getIdConversation());
-			preparedStatement.setInt(4, message.getRolUV().getUserId());
+			preparedStatement.setInt(1,message.getIdMessage());
+			preparedStatement.setString(2, message.getText());
+			preparedStatement.setInt(3, message.getTimestamp());
+			preparedStatement.setInt(4, message.getConversation().getIdConversation());
+			preparedStatement.setInt(5, message.getRolUV().getUserId());
 
 			preparedStatement.addBatch();
 		}
@@ -47,7 +46,7 @@ public class MessageDAO extends BaseDAO {
 	}
 
 	public Collection<Message> getMessages(int idConversation, int pageSize) throws ClassNotFoundException, SQLException {
-		Collection<Message> messages = new ArrayList<>();
+		List<Message> messages = new ArrayList<>();
 		
         ResultSet result = query(String.format(QUERY_GET_MESSAGES, idConversation, pageSize));
         if (result != null) {
@@ -61,12 +60,14 @@ public class MessageDAO extends BaseDAO {
                 messages.add(message);
             }
         }
-        
-		return messages;
+
+		Collections.reverse(messages);
+
+        return messages;
 	}
 	
 	public List<Message> getPreviousMessages(int idConversation, int timestamp, int pageSize) throws ClassNotFoundException, SQLException {
-		List<Message> messages = new ArrayList<Message>();
+		List<Message> messages = new ArrayList<>();
 		
         ResultSet result = query(String.format(QUERY_GET_PREVIOUS_MESSAGES, timestamp, idConversation, pageSize));
         if (result != null) {
@@ -85,7 +86,7 @@ public class MessageDAO extends BaseDAO {
 	}
 	
 	public List<Message> getFollowingMessages(int idConversation, int timestamp,int pageSize) throws ClassNotFoundException, SQLException {
-		List<Message> messages = new ArrayList<Message>();
+		List<Message> messages = new ArrayList<>();
 		
         ResultSet result = query(String.format(QUERY_GET_FOLLOWING_MESSAGES, timestamp, idConversation, pageSize));
         if (result != null) {
@@ -99,6 +100,8 @@ public class MessageDAO extends BaseDAO {
                 messages.add(message);
             }
         }
+
+        Collections.reverse(messages);
         
 		return messages;
 	}

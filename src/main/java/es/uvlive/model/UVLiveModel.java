@@ -38,9 +38,9 @@ public class UVLiveModel {
 	}
 
 	public UVLiveModel() {
+		Message.initMessageId(new MessageDAO().getMaxMessageId());
 		conversationCatalog = new ConversationCatalog();
 		sessionManager = new SessionManager();
-		Message.initMessageId(new MessageDAO().getMaxMessageId());
 	}
 
 	/**
@@ -58,8 +58,8 @@ public class UVLiveModel {
 	 * @return token
 	 * @throws Exception
      */
-    public synchronized String login(String userName, String password, String loginType, String pushToken, String key) throws Exception {
-        String token = sessionManager.login(userName, password, loginType, pushToken, key);
+    public synchronized String login(String userName, String password, String loginType, String pushToken) throws Exception {
+        String token = sessionManager.login(userName, password, loginType, pushToken);
         if (!StringUtils.isEmpty(token)) {
         	User user = sessionManager.getUser(token);
         	if (user != null && user instanceof RolUV) {
@@ -74,7 +74,7 @@ public class UVLiveModel {
      * Logout
      * @param token
      */
-    public synchronized void logout(String token) {
+    public synchronized void logout(String token) throws Exception{
         sessionManager.logout(token);
     }
 

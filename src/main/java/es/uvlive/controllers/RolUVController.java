@@ -34,14 +34,7 @@ import es.uvlive.utils.Logger;
 
 @Controller
 public class RolUVController extends BaseController {
-	/**
-	 *
-	 * @param loginForm
-	 * @param result
-	 * @param request
-	 * @param response
-	 * @return
-	 */
+
 	@RequestMapping(value = "/rolUV/conversations", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE, headers = {
 			"Content-Type=application/json" })
 	public @ResponseBody BaseResponse getConversations(HttpServletRequest request, HttpServletResponse response) {
@@ -114,13 +107,15 @@ public class RolUVController extends BaseController {
 		try {
 			if (getMessagesForm.isValid()) {
 				messages = uvLiveModel.getMessages(getToken(request), getMessagesForm.getIdConversation());
-				for (Message message : messages) {
-					MessageResponse messageResponse = new MessageResponse();
-					messageResponse.setIdMessage(message.getIdMessage());
-					messageResponse.setText(message.getText());
-					messageResponse.setTimestamp(message.getTimestamp());
-					messageResponse.setOwner(message.getOwner());
-					messageResponseList.add(messageResponse);
+				if (messages != null) {
+					for (Message message : messages) {
+						MessageResponse messageResponse = new MessageResponse();
+						messageResponse.setIdMessage(message.getIdMessage());
+						messageResponse.setText(message.getText());
+						messageResponse.setTimestamp(message.getTimestamp());
+						messageResponse.setOwner(message.getOwner());
+						messageResponseList.add(messageResponse);
+					}
 				}
 
 				messageListResponse.setMessages(messageResponseList);

@@ -46,19 +46,8 @@ public class SessionManager {
 	 * @param password
 	 * @param loginType
 	 */
-	public String login(String userName, String password, String loginType, String pushToken, String token)
-			throws Exception {
-
+	public String login(String userName, String password, String loginType, String pushToken) throws Exception {
 		User user = null;
-		try {
-			user = getUser(token);
-		} catch (Exception e) {
-			// Nothing to do here
-		}
-
-		if (user != null) {
-			return token;
-		}
 
 		String newToken = null;
 		UserDAO userDao = new UserDAO();
@@ -86,8 +75,8 @@ public class SessionManager {
 	 * 
 	 * @param token
 	 */
-	public void logout(String token) {
-		usersCollection.remove(token);
+	public void logout(String token) throws TokenExpiredException {
+		usersCollection.remove(getUser(token));
 	}
 
 	/**

@@ -37,7 +37,7 @@ public class UserController extends BaseController {
 		try {
 			if (loginForm.isValid()) {
 				String token = uvLiveModel.login(loginForm.getUserName(), loginForm.getPassword(),
-						loginForm.getLoginType(), loginForm.getPushToken(), getToken(request));
+						loginForm.getLoginType(), loginForm.getPushToken());
 
 				if (!StringUtils.isEmpty(token)) {
 					Logger.put(this, loginForm.getUserName() + " logged");

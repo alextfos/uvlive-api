@@ -89,6 +89,7 @@ public abstract class RolUV extends User {
 		if (currentConversation != null) {
 			Message message = new Message();
 			message.setTimestamp(DateUtils.getCurrentTimestamp());
+			message.generateId();
 			message.setText(text);
 			message.setRolUV(this);
 			message.setOwner(getFirstname() + " " + getLastname());
@@ -126,13 +127,18 @@ public abstract class RolUV extends User {
 		
 		for (Conversation conversation : userConversations) {
 			if (conversation.getIdConversation() == idConversation) {
-				if (conversation.containsTimestamp(timestamp)) {
+				if (timestamp > conversation.getFirstMessageTimestamp()) {
+					messages = conversation.getLastMessages(UVLiveModel.PAGE_SIZE);
+					return messages;
+				} else if (conversation.containsTimestamp(timestamp)) {
 					messages = conversation.getPreviousMessages(timestamp,UVLiveModel.PAGE_SIZE);
-					if (messages.size()<UVLiveModel.PAGE_SIZE) {
+					if (messages.size()<UVLiveModel.PAGE_SIZE && messages.size() > 0) {
 						messages.addAll(new MessageDAO().getPreviousMessages(idConversation, messages.get(messages.size()-1).getTimestamp(),UVLiveModel.PAGE_SIZE-messages.size()));
 					}
+					return messages;
 				} else {
 					messages = new MessageDAO().getPreviousMessages(idConversation, timestamp,UVLiveModel.PAGE_SIZE);
+					return messages;
 				}
 			}
 		}
@@ -145,11 +151,10 @@ public abstract class RolUV extends User {
 		
 		for (Conversation conversation : userConversations) {
 			if (conversation.getIdConversation() == idConversation) {
-				if (conversation.containsTimestamp(timestamp)) {
+				if (timestamp >= conversation.getFirstMessageTimestamp()) {
+					return messages;
+				} else if (conversation.containsTimestamp(timestamp)) {
 					messages = conversation.getFollowingMessages(timestamp,UVLiveModel.PAGE_SIZE);
-					if (messages.size()<UVLiveModel.PAGE_SIZE) {
-						messages.addAll(new MessageDAO().getPreviousMessages(idConversation, messages.get(0).getTimestamp(),UVLiveModel.PAGE_SIZE-messages.size()));
-					}
 				} else {
 					messages = new MessageDAO().getFollowingMessages(idConversation, timestamp,UVLiveModel.PAGE_SIZE);
 				}

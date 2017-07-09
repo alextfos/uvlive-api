@@ -217,7 +217,7 @@ public class ElasticList<T> implements List<T> {
 			element = element.getNextElement();
 		}
 		
-		for (int i=fromIndex ; i<toIndex && element.getNextElement() !=null ; i++) {
+		for (int i=fromIndex ; i<=toIndex && element !=null ; i++) {
 			subList.add(element.getElement());
 			element = element.getNextElement();
 		}

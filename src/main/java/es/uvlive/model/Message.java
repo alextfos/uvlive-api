@@ -19,7 +19,7 @@ public class Message implements Comparable<Message> {
 		nextId = new AtomicInteger(maxId);
 	}
 
-	public Message() {
+	public void generateId() {
 		idMessage = nextId.incrementAndGet();
 	}
 	

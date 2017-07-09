@@ -20,10 +20,8 @@ public class ConversationDAO extends BaseDAO {
         ResultSet result = query(QUERY_GET_CONVERSATIONS);
         if (result!=null) {
             while(result.next()) {
-            	Conversation conversation = new Conversation();
-                int idConversation = result.getInt(CONVERSATION_ID_FIELD);
+            	Conversation conversation = new Conversation(result.getInt(CONVERSATION_ID_FIELD));
                 String  name = result.getString(NAME_FIELD);
-                conversation.setIdConversation(idConversation);
                 conversation.setName(name);
                 conversationCollection.add(conversation);
             }
@@ -50,9 +48,8 @@ public class ConversationDAO extends BaseDAO {
 		Conversation conversation = null;
 		
 		if (resultSet != null && resultSet.next()) {
-			conversation = new Conversation();
+			conversation = new Conversation(resultSet.getInt(CONVERSATION_ID_FIELD));
             String  name = resultSet.getString(NAME_FIELD);
-            conversation.setIdConversation(idConversation);
             conversation.setName(name);
 		}
 		return conversation;

@@ -8,7 +8,6 @@ import es.uvlive.api.GoogleInterface;
 import es.uvlive.api.RetrofitFactory;
 import es.uvlive.api.requests.NewMessagesOperation;
 import es.uvlive.api.requests.NotificationRequest;
-import es.uvlive.api.requests.Operation;
 import es.uvlive.api.response.NotificationResponse;
 import es.uvlive.eda.ElasticList;
 import es.uvlive.model.dao.MessageDAO;
@@ -24,8 +23,15 @@ public class Conversation implements ElasticList.OnFillBufferCallback<Message> {
 	private int idConversation;
 	private String name;
 
-	public Conversation() {
+	public Conversation(int idConversation) {
+		this.idConversation = idConversation;
 		this.messages = new ElasticList<>(UVLiveModel.LIST_SIZE,UVLiveModel.BUFFER_SIZE,this);
+		try {
+			Collection<Message> oldMessages = new MessageDAO().getMessages(idConversation,UVLiveModel.LIST_SIZE);
+			messages.addAll(oldMessages);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		rolUVs = new ArrayList<>();
 	}
 	
@@ -87,11 +93,19 @@ public class Conversation implements ElasticList.OnFillBufferCallback<Message> {
 	}
 
 	public boolean containsTimestamp(int timestamp) {
-		return messages.getFirstElement().getTimestamp() <= timestamp &&
-				messages.getLastElement().getTimestamp() >= timestamp;
+		return messages.getFirstElement().getTimestamp() >= timestamp &&
+				messages.getLastElement().getTimestamp() <= timestamp;
 	}
 
-	public List<Message> getPreviousMessages(int timestamp, int pageSize) {
+	public int getFirstMessageTimestamp() {
+		return messages.getFirstElement().getTimestamp();
+	}
+
+	public int getLastMessageTimestamp() {
+		return messages.getLastElement().getTimestamp();
+	}
+
+	public List<Message> getFollowingMessages(int timestamp, int pageSize) {
 		List<Message> messageList = messages.subList(0,messages.size());
 		for (Message message: messageList) {
 			if (message.getTimestamp() == timestamp) {
@@ -102,19 +116,19 @@ public class Conversation implements ElasticList.OnFillBufferCallback<Message> {
 		return new ArrayList();
 	}
 
-	public List<Message> getFollowingMessages(int timestamp, int pageSize) {
+	public List<Message> getPreviousMessages(int timestamp, int pageSize) {
 		List<Message> messageList = messages.subList(0,messages.size());
 		for (Message message: messageList) {
 			if (message.getTimestamp() == timestamp) {
 				int position = messageList.indexOf(message);
-				return messageList.subList(position,(position+pageSize)>messageList.size()?messageList.size():position+pageSize);
+				return messageList.subList(position+1,(position+pageSize)>messageList.size()?messageList.size():position+pageSize);
 			}
 		}
 		return new ArrayList();
 	}
 
 	public List<Message> getLastMessages(int pageSize) {
-		return messages.subList(messages.size()-pageSize,messages.size());
+		return messages.subList(messages.size()-pageSize<0?0:messages.size()-pageSize,messages.size());
 	}
 
 	@Override
