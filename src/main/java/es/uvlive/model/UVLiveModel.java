@@ -212,7 +212,7 @@ public class UVLiveModel {
 						@Override
 						public void onResponse(Call<NotificationResponse> call, Response<NotificationResponse> rspns) {
 							NotificationResponse response = rspns.body();
-							if (response.getFailure() > 0) {
+							if (response != null && response.getFailure() > 0) {
 								try {
 									((RolUV)user).removePushToken();
 								} catch (Exception e) {

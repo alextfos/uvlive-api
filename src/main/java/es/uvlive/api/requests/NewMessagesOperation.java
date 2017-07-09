@@ -6,6 +6,7 @@ public class NewMessagesOperation extends Operation {
 
     public NewMessagesOperation(String type, String operation, int idConversation) {
         super(type, operation);
+        this.idConversation = idConversation;
     }
 
     public int getIdConversation() {

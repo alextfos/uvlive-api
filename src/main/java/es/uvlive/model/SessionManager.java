@@ -11,6 +11,7 @@ import java.util.Set;
 
 import es.uvlive.api.GoogleInterface;
 import es.uvlive.api.RetrofitFactory;
+import es.uvlive.api.requests.NewConversationsOperation;
 import es.uvlive.api.requests.NotificationRequest;
 import es.uvlive.api.requests.Operation;
 import es.uvlive.api.response.NotificationResponse;
@@ -198,7 +199,7 @@ public class SessionManager {
 			@Override
 			public void onResponse(Call<NotificationResponse> call, Response<NotificationResponse> rspns) {
 				NotificationResponse response = rspns.body();
-				if (response.getFailure() > 0) {
+				if (response != null && response.getFailure() > 0) {
 					try {
 						rolUV.removePushToken();
 					} catch (Exception e) {
