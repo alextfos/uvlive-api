@@ -11,7 +11,6 @@ import java.util.Set;
 
 import es.uvlive.api.GoogleInterface;
 import es.uvlive.api.RetrofitFactory;
-import es.uvlive.api.requests.NewConversationsOperation;
 import es.uvlive.api.requests.NotificationRequest;
 import es.uvlive.api.requests.Operation;
 import es.uvlive.api.response.NotificationResponse;
