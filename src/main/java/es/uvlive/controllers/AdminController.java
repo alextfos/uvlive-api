@@ -13,14 +13,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import es.uvlive.controllers.form.GetMerchantForm;
 import es.uvlive.controllers.form.SetMerchantForm;
 import es.uvlive.controllers.form.ValidateMerchantForm;
 import es.uvlive.controllers.response.BaseResponse;
+import es.uvlive.controllers.response.GetMerchantResponse;
 import es.uvlive.controllers.response.LogListResponse;
 import es.uvlive.controllers.response.LogResponse;
 import es.uvlive.controllers.response.SetMerchantResponse;
 import es.uvlive.controllers.response.ValidateMerchantNameResponse;
+import es.uvlive.exceptions.MerchantNotExistsException;
 import es.uvlive.exceptions.ValidationFormException;
+import es.uvlive.model.Merchant;
 import es.uvlive.utils.LogRegister;
 import es.uvlive.utils.Logger;
 
@@ -70,6 +74,33 @@ public class AdminController extends BaseController {
 			validateMerchantNameResponse.setErrorCode(getErrorCode(e));
 		}
 		return validateMerchantNameResponse;
+	}
+	
+	@RequestMapping(value = "/admin/merchant/get", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE, headers = {
+	"Content-Type=application/json" })
+	public @ResponseBody BaseResponse getMerchant(@RequestBody GetMerchantForm merchantForm,
+		BindingResult result, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	
+		GetMerchantResponse getMerchantResponse = new GetMerchantResponse();
+		try {
+			if (merchantForm.isValid()) {
+				Merchant merchant = uvLiveModel.getMerchant(getToken(request), merchantForm.getUserName());
+				if (merchant != null) {
+					getMerchantResponse.setDni(merchant.getDni());
+					getMerchantResponse.setFirstname(merchant.getFirstname());
+					getMerchantResponse.setLastname(merchant.getLastname());
+					getMerchantResponse.setUserId(merchant.getUserId());
+					getMerchantResponse.setUsername(merchant.getUsername());
+				} else {
+					throw new MerchantNotExistsException();
+				}
+			} else {
+				throw new ValidationFormException();
+			}
+		} catch (Exception e) {
+			getMerchantResponse.setErrorCode(getErrorCode(e));
+		}
+		return getMerchantResponse;
 	}
 
 	@RequestMapping(value = "/admin/merchant/register", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE, headers = {

@@ -16,6 +16,7 @@ public class ErrorManager {
     public static final int VALIDATION_FORM_EXCEPTION = -6;
     public static final int CONVERSATION_NOT_CREATED_EXCEPTION = -7;
     public static final int USER_BLOCKED_EXCEPTION = -8;
+    public static final int MERCHANT_NOT_EXISTS_EXCEPTION = -9;
 
     public static int getErrorCode(Class clazz, Exception e) {
         System.err.println("Generic error treatment: "+e.getMessage());
@@ -49,6 +50,9 @@ public class ErrorManager {
                 case UserBlockedException.MESSAGE:
                     code = USER_BLOCKED_EXCEPTION;
                     break;
+                case MerchantNotExistsException.MESSAGE:
+                	code = MERCHANT_NOT_EXISTS_EXCEPTION;
+                	break;
             }
         }
         return code;

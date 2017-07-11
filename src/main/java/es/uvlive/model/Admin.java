@@ -61,4 +61,8 @@ public class Admin extends User {
 		return sessionManager.isUserExists(userName);
 	}
 
+	public Merchant getMerchant(String merchantName) throws ClassNotFoundException, SQLException {
+		return sessionManager.getMerchant(merchantName);
+	}
+
 }

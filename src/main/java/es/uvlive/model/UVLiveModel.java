@@ -349,4 +349,13 @@ public class UVLiveModel {
 		}
 	}
 
+	public Merchant getMerchant(String token, String merchantName) throws Exception {
+		User user = getUser(token);
+		if (user != null && user instanceof Admin) {
+			return ((Admin)user).getMerchant(merchantName);
+		} else {
+			throw new UnauthorizedException();
+		}
+	}
+
 }

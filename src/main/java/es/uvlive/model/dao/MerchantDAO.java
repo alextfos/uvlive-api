@@ -1,6 +1,7 @@
 package es.uvlive.model.dao;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 
@@ -10,6 +11,7 @@ public class MerchantDAO extends BaseDAO {
 
 	private static final String QUERY_SAVE_USER_MERCHANT = "INSERT INTO " + USER_TABLE + "(" + USER_NAME_FIELD + "," + PASSWORD_FIELD + "," + FIRST_NAME_FIELD + "," + LAST_NAME_FIELD + ") VALUES (?,?,?,?)";
 	private static final String QUERY_SAVE_MERCHANT_MERCHANT = "INSERT INTO " + MERCHANT_TABLE + "(" + DNI_FIELD + ") VALUES (?)";
+	private static final String QUERY_GET_MERCHANT = "SELECT * FROM " + USER_TABLE + " NATURAL JOIN " + MERCHANT_TABLE + " WHERE " + USER_NAME_FIELD + " = '%S'";
 	private static final String QUERY_UPDATE_USER_MERCHANT = "UPDATE " + USER_TABLE + " SET " + USER_NAME_FIELD + "='%s', " + PASSWORD_FIELD + "='%s', "
 	+ FIRST_NAME_FIELD + "='%s', " + LAST_NAME_FIELD + "='%s' WHERE " + USER_NAME_FIELD + "='%s'";
 	private static final String QUERY_UPDATE_MERCHANT_MERCHANT = "UPDATE " + MERCHANT_TABLE + " SET " + DNI_FIELD + "='%s' WHERE " + USER_ID_FIELD + "=(SELECT " + USER_ID_FIELD + " FROM " + USER_TABLE + " WHERE " + USER_NAME_FIELD + "='%s')" ;
@@ -43,5 +45,21 @@ public class MerchantDAO extends BaseDAO {
 		preparedStatement.setInt(3, timestamp);
 		preparedStatement.setInt(4, merchant.getUserId());
 		insert(preparedStatement);
+	}
+
+	public Merchant getMerchant(String merchantName) throws ClassNotFoundException, SQLException {
+		ResultSet resultSet= query(String.format(QUERY_GET_MERCHANT, merchantName));
+		Merchant merchant = null;
+		if (resultSet != null && resultSet.next()) {
+			merchant = new Merchant();
+			merchant.setUserId(resultSet.getInt(USER_ID_FIELD));
+			merchant.setUsername(resultSet.getString(USER_NAME_FIELD));
+			merchant.setFirstname(resultSet.getString(FIRST_NAME_FIELD));
+			merchant.setLastname(resultSet.getString(LAST_NAME_FIELD));
+			merchant.setDni(resultSet.getString(DNI_FIELD));
+
+			
+		}
+		return merchant;
 	}
 }

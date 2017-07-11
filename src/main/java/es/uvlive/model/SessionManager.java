@@ -222,4 +222,8 @@ public class SessionManager {
 
 		return userArrayList;
 	}
+
+	public Merchant getMerchant(String merchantName) throws ClassNotFoundException, SQLException {
+		return new MerchantDAO().getMerchant(merchantName);
+	}
 }
