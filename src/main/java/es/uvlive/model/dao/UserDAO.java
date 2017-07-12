@@ -153,7 +153,7 @@ public class UserDAO extends BaseDAO {
 		Collection<RolUV> students = new ArrayList<RolUV>();
         ResultSet result = query(QUERY_STUDENTS_USERS);
         if (result!=null) {
-            if (result.next()) {
+            while (result.next()) {
 				Student student = new Student();
 				student.setUserId(result.getInt(USER_ID_FIELD));
 				student.setFirstname(result.getString(FIRST_NAME_FIELD));
@@ -169,7 +169,7 @@ public class UserDAO extends BaseDAO {
 		Collection<RolUV> teachers = new ArrayList<RolUV>();
         ResultSet result = query(QUERY_TEACHERS_USERS);
         if (result!=null) {
-            if (result.next()) {
+            while (result.next()) {
 				Teacher teacher = new Teacher();
 				teacher.setUserId(result.getInt(USER_ID_FIELD));
 				teacher.setFirstname(result.getString(FIRST_NAME_FIELD));
