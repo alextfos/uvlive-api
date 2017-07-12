@@ -134,6 +134,8 @@ public abstract class RolUV extends User {
 					messages = conversation.getPreviousMessages(timestamp,UVLiveModel.PAGE_SIZE);
 					if (messages.size()<UVLiveModel.PAGE_SIZE && messages.size() > 0) {
 						messages.addAll(new MessageDAO().getPreviousMessages(idConversation, messages.get(messages.size()-1).getTimestamp(),UVLiveModel.PAGE_SIZE-messages.size()));
+					} else {
+						messages.addAll(new MessageDAO().getPreviousMessages(idConversation, timestamp,UVLiveModel.PAGE_SIZE));
 					}
 					return messages;
 				} else {
