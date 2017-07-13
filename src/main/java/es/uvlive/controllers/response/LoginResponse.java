@@ -5,12 +5,10 @@
  */
 package es.uvlive.controllers.response;
 
-import javax.xml.bind.annotation.XmlElement;
-
 public class LoginResponse extends BaseResponse {
 
-    @XmlElement(name = "token")
     private String token;
+    private String ownerField;
     
     public void setToken(String token) {
         this.token = token;
@@ -19,4 +17,12 @@ public class LoginResponse extends BaseResponse {
     public String getToken() {
         return token;
     }
+
+	public void setOwnerField(String ownerField) {
+		this.ownerField = ownerField;
+	}
+
+	public String getOwnerField() {
+		return ownerField;
+	}
 }

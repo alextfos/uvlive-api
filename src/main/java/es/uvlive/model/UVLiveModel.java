@@ -358,4 +358,13 @@ public class UVLiveModel {
 		}
 	}
 
+	public String getOwnerField(String token) throws Exception {
+		User user = getUser(token);
+		String ownerField = "";
+		if (user != null) {
+			ownerField = user.getFirstname() + " " + user.getLastname();
+		}
+		return ownerField;
+	}
+
 }

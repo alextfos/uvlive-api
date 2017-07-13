@@ -43,6 +43,7 @@ public class UserController extends BaseController {
 					Logger.put(this, loginForm.getUserName() + " logged");
 					String str = request.getSession().getId();
 					response.setHeader("Set-Cookie", "JSESSIONID=" + str);
+					loginResponse.setOwnerField(uvLiveModel.getOwnerField(token));
 					loginResponse.setToken(token);
 				} else {
 					throw new Exception();
