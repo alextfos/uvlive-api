@@ -4,15 +4,26 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import com.mysql.jdbc.StringUtils;
+
 import es.uvlive.exceptions.ConversationNotCreatedException;
 
 public class RolUVDAO extends BaseDAO {
 	
 	private static final String QUERY_GET_STUDENT = "SELECT " + USER_ID_FIELD + " FROM " + USER_TABLE + " NATURAL JOIN " + STUDENT_TABLE + " WHERE " + USER_ID_FIELD + "=%d";
 	private static final String QUERY_GET_TEACHER = "SELECT " + USER_ID_FIELD + " FROM " + USER_TABLE + " NATURAL JOIN " + TEACHER_TABLE + " WHERE " + USER_ID_FIELD + "=%d";
-	private static final String QUERY_GET_COMMON_CONVERSATIONS = "SELECT COUNT(DISTINCT " + CONVERSATION_ID_CONVERSATION_FIELD + ") FROM " + CONVERSATION_ROL_UV_TABLE + " WHERE "
-	+ ROL_UV_ID_USER_FIELD + " = %d OR " + ROL_UV_ID_USER_FIELD + " = %d GROUP BY " + CONVERSATION_ID_CONVERSATION_FIELD;
-	// And add a parameter to dinstinct personal conversation to group conversation
+
+	private static final String QUERY_GET_COMMON_CONVERSATIONS = "SELECT * FROM " + CONVERSATION_TABLE +" WHERE " + CONVERSATION_ID_FIELD + " IN " +
+		"(SELECT DISTINCT " +  CONVERSATION_ID_CONVERSATION_FIELD +
+		" FROM " + CONVERSATION_ROL_UV_TABLE + " WHERE " +
+		CONVERSATION_ROL_UV_TABLE + "." + CONVERSATION_ID_CONVERSATION_FIELD + " IN " +
+			"(SELECT " + CONVERSATION_ID_CONVERSATION_FIELD +
+			" FROM " + CONVERSATION_ROL_UV_TABLE + " WHERE " + ROL_UV_ID_USER_FIELD + " = %d)" +
+		" AND " + CONVERSATION_ROL_UV_TABLE + "." + CONVERSATION_ID_CONVERSATION_FIELD + " IN " +
+			"(SELECT " + CONVERSATION_ID_CONVERSATION_FIELD +
+			" FROM " + CONVERSATION_ROL_UV_TABLE + " WHERE " + ROL_UV_ID_USER_FIELD + " = %d))";
+	
+	// And add a parameter to distinct personal conversation to group conversation
 	private static final String QUERY_GET_MAX_ID = "SELECT MAX(" + CONVERSATION_ID_FIELD + ") FROM " + CONVERSATION_TABLE;
 	private static final String QUERY_INSERT_CONVERSATION = "INSERT INTO " + CONVERSATION_TABLE + " (" + CONVERSATION_ID_FIELD + ", " + NAME_FIELD + ") VALUES (?,?);";
 	private static final String QUERY_INSERT_CONVERSATION_ROL_UV = "INSERT INTO " + CONVERSATION_ROL_UV_TABLE + " (" + CONVERSATION_ID_CONVERSATION_FIELD + "," + ROL_UV_ID_USER_FIELD +  ") VALUES (?,?)";
@@ -26,11 +37,13 @@ public class RolUVDAO extends BaseDAO {
 			int s = studentResult.getInt(USER_ID_FIELD);
 			int t = teacherResult.getInt(USER_ID_FIELD);
 			ResultSet conversationCountQuery = query(String.format(QUERY_GET_COMMON_CONVERSATIONS, teacherId,studentId));
-			int conversationCount = Integer.MAX_VALUE;
+			int conversationCount = 0;
 			if (conversationCountQuery != null) {
 				conversationCount = 0;
 				while (conversationCountQuery.next()) {
-					conversationCount++;
+					if (StringUtils.isNullOrEmpty(conversationCountQuery.getString(NAME_FIELD))) {
+						conversationCount++;
+					}
 				}
 			}
 			if (s == studentId && t == teacherId && conversationCount < 1) {
