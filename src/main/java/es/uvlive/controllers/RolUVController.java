@@ -88,6 +88,9 @@ public class RolUVController extends BaseController {
 				userResponse.setUsername(user.getUsername());
 				userResponse.setFirstname(user.getFirstname());
 				userResponse.setLastname(user.getLastname());
+				if (user instanceof Student) {
+					userResponse.setBlocked(((Student)user).isBlocked());
+				}
 				responseUsers.add(userResponse);
 			}
 			usersListResponse.setUsers(responseUsers);

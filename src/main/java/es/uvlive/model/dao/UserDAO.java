@@ -158,6 +158,7 @@ public class UserDAO extends BaseDAO {
 				student.setUserId(result.getInt(USER_ID_FIELD));
 				student.setFirstname(result.getString(FIRST_NAME_FIELD));
 				student.setLastname(result.getString(LAST_NAME_FIELD));
+				student.setBlocked(result.getBoolean(BLOCKED_FIELD));
 				((User)student).setUsername(result.getString(USER_NAME_FIELD));
 				students.add(student);
             }
