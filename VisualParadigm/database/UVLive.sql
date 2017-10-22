@@ -1,6 +1,6 @@
-CREATE TABLE Message (idMessage int(11) NOT NULL AUTO_INCREMENT, text varchar(1023), timestamp int(13), ConversationidConversation int(11) NOT NULL, RolUVidUser int(11) NOT NULL, PRIMARY KEY (idMessage));
+CREATE TABLE Message (idMessage int(11) NOT NULL AUTO_INCREMENT, text varchar(1023), timestamp bigint, ConversationidConversation int(11) NOT NULL, RolUVidUser int(11) NOT NULL, PRIMARY KEY (idMessage));
 CREATE TABLE Merchant (idUser int(11) NOT NULL AUTO_INCREMENT, dni varchar(9), PRIMARY KEY (idUser));
-CREATE TABLE Broadcast (idBroadcast int(11) NOT NULL AUTO_INCREMENT, title varchar(20), text varchar(255), creationTimestamp int(13), MerchantIdUser int(11), PRIMARY KEY (idBroadcast));
+CREATE TABLE Broadcast (idBroadcast int(11) NOT NULL AUTO_INCREMENT, title varchar(20), text varchar(255), creationTimestamp bigint, MerchantIdUser int(11), PRIMARY KEY (idBroadcast));
 CREATE TABLE Teacher (idUser int(11) NOT NULL AUTO_INCREMENT, PRIMARY KEY (idUser));
 CREATE TABLE Student (idUser int(11) NOT NULL AUTO_INCREMENT, blocked int(1), PRIMARY KEY (idUser));
 CREATE TABLE Conversation (idConversation int(11) NOT NULL AUTO_INCREMENT, name varchar(52), PRIMARY KEY (idConversation));
