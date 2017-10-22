@@ -197,37 +197,41 @@ public class UVLiveModel {
 	 */
 	public synchronized void sendBroadcasts() throws Exception {
 		List<Broadcast> broadcastList = new BroadcastDAO().getBroadcasts();
+		List<String> usedTokenList = new ArrayList<>();
 		List<User> users = sessionManager.getUsers();
 		for (final User user: users) {
 			if (user instanceof RolUV) {
 				String pushToken = ((RolUV)user).getPushToken();
-				for (Broadcast broadcast:broadcastList) {
-					GoogleInterface googleInterface = RetrofitFactory.getGoogleInterface();
-					NotificationRequest notificationRequest = new NotificationRequest();
-
-					notificationRequest.setNotification(new Notification(broadcast.getTitle(), broadcast.getText()));
-					notificationRequest.setTo(pushToken);
-					Call<NotificationResponse> callback = googleInterface.sendNotification(notificationRequest);
-					callback.enqueue(new Callback<NotificationResponse>() {
-						@Override
-						public void onResponse(Call<NotificationResponse> call, Response<NotificationResponse> rspns) {
-							NotificationResponse response = rspns.body();
-							if (response != null && response.getFailure() > 0) {
-								try {
-									((RolUV)user).removePushToken();
-								} catch (Exception e) {
-									e.printStackTrace();
-									Logger.putError(UVLiveModel.this, e);
+				if (!usedTokenList.contains(pushToken)) {
+					usedTokenList.add(pushToken);
+					for (Broadcast broadcast:broadcastList) {
+						GoogleInterface googleInterface = RetrofitFactory.getGoogleInterface();
+						NotificationRequest notificationRequest = new NotificationRequest();
+	
+						notificationRequest.setNotification(new Notification(broadcast.getTitle(), broadcast.getText()));
+						notificationRequest.setTo(pushToken);
+						Call<NotificationResponse> callback = googleInterface.sendNotification(notificationRequest);
+						callback.enqueue(new Callback<NotificationResponse>() {
+							@Override
+							public void onResponse(Call<NotificationResponse> call, Response<NotificationResponse> rspns) {
+								NotificationResponse response = rspns.body();
+								if (response != null && response.getFailure() > 0) {
+									try {
+										((RolUV)user).removePushToken();
+									} catch (Exception e) {
+										e.printStackTrace();
+										Logger.putError(UVLiveModel.this, e);
+									}
 								}
 							}
-						}
-
-						@Override
-						public void onFailure(Call<NotificationResponse> call, Throwable thrwbl) {
-							System.out.println("Error: ");
-							thrwbl.printStackTrace();
-						}
-					});
+	
+							@Override
+							public void onFailure(Call<NotificationResponse> call, Throwable thrwbl) {
+								System.out.println("Error: ");
+								thrwbl.printStackTrace();
+							}
+						});
+					}
 				}
 			}
 		}
@@ -294,7 +298,7 @@ public class UVLiveModel {
 	 * @return messages
 	 * @throws Exception
 	 */
-	public synchronized Collection<Message> getPreviousMessages(String key, int idConversation, int timestamp) throws Exception {
+	public synchronized Collection<Message> getPreviousMessages(String key, int idConversation, long timestamp) throws Exception {
 		Collection<Message> messages;
 		User user = getUser(key);
 		if (user != null && user instanceof RolUV) {
@@ -305,7 +309,7 @@ public class UVLiveModel {
 		return messages;
 	}
 	
-	public synchronized Collection<Message> getFollowingMessages(String key, int idConversation, int timestamp) throws Exception {
+	public synchronized Collection<Message> getFollowingMessages(String key, int idConversation, long timestamp) throws Exception {
 		Collection<Message> messages;
 		User user = getUser(key);
 		if (user != null && user instanceof RolUV) {

@@ -10,7 +10,7 @@ import es.uvlive.utils.ValidationUtils;
 public class GetMessagesForm extends BaseForm {
 	
 	private int idConversation;
-	private int timestamp;
+	private long timestamp;
 	
 	public int getIdConversation() {
 		return idConversation;
@@ -20,7 +20,7 @@ public class GetMessagesForm extends BaseForm {
 		this.idConversation = idConversation;
 	}
 
-	public int getTimestamp() {
+	public long getTimestamp() {
 		return timestamp;
 	}
 

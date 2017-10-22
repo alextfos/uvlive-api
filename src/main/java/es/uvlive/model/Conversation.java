@@ -92,20 +92,20 @@ public class Conversation implements ElasticList.OnFillBufferCallback<Message> {
 		}
 	}
 
-	public boolean containsTimestamp(int timestamp) {
+	public boolean containsTimestamp(long timestamp) {
 		return messages.getFirstElement().getTimestamp() >= timestamp &&
 				messages.getLastElement().getTimestamp() <= timestamp;
 	}
 
-	public int getFirstMessageTimestamp() {
+	public long getFirstMessageTimestamp() {
 		return messages.getFirstElement().getTimestamp();
 	}
 
-	public int getLastMessageTimestamp() {
+	public long getLastMessageTimestamp() {
 		return messages.getLastElement().getTimestamp();
 	}
 
-	public List<Message> getFollowingMessages(int timestamp, int pageSize) {
+	public List<Message> getFollowingMessages(long timestamp, int pageSize) {
 		List<Message> messageList = messages.subList(0,messages.size());
 		for (Message message: messageList) {
 			if (message.getTimestamp() == timestamp) {
@@ -116,7 +116,7 @@ public class Conversation implements ElasticList.OnFillBufferCallback<Message> {
 		return new ArrayList();
 	}
 
-	public List<Message> getPreviousMessages(int timestamp, int pageSize) {
+	public List<Message> getPreviousMessages(long timestamp, int pageSize) {
 		List<Message> messageList = messages.subList(0,messages.size());
 		for (Message message: messageList) {
 			if (message.getTimestamp() == timestamp) {

@@ -35,7 +35,7 @@ public class MessageDAO extends BaseDAO {
 		for (Message message: messageList) {
 			preparedStatement.setInt(1,message.getIdMessage());
 			preparedStatement.setString(2, message.getText());
-			preparedStatement.setInt(3, message.getTimestamp());
+			preparedStatement.setLong(3, message.getTimestamp());
 			preparedStatement.setInt(4, message.getConversation().getIdConversation());
 			preparedStatement.setInt(5, message.getRolUV().getUserId());
 
@@ -54,7 +54,7 @@ public class MessageDAO extends BaseDAO {
                 Message message = new Message();
                 message.setIdMessage(result.getInt(MESSAGE_ID_FIELD));
                 message.setText(result.getString(TEXT_FIELD));
-                message.setTimestamp(result.getInt(TIME_STAMP_FIELD));
+                message.setTimestamp(result.getLong(TIME_STAMP_FIELD));
                 message.setOwner(result.getString(FIRST_NAME_FIELD) + " " + result.getString(LAST_NAME_FIELD));
                 
                 messages.add(message);
@@ -66,7 +66,7 @@ public class MessageDAO extends BaseDAO {
         return messages;
 	}
 	
-	public List<Message> getPreviousMessages(int idConversation, int timestamp, int pageSize) throws ClassNotFoundException, SQLException {
+	public List<Message> getPreviousMessages(int idConversation, long timestamp, int pageSize) throws ClassNotFoundException, SQLException {
 		List<Message> messages = new ArrayList<>();
 		
         ResultSet result = query(String.format(QUERY_GET_PREVIOUS_MESSAGES, timestamp, idConversation, pageSize));
@@ -75,7 +75,7 @@ public class MessageDAO extends BaseDAO {
                 Message message = new Message();
                 message.setIdMessage(result.getInt(MESSAGE_ID_FIELD));
                 message.setText(result.getString(TEXT_FIELD));
-                message.setTimestamp(result.getInt(TIME_STAMP_FIELD));
+                message.setTimestamp(result.getLong(TIME_STAMP_FIELD));
                 message.setOwner(result.getString(FIRST_NAME_FIELD) + " " + result.getString(LAST_NAME_FIELD));
                 
                 messages.add(message);
@@ -85,7 +85,7 @@ public class MessageDAO extends BaseDAO {
 		return messages;
 	}
 	
-	public List<Message> getFollowingMessages(int idConversation, int timestamp,int pageSize) throws ClassNotFoundException, SQLException {
+	public List<Message> getFollowingMessages(int idConversation, long timestamp,int pageSize) throws ClassNotFoundException, SQLException {
 		List<Message> messages = new ArrayList<>();
 		
         ResultSet result = query(String.format(QUERY_GET_FOLLOWING_MESSAGES, timestamp, idConversation, pageSize));
@@ -94,7 +94,7 @@ public class MessageDAO extends BaseDAO {
                 Message message = new Message();
                 message.setIdMessage(result.getInt(MESSAGE_ID_FIELD));
                 message.setText(result.getString(TEXT_FIELD));
-                message.setTimestamp(result.getInt(TIME_STAMP_FIELD));
+                message.setTimestamp(result.getLong(TIME_STAMP_FIELD));
                 message.setOwner(result.getString(FIRST_NAME_FIELD) + " " + result.getString(LAST_NAME_FIELD));
                 
                 messages.add(message);

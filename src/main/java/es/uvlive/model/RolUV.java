@@ -122,7 +122,7 @@ public abstract class RolUV extends User {
 		return messages;
 	}
 	
-	public Collection<Message> getPreviousMessages(int idConversation, int timestamp) throws ClassNotFoundException, SQLException {
+	public Collection<Message> getPreviousMessages(int idConversation, long timestamp) throws ClassNotFoundException, SQLException {
 		List<Message> messages = new ArrayList<>();
 		
 		for (Conversation conversation : userConversations) {
@@ -148,7 +148,7 @@ public abstract class RolUV extends User {
 		return messages;
 	}
 	
-	public Collection<Message> getFollowingMessages(int idConversation, int timestamp) throws ClassNotFoundException, SQLException {
+	public Collection<Message> getFollowingMessages(int idConversation, long timestamp) throws ClassNotFoundException, SQLException {
 		List<Message> messages = new ArrayList<>();
 		
 		for (Conversation conversation : userConversations) {

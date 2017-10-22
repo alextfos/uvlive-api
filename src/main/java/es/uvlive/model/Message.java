@@ -11,7 +11,7 @@ public class Message implements Comparable<Message> {
 	private int idMessage;
 	private RolUV rolUV;
 	private String text;
-	private int timestamp;
+	private long timestamp;
 	private String owner;
 	private Conversation conversation;
 
@@ -47,11 +47,11 @@ public class Message implements Comparable<Message> {
 		this.text = text;
 	}
 	
-	public int getTimestamp() {
+	public long getTimestamp() {
 		return timestamp;
 	}
 	
-	public void setTimestamp(int timestamp) {
+	public void setTimestamp(long timestamp) {
 		this.timestamp = timestamp;
 	}
 
