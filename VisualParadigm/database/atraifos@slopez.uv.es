@@ -1,0 +1,3 @@
+DROP DATABASE IF EXISTS uvlive;
+CREATE DATABASE uvlive;
+USE uvlive;

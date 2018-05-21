@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model:Screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:model="http://wireframesketcher.com/1.0/model.ecore" xmlns:o="http://wireframesketcher.com/1.0/model/overrides">
+  <widgets xsi:type="model:Master" id="1" x="200" y="10" measuredWidth="456" measuredHeight="872">
+    <screen xsi:type="model:WidgetGroup" href="../assets/Android5/Devices/Nexus%206.screen#Nexus%206"/>
+  </widgets>
+  <widgets xsi:type="model:Master" id="2" x="248" y="166" width="348" measuredWidth="348" measuredHeight="148">
+    <screen xsi:type="model:WidgetGroup" href="../assets/Android5/Lists.screen#List%201%20Line"/>
+    <overrides>
+      <widgets ref="4" width="348"/>
+      <widgets ref="2" width="337" text="Gestión de Proyectos&#xA;Usuario 1&#xA;Trabajo de Fin de Grado">
+        <items ref="@items.0" text="Gestión de Proyectos"/>
+        <items ref="@items.1" text="Usuario 1"/>
+        <items ref="@items.2" text="Trabajo de Fin de Grado"/>
+      </widgets>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Master" id="3" x="530" y="673" measuredWidth="58" measuredHeight="58">
+    <screen xsi:type="model:WidgetGroup" href="../assets/Android5/Controls.screen#Button%20Floating"/>
+  </widgets>
+  <widgets xsi:type="model:Panel" id="4" x="223" y="111" width="410" height="56" measuredWidth="410" measuredHeight="56" layoutParams="anchor-left,anchor-right|anchor-top,anchor-bottom" background="#ccc" border="none"/>
+  <widgets xsi:type="model:Label" id="5" x="283" y="123" text="UVLive" measuredWidth="70" measuredHeight="31" layoutParams="anchor-left|anchor-middle">
+    <font size="20px"/>
+  </widgets>
+  <widgets xsi:type="model:Icon" id="6" x="242" y="127" measuredWidth="24" measuredHeight="24" layoutParams="anchor-right|anchor-middle" icon="assets/ic-reorder (medium)"/>
+  <widgets xsi:type="model:Master" id="7" x="221" y="111" width="210" height="657" measuredWidth="210" measuredHeight="657">
+    <screen xsi:type="model:WidgetGroup" href="../assets/Android5/Navigation.screen#Navigation%20Drawer"/>
+    <overrides>
+      <widgetChanges xsi:type="o:Insert" newIndex="10">
+        <object xsi:type="model:Label" id="14" x="63" y="75" text="Rol del usuario" foreground="#fff">
+          <font/>
+        </object>
+      </widgetChanges>
+      <widgetChanges xsi:type="o:Insert" newIndex="10">
+        <object xsi:type="model:Label" id="13" x="32" y="41" text="Nombre usuario" foreground="#fff">
+          <font size="18px" bold="true"/>
+        </object>
+      </widgetChanges>
+      <widgetChanges xsi:type="o:Insert" newIndex="10">
+        <object xsi:type="model:Panel" id="8" width="209" height="130" background="#666"/>
+      </widgetChanges>
+      <widgetChanges xsi:type="o:Delete" ref="76"/>
+      <widgetChanges xsi:type="o:Delete" ref="75"/>
+      <widgetChanges xsi:type="o:Delete" ref="61"/>
+      <widgetChanges xsi:type="o:Delete" ref="66"/>
+      <widgetChanges xsi:type="o:Delete" ref="65"/>
+      <widgetChanges xsi:type="o:Delete" ref="64"/>
+      <widgetChanges xsi:type="o:Delete" ref="63"/>
+      <widgetChanges xsi:type="o:Delete" ref="62"/>
+      <widgets ref="60" width="209" height="657">
+        <attributes key="alpha" value="255"/>
+      </widgets>
+      <widgets ref="68" y="177" width="210" height="225"/>
+      <widgets ref="69" width="210" height="177"/>
+      <widgets ref="70" x="39" width="171" height="225" text="Opciones del usuario&#xA;(si aplica)&#xA;Salir&#xA;">
+        <items ref="@items.3" text="Opciones del usuario"/>
+        <itemChanges xsi:type="o:Insert" newIndex="4">
+          <object xsi:type="model:Item" text="Salir"/>
+        </itemChanges>
+        <itemChanges xsi:type="o:Insert" newIndex="4">
+          <object xsi:type="model:Item" text="(si aplica)"/>
+        </itemChanges>
+        <itemChanges xsi:type="o:Delete" ref="@items.2"/>
+        <itemChanges xsi:type="o:Delete" ref="@items.1"/>
+        <itemChanges xsi:type="o:Delete" ref="@items.0"/>
+      </widgets>
+      <widgets ref="72" x="10" y="112">
+        <attributes key="icon" value="assets/ic-exit-to-app (medium)"/>
+      </widgets>
+      <widgets ref="68">
+        <widgetChanges xsi:type="o:Delete" ref="74"/>
+        <widgetChanges xsi:type="o:Delete" ref="73"/>
+        <widgetChanges xsi:type="o:Delete" ref="71"/>
+      </widgets>
+    </overrides>
+  </widgets>
+  <hRuler/>
+  <vRuler/>
+  <font size="12px"/>
+</model:Screen>
