@@ -28,6 +28,9 @@ public class Conversation implements ElasticList.OnFillBufferCallback<Message> {
 		this.messages = new ElasticList<>(UVLiveModel.LIST_SIZE,UVLiveModel.BUFFER_SIZE,this);
 		try {
 			Collection<Message> oldMessages = new MessageDAO().getMessages(idConversation,UVLiveModel.LIST_SIZE);
+			for (Message message: oldMessages) {
+				message.setConversation(this);
+			}
 			messages.addAll(oldMessages);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -128,7 +131,7 @@ public class Conversation implements ElasticList.OnFillBufferCallback<Message> {
 	}
 
 	public List<Message> getLastMessages(int pageSize) {
-		return messages.subList(messages.size()-pageSize<0?0:messages.size()-pageSize,messages.size());
+		return messages.subList(((messages.size()-pageSize)<0)?0:messages.size()-pageSize,messages.size());
 	}
 
 	@Override

@@ -105,11 +105,11 @@ public class RolUVController extends BaseController {
 	public @ResponseBody MessageListResponse getMessages(@RequestBody GetMessagesForm getMessagesForm,
 			BindingResult result, HttpServletRequest request, HttpServletResponse response) {
 		MessageListResponse messageListResponse = new MessageListResponse();
-		Collection<MessageResponse> messageResponseList = new ArrayList<MessageResponse>();
+		Collection<MessageResponse> messageResponseList = new ArrayList<>();
 		Collection<Message> messages;
 
 		try {
-			if (getMessagesForm.isValid()) {
+			if (getMessagesForm.getIdConversation() > 0) {
 				messages = uvLiveModel.getMessages(getToken(request), getMessagesForm.getIdConversation());
 				if (messages != null) {
 					for (Message message : messages) {
@@ -198,18 +198,23 @@ public class RolUVController extends BaseController {
 			"Content-Type=application/json" })
 	public @ResponseBody BaseResponse sendMessage(@RequestBody SendMessagesForm sendMessagesForm, BindingResult result,
 			HttpServletRequest request, HttpServletResponse response) {
-		BaseResponse baseResponse = new BaseResponse();
+		MessageResponse messageResponse = new MessageResponse();
 		try {
 			if (sendMessagesForm.isValid()) {
-				uvLiveModel.sendMessage(getToken(request), sendMessagesForm.getIdConversation(), sendMessagesForm.getMessage());
+				Message message = uvLiveModel.sendMessage(getToken(request), sendMessagesForm.getIdConversation(), sendMessagesForm.getMessage());
+
+				messageResponse.setIdMessage(message.getIdMessage());
+				messageResponse.setText(message.getText());
+				messageResponse.setTimestamp(message.getTimestamp());
+				messageResponse.setOwner(message.getOwner());
 			} else {
 				throw new ValidationFormException();
 			}
 		} catch (Exception e) {
-			baseResponse.setErrorCode(getErrorCode(e));
+			messageResponse.setErrorCode(getErrorCode(e));
 		}
 
-		return baseResponse;
+		return messageResponse;
 	}
 
 	@RequestMapping(value = "/rolUV/pushToken/update", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE, headers = {

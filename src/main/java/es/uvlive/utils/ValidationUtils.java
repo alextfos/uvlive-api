@@ -35,4 +35,8 @@ public class ValidationUtils {
 		return Student.LOGIN_TYPE.equals(loginType) | Teacher.LOGIN_TYPE.equals(loginType) |
 				Merchant.LOGIN_TYPE.equals(loginType) | Admin.LOGIN_TYPE.equals(loginType);
 	}
+
+	public static boolean validateLong(long timestamp) {
+		return timestamp > 0;
+	}
 }

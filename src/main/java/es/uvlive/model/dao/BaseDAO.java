@@ -15,8 +15,12 @@ public class BaseDAO {
     private static final String URL = "jdbc:mysql://localhost/uvlive";
     private static final String USER = "root";
     private static final String PASSWORD = "asdf1234";
-    private static final String DRIVER = "com.mysql.jdbc.Driver"; 
-    
+//    private static final String PASSWORD = "A.tra-1f0s";
+//    private static final String USER = "atraifos";
+//    private static final String URL = "jdbc:mysql://localhost/atraifos";
+    private static final String DRIVER = "com.mysql.jdbc.Driver";
+
+
     /* Table names */
     protected static final String USER_TABLE = "User";
     protected static final String ROL_UV_TABLE = "ROLUV";
@@ -77,8 +81,7 @@ public class BaseDAO {
         }
         return sConnectionDB.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY).executeQuery(sql);
     }
-    
-    
+
     protected PreparedStatement getPreparedStatement(String query) throws ClassNotFoundException, SQLException {
         if (!(sConnectionDB != null && !sConnectionDB.isClosed())) {
             connect();

@@ -263,13 +263,16 @@ public class UVLiveModel {
 	 * @param text
 	 * @throws Exception
 	 */
-	public synchronized void sendMessage(String key, int idConversation, String text) throws Exception {
+	public synchronized Message sendMessage(String key, int idConversation, String text) throws Exception {
 		User user = getUser(key);
+		Message message = null;
 		if (user != null && user instanceof RolUV) {
-			((RolUV)user).sendMessage(idConversation, text);
+			message = ((RolUV)user).sendMessage(idConversation, text);
 		} else {
 			throw new UnauthorizedException();
 		}
+
+		return message;
 	}
 
 	/**

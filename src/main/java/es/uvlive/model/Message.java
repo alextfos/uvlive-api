@@ -1,6 +1,7 @@
 package es.uvlive.model;
 
 import com.google.gson.Gson;
+import com.sun.istack.internal.Nullable;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -13,6 +14,7 @@ public class Message implements Comparable<Message> {
 	private String text;
 	private long timestamp;
 	private String owner;
+	private int rolUvIdUser;
 	private Conversation conversation;
 
 	public static void initMessageId(int maxId) {
@@ -22,7 +24,8 @@ public class Message implements Comparable<Message> {
 	public void generateId() {
 		idMessage = nextId.incrementAndGet();
 	}
-	
+
+	@Nullable
 	public RolUV getRolUV() {
 		return rolUV;
 	}
@@ -74,6 +77,14 @@ public class Message implements Comparable<Message> {
 
 	public Conversation getConversation() {
 		return conversation;
+	}
+
+	public int getRolUvIdUser() {
+		return rolUvIdUser;
+	}
+
+	public void setRolUvIdUser(int rolUvIdUser) {
+		this.rolUvIdUser = rolUvIdUser;
 	}
 
 	@Override

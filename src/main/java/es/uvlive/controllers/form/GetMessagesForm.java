@@ -24,13 +24,14 @@ public class GetMessagesForm extends BaseForm {
 		return timestamp;
 	}
 
-	public void setIdMessage(int timestamp) {
+	public void setTimestamp(long timestamp) {
 		this.timestamp = timestamp;
 	}
 
 	@Override
 	public boolean isValid() {
-		return ValidationUtils.validateInt(idConversation);
+		return ValidationUtils.validateInt(idConversation) &&
+				ValidationUtils.validateLong(timestamp);
 	}
 	
 }

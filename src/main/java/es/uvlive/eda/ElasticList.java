@@ -15,7 +15,6 @@ public class ElasticList<T> implements List<T> {
 
 	private ElasticItem<T> firstElement;
 	private ElasticItem<T> lastElement;
-	private ElasticItem<T> lastSync;
 	
 	private OnFillBufferCallback<T> onFillBufferCallback;
 	
@@ -56,7 +55,6 @@ public class ElasticList<T> implements List<T> {
 				return Boolean.FALSE;
 			}
 		}
-		lastSync = firstElement;
 		return Boolean.TRUE;
 	}
 
@@ -185,12 +183,7 @@ public class ElasticList<T> implements List<T> {
 			ArrayList<T> elements = new ArrayList<>();
 			
 			while (element.getPreviousElement() != null && index<bufferSize) {
-				if (lastSync == null) {
-					elements.add(element.getElement());
-				}
-				if (element.equals(lastSync)) {
-					lastSync = null;
-				}
+				elements.add(element.getElement());
 				element = element.getPreviousElement();
 				index++;
 			}

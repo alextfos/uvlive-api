@@ -1,5 +1,6 @@
 package es.uvlive.model.dao;
 
+import java.sql.BatchUpdateException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -37,12 +38,17 @@ public class MessageDAO extends BaseDAO {
 			preparedStatement.setString(2, message.getText());
 			preparedStatement.setLong(3, message.getTimestamp());
 			preparedStatement.setInt(4, message.getConversation().getIdConversation());
-			preparedStatement.setInt(5, message.getRolUV().getUserId());
+			preparedStatement.setInt(5, (message.getRolUV() != null)?
+                                                        message.getRolUV().getUserId():
+                                                        message.getRolUvIdUser());
 
 			preparedStatement.addBatch();
 		}
-
-		insertBatch(preparedStatement);
+		try {
+            insertBatch(preparedStatement);
+        } catch (BatchUpdateException e) {
+		    // if that exception is thown it's because the element already exists
+        }
 	}
 
 	public Collection<Message> getMessages(int idConversation, int pageSize) throws ClassNotFoundException, SQLException {
@@ -52,11 +58,13 @@ public class MessageDAO extends BaseDAO {
         if (result != null) {
             while(result.next()) {
                 Message message = new Message();
+
                 message.setIdMessage(result.getInt(MESSAGE_ID_FIELD));
                 message.setText(result.getString(TEXT_FIELD));
                 message.setTimestamp(result.getLong(TIME_STAMP_FIELD));
                 message.setOwner(result.getString(FIRST_NAME_FIELD) + " " + result.getString(LAST_NAME_FIELD));
-                
+                message.setRolUvIdUser(result.getInt(ROL_UV_ID_USER_FIELD));
+
                 messages.add(message);
             }
         }
@@ -77,7 +85,8 @@ public class MessageDAO extends BaseDAO {
                 message.setText(result.getString(TEXT_FIELD));
                 message.setTimestamp(result.getLong(TIME_STAMP_FIELD));
                 message.setOwner(result.getString(FIRST_NAME_FIELD) + " " + result.getString(LAST_NAME_FIELD));
-                
+                message.setRolUvIdUser(result.getInt(ROL_UV_ID_USER_FIELD));
+
                 messages.add(message);
             }
         }
@@ -92,6 +101,7 @@ public class MessageDAO extends BaseDAO {
         if (result != null) {
             while(result.next()) {
                 Message message = new Message();
+
                 message.setIdMessage(result.getInt(MESSAGE_ID_FIELD));
                 message.setText(result.getString(TEXT_FIELD));
                 message.setTimestamp(result.getLong(TIME_STAMP_FIELD));
