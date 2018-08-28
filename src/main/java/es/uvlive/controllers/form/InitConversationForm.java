@@ -4,18 +4,18 @@ import es.uvlive.utils.ValidationUtils;
 
 public class InitConversationForm extends BaseForm {
 	
-	private String idUser;
+	private int idUser;
 	
-	public String getIdUser() {
+	public int getIdUser() {
 		return idUser;
 	}
 
-	public void setIdUser(String idUser) {
+	public void setIdUser(int idUser) {
 		this.idUser = idUser;
 	}
 
 	public boolean isValid() {
-		return	ValidationUtils.validateString(idUser);
+		return	ValidationUtils.validateInt(idUser);
 	}
 	
 }

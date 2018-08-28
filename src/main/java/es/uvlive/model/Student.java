@@ -31,7 +31,7 @@ public class Student extends RolUV {
 		int conversationId = new RolUVDAO().saveConversation(userId,getUserId());
 		Conversation conversation = getConversationCatalog().addAndGetConversation(conversationId);
 		conversation.addRolUV(this);
-		getUserConversations().add(conversation);
+		userConversations.put(conversationId, conversation);
 		getSessionManager().addConversationToUser(userId, conversation);
 	}
 	

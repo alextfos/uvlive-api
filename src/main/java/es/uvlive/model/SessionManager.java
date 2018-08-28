@@ -83,7 +83,7 @@ public class SessionManager {
 	 * Gets user - Si hay algun tipo de ptoblema con el token, se lanzará una
 	 * excepción de no autorizado
 	 * 
-	 * @param key
+	 * @param token
 	 */
 	public User getUser(String token) throws TokenExpiredException {
 		try {
@@ -179,7 +179,7 @@ public class SessionManager {
 		for (String key : users) {
 			User currentUser = usersCollection.get(key);
 			if (currentUser.getUserId() == userId && currentUser instanceof RolUV) {
-				((RolUV) currentUser).getUserConversations().add(conversation);
+				((RolUV) currentUser).getUserConversations().put(conversation.getIdConversation(), conversation);
 				conversation.addRolUV(((RolUV) currentUser));
 				notifyConversationsChanged((RolUV) currentUser);
 			}

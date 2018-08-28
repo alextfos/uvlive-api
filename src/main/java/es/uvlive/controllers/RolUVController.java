@@ -63,7 +63,7 @@ public class RolUVController extends BaseController {
 
 		try {
 			if (initConversationForm.isValid()) {
-				uvLiveModel.initConversation(getToken(request), Integer.parseInt(initConversationForm.getIdUser()));
+				uvLiveModel.initConversation(getToken(request), initConversationForm.getIdUser());
 			} else {
 				throw new ValidationFormException();
 			}

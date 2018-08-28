@@ -44,7 +44,7 @@ public class Teacher extends RolUV {
 		int conversationId = new RolUVDAO().saveConversation(getUserId(),userId);
 		Conversation conversation = getConversationCatalog().addAndGetConversation(conversationId);
 		conversation.addRolUV(this);
-		getUserConversations().add(conversation);
+		userConversations.put(conversationId, conversation);
 		getSessionManager().addConversationToUser(userId, conversation);
 	}
 

@@ -19,7 +19,7 @@ public abstract class RolUV extends User {
 	private String pushToken;
 
 	private ConversationCatalog conversationCatalog;
-	private HashMap<Integer, Conversation> userConversations;
+	protected HashMap<Integer, Conversation> userConversations;
 	private SessionManager sessionManager;
 
 	public RolUV() {
@@ -169,8 +169,8 @@ public abstract class RolUV extends User {
 		return conversationCatalog;
 	}
 
-	public Collection<Conversation> getUserConversations() {
-		return userConversations.values();
+	public HashMap<Integer,Conversation> getUserConversations() {
+		return userConversations;
 	}
 
 	public SessionManager getSessionManager() {
